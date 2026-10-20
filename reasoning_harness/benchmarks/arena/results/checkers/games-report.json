@@ -1,0 +1,68 @@
+{
+  "Trained network (depth 1) vs random mover": {
+    "win": 40,
+    "draw": 0,
+    "loss": 0,
+    "games": 40,
+    "score_pct": 100.0,
+    "win_rate_wilson95": [
+      91.24,
+      100
+    ]
+  },
+  "Trained network (depth 1) vs material engine (depth 1)": {
+    "win": 40,
+    "draw": 0,
+    "loss": 0,
+    "games": 40,
+    "score_pct": 100.0,
+    "win_rate_wilson95": [
+      91.24,
+      100
+    ]
+  },
+  "Trained network (depth 2) vs random mover": {
+    "win": 40,
+    "draw": 0,
+    "loss": 0,
+    "games": 40,
+    "score_pct": 100.0,
+    "win_rate_wilson95": [
+      91.24,
+      100
+    ]
+  },
+  "Trained network (depth 2) vs material engine (depth 2)": {
+    "win": 15,
+    "draw": 18,
+    "loss": 7,
+    "games": 40,
+    "score_pct": 60.0,
+    "win_rate_wilson95": [
+      24.22,
+      52.97
+    ]
+  },
+  "Trained network (depth 2) vs material engine (depth 4)": {
+    "win": 4,
+    "draw": 20,
+    "loss": 16,
+    "games": 40,
+    "score_pct": 35.0,
+    "win_rate_wilson95": [
+      3.96,
+      23.05
+    ]
+  },
+  "Untrained network (depth 2) vs material engine (depth 2) [control]": {
+    "win": 0,
+    "draw": 0,
+    "loss": 40,
+    "games": 40,
+    "score_pct": 0.0,
+    "win_rate_wilson95": [
+      0,
+      8.76
+    ]
+  }
+}
