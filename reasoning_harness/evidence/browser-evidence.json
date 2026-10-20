@@ -1,0 +1,334 @@
+[
+  {
+    "name": "neural-4x4",
+    "mode": "model",
+    "rows": [
+      "S...",
+      ".X..",
+      "..X.",
+      "...G"
+    ],
+    "response": {
+      "solved": true,
+      "attempts_used": 1,
+      "history": [
+        {
+          "path": "RRDRDD",
+          "valid": true,
+          "optimal": true,
+          "reason": "solved",
+          "at": 6
+        }
+      ],
+      "mode": "neural_only"
+    }
+  },
+  {
+    "name": "neural-detour",
+    "mode": "model",
+    "rows": [
+      "S...",
+      "XXX.",
+      "....",
+      "GXXX"
+    ],
+    "response": {
+      "solved": true,
+      "attempts_used": 1,
+      "history": [
+        {
+          "path": "RRRDDLLLD",
+          "valid": true,
+          "optimal": true,
+          "reason": "solved",
+          "at": 9
+        }
+      ],
+      "mode": "neural_only"
+    }
+  },
+  {
+    "name": "guided-8x8",
+    "mode": "guided",
+    "rows": [
+      "S.......",
+      "XXXXXXX.",
+      "........",
+      ".XXXXXXX",
+      "........",
+      "XXXXXXX.",
+      "........",
+      "GXXXXXXX"
+    ],
+    "response": {
+      "solved": true,
+      "mode": "policy_guided_search",
+      "expanded_states": 36,
+      "budget": 64,
+      "attempts_used": 1,
+      "history": [
+        {
+          "path": "RRRRRRRDDLLLLLLLDDRRRRRRRDDLLLLLLLD",
+          "valid": true,
+          "optimal": true,
+          "reason": "solved",
+          "at": 35
+        }
+      ],
+      "trace": [
+        {
+          "position": [
+            0,
+            0
+          ],
+          "path": ""
+        },
+        {
+          "position": [
+            0,
+            1
+          ],
+          "path": "R"
+        },
+        {
+          "position": [
+            0,
+            2
+          ],
+          "path": "RR"
+        },
+        {
+          "position": [
+            0,
+            3
+          ],
+          "path": "RRR"
+        },
+        {
+          "position": [
+            0,
+            4
+          ],
+          "path": "RRRR"
+        },
+        {
+          "position": [
+            0,
+            5
+          ],
+          "path": "RRRRR"
+        },
+        {
+          "position": [
+            0,
+            6
+          ],
+          "path": "RRRRRR"
+        },
+        {
+          "position": [
+            0,
+            7
+          ],
+          "path": "RRRRRRR"
+        },
+        {
+          "position": [
+            1,
+            7
+          ],
+          "path": "RRRRRRRD"
+        },
+        {
+          "position": [
+            2,
+            7
+          ],
+          "path": "RRRRRRRDD"
+        },
+        {
+          "position": [
+            2,
+            6
+          ],
+          "path": "RRRRRRRDDL"
+        },
+        {
+          "position": [
+            2,
+            5
+          ],
+          "path": "RRRRRRRDDLL"
+        },
+        {
+          "position": [
+            2,
+            4
+          ],
+          "path": "RRRRRRRDDLLL"
+        },
+        {
+          "position": [
+            2,
+            3
+          ],
+          "path": "RRRRRRRDDLLLL"
+        },
+        {
+          "position": [
+            2,
+            2
+          ],
+          "path": "RRRRRRRDDLLLLL"
+        },
+        {
+          "position": [
+            2,
+            1
+          ],
+          "path": "RRRRRRRDDLLLLLL"
+        },
+        {
+          "position": [
+            2,
+            0
+          ],
+          "path": "RRRRRRRDDLLLLLLL"
+        },
+        {
+          "position": [
+            3,
+            0
+          ],
+          "path": "RRRRRRRDDLLLLLLLD"
+        },
+        {
+          "position": [
+            4,
+            0
+          ],
+          "path": "RRRRRRRDDLLLLLLLDD"
+        },
+        {
+          "position": [
+            4,
+            1
+          ],
+          "path": "RRRRRRRDDLLLLLLLDDR"
+        },
+        {
+          "position": [
+            4,
+            2
+          ],
+          "path": "RRRRRRRDDLLLLLLLDDRR"
+        },
+        {
+          "position": [
+            4,
+            3
+          ],
+          "path": "RRRRRRRDDLLLLLLLDDRRR"
+        },
+        {
+          "position": [
+            4,
+            4
+          ],
+          "path": "RRRRRRRDDLLLLLLLDDRRRR"
+        },
+        {
+          "position": [
+            4,
+            5
+          ],
+          "path": "RRRRRRRDDLLLLLLLDDRRRRR"
+        },
+        {
+          "position": [
+            4,
+            6
+          ],
+          "path": "RRRRRRRDDLLLLLLLDDRRRRRR"
+        },
+        {
+          "position": [
+            4,
+            7
+          ],
+          "path": "RRRRRRRDDLLLLLLLDDRRRRRRR"
+        },
+        {
+          "position": [
+            5,
+            7
+          ],
+          "path": "RRRRRRRDDLLLLLLLDDRRRRRRRD"
+        },
+        {
+          "position": [
+            6,
+            7
+          ],
+          "path": "RRRRRRRDDLLLLLLLDDRRRRRRRDD"
+        },
+        {
+          "position": [
+            6,
+            6
+          ],
+          "path": "RRRRRRRDDLLLLLLLDDRRRRRRRDDL"
+        },
+        {
+          "position": [
+            6,
+            5
+          ],
+          "path": "RRRRRRRDDLLLLLLLDDRRRRRRRDDLL"
+        },
+        {
+          "position": [
+            6,
+            4
+          ],
+          "path": "RRRRRRRDDLLLLLLLDDRRRRRRRDDLLL"
+        },
+        {
+          "position": [
+            6,
+            3
+          ],
+          "path": "RRRRRRRDDLLLLLLLDDRRRRRRRDDLLLL"
+        },
+        {
+          "position": [
+            6,
+            2
+          ],
+          "path": "RRRRRRRDDLLLLLLLDDRRRRRRRDDLLLLL"
+        },
+        {
+          "position": [
+            6,
+            1
+          ],
+          "path": "RRRRRRRDDLLLLLLLDDRRRRRRRDDLLLLLL"
+        },
+        {
+          "position": [
+            6,
+            0
+          ],
+          "path": "RRRRRRRDDLLLLLLLDDRRRRRRRDDLLLLLLL"
+        },
+        {
+          "position": [
+            7,
+            0
+          ],
+          "path": "RRRRRRRDDLLLLLLLDDRRRRRRRDDLLLLLLLD"
+        }
+      ]
+    }
+  }
+]

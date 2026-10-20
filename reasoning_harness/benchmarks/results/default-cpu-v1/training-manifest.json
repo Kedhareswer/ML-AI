@@ -1,0 +1,39 @@
+{
+  "model": {
+    "config": {
+      "width": 256,
+      "layers": 12,
+      "heads": 8,
+      "context": 256
+    },
+    "parameters": 9576704,
+    "fp32_weight_MB": 38.306816
+  },
+  "training": {
+    "batch_size": 2,
+    "lr": 0.0003,
+    "size": 4,
+    "train_examples": 16,
+    "seed": 42
+  },
+  "train_mazes": [
+    "....\n..X.\n.GS.\n..X.",
+    "....\nS.G.\n.X..\nX.X.",
+    "...G\n....\n.XXS\n...X",
+    "...G\n..X.\nXX..\n.S..",
+    "..S.\n..G.\nXX..\n.X..",
+    "..SX\n.GXX\nX...\n....",
+    ".X..\n....\nG.S.\nX...",
+    ".X..\n...S\n.XX.\nXX.G",
+    ".XXX\n....\nSG..\n....",
+    "S.X.\n....\n....\n.G..",
+    "X...\nGS..\n....\n.X..",
+    "X.X.\n....\nGX..\n...S",
+    "X.X.\n.XXS\nX..G\n....",
+    "X.XS\n....\nX...\n.G.X",
+    "XSX.\n....\n..G.\n....",
+    "XXGX\nX...\n....\n.S.X"
+  ],
+  "torch": "2.6.0+cpu",
+  "precision": "fp32"
+}

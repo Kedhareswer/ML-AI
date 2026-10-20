@@ -1,0 +1,511 @@
+{
+  "validation": {
+    "count": 100,
+    "seed": 4000000,
+    "supervised_tokens": 310,
+    "answer_NLL": 1.5671053055794009,
+    "answer_perplexity": 4.792754534717095,
+    "unconstrained_next_token_accuracy": 0.43870967741935485,
+    "note": "Teacher-forced answer-token metrics, not free-generation planning accuracy"
+  },
+  "stress": [
+    {
+      "name": "adjacent_goal",
+      "rows": [
+        "SG..",
+        "....",
+        "....",
+        "...."
+      ],
+      "reachable": true,
+      "shortest_moves": 1,
+      "training_overlap": false,
+      "greedy": {
+        "solved": false,
+        "attempts_used": 1,
+        "history": [
+          {
+            "path": "U",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          }
+        ],
+        "seconds": 0.0013862690002497402,
+        "generated_moves": 1
+      },
+      "feedback": {
+        "solved": false,
+        "attempts_used": 4,
+        "history": [
+          {
+            "path": "U",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "L",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "UURD",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "LDRL",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          }
+        ],
+        "seconds": 0.010618668000006437,
+        "generated_moves": 10
+      },
+      "no_feedback": {
+        "solved": false,
+        "attempts_used": 4,
+        "history": [
+          {
+            "path": "U",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "L",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "UURD",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "RDRL",
+            "valid": false,
+            "optimal": false,
+            "reason": "incomplete",
+            "at": 4
+          }
+        ],
+        "seconds": 0.00750009700004739,
+        "generated_moves": 10
+      }
+    },
+    {
+      "name": "open_diagonal",
+      "rows": [
+        "S...",
+        "....",
+        "....",
+        "...G"
+      ],
+      "reachable": true,
+      "shortest_moves": 6,
+      "training_overlap": false,
+      "greedy": {
+        "solved": false,
+        "attempts_used": 1,
+        "history": [
+          {
+            "path": "U",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          }
+        ],
+        "seconds": 0.0009714630000416946,
+        "generated_moves": 1
+      },
+      "feedback": {
+        "solved": false,
+        "attempts_used": 4,
+        "history": [
+          {
+            "path": "U",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "L",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "UURD",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "LDRL",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          }
+        ],
+        "seconds": 0.007899059000010311,
+        "generated_moves": 10
+      },
+      "no_feedback": {
+        "solved": false,
+        "attempts_used": 4,
+        "history": [
+          {
+            "path": "U",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "L",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "UURD",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "RDRL",
+            "valid": false,
+            "optimal": false,
+            "reason": "incomplete",
+            "at": 4
+          }
+        ],
+        "seconds": 0.006433843999730016,
+        "generated_moves": 10
+      }
+    },
+    {
+      "name": "forced_detour",
+      "rows": [
+        "S...",
+        "XXX.",
+        "....",
+        "GXXX"
+      ],
+      "reachable": true,
+      "shortest_moves": 9,
+      "training_overlap": false,
+      "greedy": {
+        "solved": false,
+        "attempts_used": 1,
+        "history": [
+          {
+            "path": "U",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          }
+        ],
+        "seconds": 0.0008784850001575251,
+        "generated_moves": 1
+      },
+      "feedback": {
+        "solved": false,
+        "attempts_used": 4,
+        "history": [
+          {
+            "path": "U",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "L",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "UURD",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "LDRL",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          }
+        ],
+        "seconds": 0.007634667999809608,
+        "generated_moves": 10
+      },
+      "no_feedback": {
+        "solved": false,
+        "attempts_used": 4,
+        "history": [
+          {
+            "path": "U",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "L",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "UURD",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "RDRL",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 1
+          }
+        ],
+        "seconds": 0.006758484999863867,
+        "generated_moves": 10
+      }
+    },
+    {
+      "name": "long_corridor_8x8",
+      "rows": [
+        "S.......",
+        "XXXXXXX.",
+        "........",
+        ".XXXXXXX",
+        "........",
+        "XXXXXXX.",
+        "........",
+        "GXXXXXXX"
+      ],
+      "reachable": true,
+      "shortest_moves": 35,
+      "training_overlap": false,
+      "greedy": {
+        "solved": false,
+        "attempts_used": 1,
+        "history": [
+          {
+            "path": "U",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          }
+        ],
+        "seconds": 0.0016773600000306033,
+        "generated_moves": 1
+      },
+      "feedback": {
+        "solved": false,
+        "attempts_used": 4,
+        "history": [
+          {
+            "path": "U",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "L",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "UURD",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "RDRL",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 1
+          }
+        ],
+        "seconds": 0.011912307999864424,
+        "generated_moves": 10
+      },
+      "no_feedback": {
+        "solved": false,
+        "attempts_used": 4,
+        "history": [
+          {
+            "path": "U",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "L",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "UURD",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "RDRL",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 1
+          }
+        ],
+        "seconds": 0.00967484600005264,
+        "generated_moves": 10
+      }
+    },
+    {
+      "name": "impossible",
+      "rows": [
+        "SXX",
+        "XXX",
+        "XXG"
+      ],
+      "reachable": false,
+      "shortest_moves": null,
+      "training_overlap": false,
+      "greedy": {
+        "solved": false,
+        "attempts_used": 1,
+        "history": [
+          {
+            "path": "U",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          }
+        ],
+        "seconds": 0.001086172999748669,
+        "generated_moves": 1
+      },
+      "feedback": {
+        "solved": false,
+        "attempts_used": 4,
+        "history": [
+          {
+            "path": "U",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "L",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "UURD",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "RDRL",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          }
+        ],
+        "seconds": 0.008149791000050755,
+        "generated_moves": 10
+      },
+      "no_feedback": {
+        "solved": false,
+        "attempts_used": 4,
+        "history": [
+          {
+            "path": "U",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "L",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "UURD",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "RDRL",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          }
+        ],
+        "seconds": 0.006400164000297082,
+        "generated_moves": 10
+      }
+    }
+  ]
+}

@@ -1,0 +1,4322 @@
+[
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000000,
+    "sampling_seed": 57000171000000,
+    "rows": [
+      "..X.",
+      "..XS",
+      "G.X.",
+      "...."
+    ],
+    "task_key": "..X.\n..X.\nG.X.\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000001,
+    "sampling_seed": 57000171000001,
+    "rows": [
+      "X...",
+      "...G",
+      "..X.",
+      "S.X."
+    ],
+    "task_key": "X...\n...G\n..X.\n..X."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000002,
+    "sampling_seed": 57000171000002,
+    "rows": [
+      "....",
+      ".X..",
+      ".SX.",
+      "G..X"
+    ],
+    "task_key": "....\n.X..\n..X.\nG..X"
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000003,
+    "sampling_seed": 57000171000003,
+    "rows": [
+      "X...",
+      ".S.G",
+      "...X",
+      "...X"
+    ],
+    "task_key": "X...\n...G\n...X\n...X"
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000004,
+    "sampling_seed": 57000171000004,
+    "rows": [
+      "....",
+      ".X..",
+      "X.G.",
+      ".S.X"
+    ],
+    "task_key": "....\n.X..\nX.G.\n...X"
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000006,
+    "sampling_seed": 57000171000005,
+    "rows": [
+      "X...",
+      ".S..",
+      "..XG",
+      ".X.X"
+    ],
+    "task_key": "X...\n....\n..XG\n.X.X"
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000007,
+    "sampling_seed": 57000171000006,
+    "rows": [
+      "S.GX",
+      "X...",
+      ".X..",
+      "X..X"
+    ],
+    "task_key": "..GX\nX...\n.X..\nX..X"
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000008,
+    "sampling_seed": 57000171000007,
+    "rows": [
+      "....",
+      "S...",
+      "G...",
+      "X.XX"
+    ],
+    "task_key": "....\n....\nG...\nX.XX"
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000009,
+    "sampling_seed": 57000171000008,
+    "rows": [
+      "..G.",
+      "....",
+      "..S.",
+      "...X"
+    ],
+    "task_key": "..G.\n....\n....\n...X"
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000011,
+    "sampling_seed": 57000171000009,
+    "rows": [
+      "X...",
+      "SXXX",
+      "....",
+      "..G."
+    ],
+    "task_key": "X...\n.XXX\n....\n..G."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000012,
+    "sampling_seed": 57000171000010,
+    "rows": [
+      "....",
+      ".XXS",
+      ".XX.",
+      ".G.."
+    ],
+    "task_key": "....\n.XX.\n.XX.\n.G.."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000013,
+    "sampling_seed": 57000171000011,
+    "rows": [
+      "X...",
+      "SXX.",
+      "...G",
+      "...."
+    ],
+    "task_key": "X...\n.XX.\n...G\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000014,
+    "sampling_seed": 57000171000012,
+    "rows": [
+      "...X",
+      "....",
+      "G...",
+      "..S."
+    ],
+    "task_key": "...X\n....\nG...\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000015,
+    "sampling_seed": 57000171000013,
+    "rows": [
+      ".XXX",
+      "...S",
+      ".G..",
+      "..XX"
+    ],
+    "task_key": ".XXX\n....\n.G..\n..XX"
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000017,
+    "sampling_seed": 57000171000014,
+    "rows": [
+      "....",
+      "....",
+      "G.X.",
+      ".XS."
+    ],
+    "task_key": "....\n....\nG.X.\n.X.."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000021,
+    "sampling_seed": 57000171000015,
+    "rows": [
+      "X...",
+      ".G..",
+      "S...",
+      "...."
+    ],
+    "task_key": "X...\n.G..\n....\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000023,
+    "sampling_seed": 57000171000016,
+    "rows": [
+      ".X..",
+      ".XX.",
+      "G...",
+      ".S.."
+    ],
+    "task_key": ".X..\n.XX.\nG...\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000024,
+    "sampling_seed": 57000171000017,
+    "rows": [
+      "....",
+      "X...",
+      "S.X.",
+      "G..."
+    ],
+    "task_key": "....\nX...\n..X.\nG..."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000026,
+    "sampling_seed": 57000171000018,
+    "rows": [
+      "..G.",
+      "....",
+      ".X.X",
+      "XS.."
+    ],
+    "task_key": "..G.\n....\n.X.X\nX..."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000027,
+    "sampling_seed": 57000171000019,
+    "rows": [
+      "G.SX",
+      "....",
+      "X.XX",
+      ".X.."
+    ],
+    "task_key": "G..X\n....\nX.XX\n.X.."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000028,
+    "sampling_seed": 57000171000020,
+    "rows": [
+      "S.X.",
+      "....",
+      "XGX.",
+      "...X"
+    ],
+    "task_key": "..X.\n....\nXGX.\n...X"
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000029,
+    "sampling_seed": 57000171000021,
+    "rows": [
+      "....",
+      "X..S",
+      "..X.",
+      "..G."
+    ],
+    "task_key": "....\nX...\n..X.\n..G."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000030,
+    "sampling_seed": 57000171000022,
+    "rows": [
+      "X..S",
+      "....",
+      "X...",
+      "..XG"
+    ],
+    "task_key": "X...\n....\nX...\n..XG"
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000031,
+    "sampling_seed": 57000171000023,
+    "rows": [
+      ".XX.",
+      "..X.",
+      "S.G.",
+      "...."
+    ],
+    "task_key": ".XX.\n..X.\n..G.\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000033,
+    "sampling_seed": 57000171000024,
+    "rows": [
+      "....",
+      ".X..",
+      "....",
+      "GX.S"
+    ],
+    "task_key": "....\n.X..\n....\nGX.."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000034,
+    "sampling_seed": 57000171000025,
+    "rows": [
+      ".S.X",
+      "...X",
+      "X...",
+      "G.X."
+    ],
+    "task_key": "...X\n...X\nX...\nG.X."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000035,
+    "sampling_seed": 57000171000026,
+    "rows": [
+      "X..G",
+      "....",
+      "X.S.",
+      "...."
+    ],
+    "task_key": "X..G\n....\nX...\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000036,
+    "sampling_seed": 57000171000027,
+    "rows": [
+      ".XX.",
+      "....",
+      "G.S.",
+      "X..."
+    ],
+    "task_key": ".XX.\n....\nG...\nX..."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000037,
+    "sampling_seed": 57000171000028,
+    "rows": [
+      ".X..",
+      "X.S.",
+      "XX..",
+      "..G."
+    ],
+    "task_key": ".X..\nX...\nXX..\n..G."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000038,
+    "sampling_seed": 57000171000029,
+    "rows": [
+      "..S.",
+      "G..X",
+      ".X.X",
+      "X..."
+    ],
+    "task_key": "....\nG..X\n.X.X\nX..."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000000,
+    "sampling_seed": 58000174000000,
+    "rows": [
+      "X.XX",
+      "....",
+      ".S.X",
+      "...G"
+    ],
+    "task_key": "X.XX\n....\n...X\n...G"
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000001,
+    "sampling_seed": 58000174000001,
+    "rows": [
+      "..G.",
+      ".X..",
+      "X...",
+      "XS.."
+    ],
+    "task_key": "..G.\n.X..\nX...\nX..."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000002,
+    "sampling_seed": 58000174000002,
+    "rows": [
+      "GXX.",
+      "..XX",
+      "....",
+      "S..."
+    ],
+    "task_key": "GXX.\n..XX\n....\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000006,
+    "sampling_seed": 58000174000003,
+    "rows": [
+      "S..X",
+      "....",
+      "G...",
+      "...X"
+    ],
+    "task_key": "...X\n....\nG...\n...X"
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000007,
+    "sampling_seed": 58000174000004,
+    "rows": [
+      "..XX",
+      "XS..",
+      ".XXG",
+      "X.X."
+    ],
+    "task_key": "..XX\nX...\n.XXG\nX.X."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000009,
+    "sampling_seed": 58000174000005,
+    "rows": [
+      ".GX.",
+      ".XX.",
+      "..X.",
+      ".SXX"
+    ],
+    "task_key": ".GX.\n.XX.\n..X.\n..XX"
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000010,
+    "sampling_seed": 58000174000006,
+    "rows": [
+      "X.G.",
+      "SX..",
+      ".X..",
+      "...."
+    ],
+    "task_key": "X.G.\n.X..\n.X..\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000011,
+    "sampling_seed": 58000174000007,
+    "rows": [
+      "...X",
+      "..S.",
+      "GX..",
+      "X..."
+    ],
+    "task_key": "...X\n....\nGX..\nX..."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000012,
+    "sampling_seed": 58000174000008,
+    "rows": [
+      "....",
+      "G...",
+      ".S.X",
+      ".X.."
+    ],
+    "task_key": "....\nG...\n...X\n.X.."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000013,
+    "sampling_seed": 58000174000009,
+    "rows": [
+      "X.XX",
+      "..X.",
+      ".XGX",
+      "...S"
+    ],
+    "task_key": "X.XX\n..X.\n.XGX\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000014,
+    "sampling_seed": 58000174000010,
+    "rows": [
+      "..X.",
+      "XG..",
+      "XS..",
+      "X..."
+    ],
+    "task_key": "..X.\nXG..\nX...\nX..."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000015,
+    "sampling_seed": 58000174000011,
+    "rows": [
+      ".G..",
+      "X..S",
+      "..XX",
+      "...X"
+    ],
+    "task_key": ".G..\nX...\n..XX\n...X"
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000016,
+    "sampling_seed": 58000174000012,
+    "rows": [
+      "XG..",
+      "X.X.",
+      "....",
+      ".X.S"
+    ],
+    "task_key": "XG..\nX.X.\n....\n.X.."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000017,
+    "sampling_seed": 58000174000013,
+    "rows": [
+      ".GX.",
+      ".X..",
+      "....",
+      ".S.."
+    ],
+    "task_key": ".GX.\n.X..\n....\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000019,
+    "sampling_seed": 58000174000014,
+    "rows": [
+      "..G.",
+      "XS.X",
+      "X...",
+      "...."
+    ],
+    "task_key": "..G.\nX..X\nX...\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000021,
+    "sampling_seed": 58000174000015,
+    "rows": [
+      "XX.G",
+      ".XSX",
+      "....",
+      "..X."
+    ],
+    "task_key": "XX.G\n.X.X\n....\n..X."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000023,
+    "sampling_seed": 58000174000016,
+    "rows": [
+      "X..X",
+      ".G..",
+      "X.SX",
+      ".X.."
+    ],
+    "task_key": "X..X\n.G..\nX..X\n.X.."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000025,
+    "sampling_seed": 58000174000017,
+    "rows": [
+      ".G..",
+      "S...",
+      "....",
+      "..X."
+    ],
+    "task_key": ".G..\n....\n....\n..X."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000026,
+    "sampling_seed": 58000174000018,
+    "rows": [
+      ".G.X",
+      ".S..",
+      ".X..",
+      "XX.."
+    ],
+    "task_key": ".G.X\n....\n.X..\nXX.."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000027,
+    "sampling_seed": 58000174000019,
+    "rows": [
+      "....",
+      "SG..",
+      ".X..",
+      ".XX."
+    ],
+    "task_key": "....\n.G..\n.X..\n.XX."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000028,
+    "sampling_seed": 58000174000020,
+    "rows": [
+      "..XX",
+      "S..G",
+      "....",
+      "XX.."
+    ],
+    "task_key": "..XX\n...G\n....\nXX.."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000029,
+    "sampling_seed": 58000174000021,
+    "rows": [
+      "..S.",
+      "X..X",
+      "...G",
+      "X..."
+    ],
+    "task_key": "....\nX..X\n...G\nX..."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000031,
+    "sampling_seed": 58000174000022,
+    "rows": [
+      "XG.X",
+      ".X..",
+      ".S.X",
+      "...."
+    ],
+    "task_key": "XG.X\n.X..\n...X\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000032,
+    "sampling_seed": 58000174000023,
+    "rows": [
+      ".G.X",
+      "S..X",
+      "X...",
+      ".X.X"
+    ],
+    "task_key": ".G.X\n...X\nX...\n.X.X"
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000033,
+    "sampling_seed": 58000174000024,
+    "rows": [
+      "G.XX",
+      "....",
+      "S..X",
+      ".X.."
+    ],
+    "task_key": "G.XX\n....\n...X\n.X.."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000034,
+    "sampling_seed": 58000174000025,
+    "rows": [
+      "X..X",
+      ".X..",
+      ".G.S",
+      "..X."
+    ],
+    "task_key": "X..X\n.X..\n.G..\n..X."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000035,
+    "sampling_seed": 58000174000026,
+    "rows": [
+      "....",
+      "..XG",
+      "..XX",
+      "..S."
+    ],
+    "task_key": "....\n..XG\n..XX\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000037,
+    "sampling_seed": 58000174000027,
+    "rows": [
+      "...G",
+      "...X",
+      "....",
+      "S..."
+    ],
+    "task_key": "...G\n...X\n....\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000038,
+    "sampling_seed": 58000174000028,
+    "rows": [
+      "....",
+      ".GX.",
+      ".XS.",
+      "X..."
+    ],
+    "task_key": "....\n.GX.\n.X..\nX..."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000040,
+    "sampling_seed": 58000174000029,
+    "rows": [
+      "X.GX",
+      "...X",
+      "....",
+      "X.S."
+    ],
+    "task_key": "X.GX\n...X\n....\nX..."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000000,
+    "sampling_seed": 59000177000000,
+    "rows": [
+      ".X.X",
+      ".X.G",
+      "....",
+      ".S.."
+    ],
+    "task_key": ".X.X\n.X.G\n....\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000001,
+    "sampling_seed": 59000177000001,
+    "rows": [
+      "..XG",
+      "..X.",
+      "..X.",
+      "X..S"
+    ],
+    "task_key": "..XG\n..X.\n..X.\nX..."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000002,
+    "sampling_seed": 59000177000002,
+    "rows": [
+      "....",
+      ".X.G",
+      "S...",
+      "...X"
+    ],
+    "task_key": "....\n.X.G\n....\n...X"
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000003,
+    "sampling_seed": 59000177000003,
+    "rows": [
+      "X...",
+      ".X..",
+      "SX.G",
+      "...."
+    ],
+    "task_key": "X...\n.X..\n.X.G\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000004,
+    "sampling_seed": 59000177000004,
+    "rows": [
+      "X...",
+      ".X..",
+      "G..S",
+      "...X"
+    ],
+    "task_key": "X...\n.X..\nG...\n...X"
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000005,
+    "sampling_seed": 59000177000005,
+    "rows": [
+      "....",
+      "XG..",
+      "X..S",
+      "...."
+    ],
+    "task_key": "....\nXG..\nX...\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000006,
+    "sampling_seed": 59000177000006,
+    "rows": [
+      "..SX",
+      "G...",
+      "X...",
+      "...."
+    ],
+    "task_key": "...X\nG...\nX...\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000007,
+    "sampling_seed": 59000177000007,
+    "rows": [
+      "....",
+      ".XS.",
+      "X...",
+      "X.G."
+    ],
+    "task_key": "....\n.X..\nX...\nX.G."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000008,
+    "sampling_seed": 59000177000008,
+    "rows": [
+      "..X.",
+      ".S.X",
+      "..G.",
+      "...."
+    ],
+    "task_key": "..X.\n...X\n..G.\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000009,
+    "sampling_seed": 59000177000009,
+    "rows": [
+      "...X",
+      "..SG",
+      "....",
+      "...X"
+    ],
+    "task_key": "...X\n...G\n....\n...X"
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000010,
+    "sampling_seed": 59000177000010,
+    "rows": [
+      "X.XX",
+      "XG..",
+      "S.XX",
+      "X..."
+    ],
+    "task_key": "X.XX\nXG..\n..XX\nX..."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000012,
+    "sampling_seed": 59000177000011,
+    "rows": [
+      "G...",
+      "X.XX",
+      "..S.",
+      "...."
+    ],
+    "task_key": "G...\nX.XX\n....\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000013,
+    "sampling_seed": 59000177000012,
+    "rows": [
+      "....",
+      "S...",
+      "....",
+      "XXG."
+    ],
+    "task_key": "....\n....\n....\nXXG."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000014,
+    "sampling_seed": 59000177000013,
+    "rows": [
+      "XX..",
+      "..SG",
+      ".X..",
+      "X..."
+    ],
+    "task_key": "XX..\n...G\n.X..\nX..."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000015,
+    "sampling_seed": 59000177000014,
+    "rows": [
+      ".XSX",
+      "XX..",
+      "....",
+      ".X.G"
+    ],
+    "task_key": ".X.X\nXX..\n....\n.X.G"
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000017,
+    "sampling_seed": 59000177000015,
+    "rows": [
+      ".GXS",
+      "....",
+      "XX..",
+      "...."
+    ],
+    "task_key": ".GX.\n....\nXX..\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000018,
+    "sampling_seed": 59000177000016,
+    "rows": [
+      "..XX",
+      "...G",
+      "X.X.",
+      "XS.."
+    ],
+    "task_key": "..XX\n...G\nX.X.\nX..."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000020,
+    "sampling_seed": 59000177000017,
+    "rows": [
+      "....",
+      ".XS.",
+      ".G..",
+      "X..."
+    ],
+    "task_key": "....\n.X..\n.G..\nX..."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000021,
+    "sampling_seed": 59000177000018,
+    "rows": [
+      "...X",
+      "X.X.",
+      ".GSX",
+      "...."
+    ],
+    "task_key": "...X\nX.X.\n.G.X\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000022,
+    "sampling_seed": 59000177000019,
+    "rows": [
+      "X.X.",
+      ".GX.",
+      ".SX.",
+      "XXX."
+    ],
+    "task_key": "X.X.\n.GX.\n..X.\nXXX."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000023,
+    "sampling_seed": 59000177000020,
+    "rows": [
+      "....",
+      ".SX.",
+      "G..X",
+      "...."
+    ],
+    "task_key": "....\n..X.\nG..X\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000024,
+    "sampling_seed": 59000177000021,
+    "rows": [
+      "...X",
+      "G.S.",
+      "X.X.",
+      "...."
+    ],
+    "task_key": "...X\nG...\nX.X.\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000026,
+    "sampling_seed": 59000177000022,
+    "rows": [
+      "...X",
+      "X.S.",
+      "..G.",
+      "X..."
+    ],
+    "task_key": "...X\nX...\n..G.\nX..."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000027,
+    "sampling_seed": 59000177000023,
+    "rows": [
+      "X...",
+      "X...",
+      ".G..",
+      "..S."
+    ],
+    "task_key": "X...\nX...\n.G..\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000028,
+    "sampling_seed": 59000177000024,
+    "rows": [
+      "X.XX",
+      ".XS.",
+      "G...",
+      "...."
+    ],
+    "task_key": "X.XX\n.X..\nG...\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000031,
+    "sampling_seed": 59000177000025,
+    "rows": [
+      "XXX.",
+      ".G..",
+      "...X",
+      "...S"
+    ],
+    "task_key": "XXX.\n.G..\n...X\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000032,
+    "sampling_seed": 59000177000026,
+    "rows": [
+      "..X.",
+      "G.X.",
+      "X...",
+      ".SX."
+    ],
+    "task_key": "..X.\nG.X.\nX...\n..X."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000033,
+    "sampling_seed": 59000177000027,
+    "rows": [
+      "X.SX",
+      ".G.X",
+      "....",
+      ".X.."
+    ],
+    "task_key": "X..X\n.G.X\n....\n.X.."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000034,
+    "sampling_seed": 59000177000028,
+    "rows": [
+      "..G.",
+      "X.X.",
+      ".X.S",
+      "...."
+    ],
+    "task_key": "..G.\nX.X.\n.X..\n...."
+  },
+  {
+    "size": 4,
+    "split": "in_distribution",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000035,
+    "sampling_seed": 59000177000029,
+    "rows": [
+      "....",
+      ".X.S",
+      ".G..",
+      "..X."
+    ],
+    "task_key": "....\n.X..\n.G..\n..X."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000000,
+    "sampling_seed": 57000171000000,
+    "rows": [
+      "..X...",
+      "XX..X.",
+      "......",
+      "G...XX",
+      "..X.S.",
+      "..X..."
+    ],
+    "task_key": "..X...\nXX..X.\n......\nG...XX\n..X...\n..X..."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000001,
+    "sampling_seed": 57000171000001,
+    "rows": [
+      "X.....",
+      ".X..X.",
+      "..X...",
+      ".....X",
+      "..X..X",
+      ".G.S.."
+    ],
+    "task_key": "X.....\n.X..X.\n..X...\n.....X\n..X..X\n.G...."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000002,
+    "sampling_seed": 57000171000002,
+    "rows": [
+      "S...GX",
+      "....X.",
+      "...X..",
+      "......",
+      "...X..",
+      "X....."
+    ],
+    "task_key": "....GX\n....X.\n...X..\n......\n...X..\nX....."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000003,
+    "sampling_seed": 57000171000003,
+    "rows": [
+      ".....G",
+      "...X.S",
+      "X.X...",
+      "......",
+      ".X....",
+      "..X..."
+    ],
+    "task_key": ".....G\n...X..\nX.X...\n......\n.X....\n..X..."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000004,
+    "sampling_seed": 57000171000004,
+    "rows": [
+      ".....X",
+      "..G...",
+      "...X..",
+      "XX...X",
+      "S..X..",
+      "..XX.."
+    ],
+    "task_key": ".....X\n..G...\n...X..\nXX...X\n...X..\n..XX.."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000005,
+    "sampling_seed": 57000171000005,
+    "rows": [
+      "......",
+      "..SX.X",
+      "XG....",
+      ".XX.X.",
+      "......",
+      ".....X"
+    ],
+    "task_key": "......\n...X.X\nXG....\n.XX.X.\n......\n.....X"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000006,
+    "sampling_seed": 57000171000006,
+    "rows": [
+      "X.....",
+      "....X.",
+      ".X.X..",
+      "....S.",
+      "..G.X.",
+      "......"
+    ],
+    "task_key": "X.....\n....X.\n.X.X..\n......\n..G.X.\n......"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000007,
+    "sampling_seed": 57000171000007,
+    "rows": [
+      "...XX.",
+      "...XG.",
+      "X..XX.",
+      "..X...",
+      ".S..X.",
+      "....X."
+    ],
+    "task_key": "...XX.\n...XG.\nX..XX.\n..X...\n....X.\n....X."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000008,
+    "sampling_seed": 57000171000008,
+    "rows": [
+      "....X.",
+      "..XG..",
+      "X.XXX.",
+      "..X...",
+      "..S...",
+      "...X.."
+    ],
+    "task_key": "....X.\n..XG..\nX.XXX.\n..X...\n......\n...X.."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000009,
+    "sampling_seed": 57000171000009,
+    "rows": [
+      "G.....",
+      "....X.",
+      "...X.S",
+      "......",
+      "......",
+      "...X.X"
+    ],
+    "task_key": "G.....\n....X.\n...X..\n......\n......\n...X.X"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000010,
+    "sampling_seed": 57000171000010,
+    "rows": [
+      ".X....",
+      "....X.",
+      "....X.",
+      ".XX.XS",
+      ".XGX..",
+      ".....X"
+    ],
+    "task_key": ".X....\n....X.\n....X.\n.XX.X.\n.XGX..\n.....X"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000011,
+    "sampling_seed": 57000171000011,
+    "rows": [
+      "X...SG",
+      "XX....",
+      "......",
+      ".....X",
+      ".....X",
+      ".X.X.."
+    ],
+    "task_key": "X....G\nXX....\n......\n.....X\n.....X\n.X.X.."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000012,
+    "sampling_seed": 57000171000012,
+    "rows": [
+      ".....X",
+      "X..XX.",
+      "....G.",
+      "S.X...",
+      "...X..",
+      "......"
+    ],
+    "task_key": ".....X\nX..XX.\n....G.\n..X...\n...X..\n......"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000013,
+    "sampling_seed": 57000171000013,
+    "rows": [
+      "X....X",
+      "X.....",
+      ".G....",
+      "XX....",
+      ".S....",
+      "......"
+    ],
+    "task_key": "X....X\nX.....\n.G....\nXX....\n......\n......"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000014,
+    "sampling_seed": 57000171000014,
+    "rows": [
+      "...X..",
+      "..SG..",
+      ".....X",
+      "XX....",
+      "......",
+      "..X..X"
+    ],
+    "task_key": "...X..\n...G..\n.....X\nXX....\n......\n..X..X"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000015,
+    "sampling_seed": 57000171000015,
+    "rows": [
+      ".XXX..",
+      "...X..",
+      "..XX..",
+      ".X....",
+      "...X..",
+      "XGS..X"
+    ],
+    "task_key": ".XXX..\n...X..\n..XX..\n.X....\n...X..\nXG...X"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000016,
+    "sampling_seed": 57000171000016,
+    "rows": [
+      "X.....",
+      "......",
+      "XX....",
+      ".X....",
+      "......",
+      "..GSX."
+    ],
+    "task_key": "X.....\n......\nXX....\n.X....\n......\n..G.X."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000017,
+    "sampling_seed": 57000171000017,
+    "rows": [
+      "X..XX.",
+      "X.X..X",
+      ".G....",
+      "......",
+      "....X.",
+      "X...S."
+    ],
+    "task_key": "X..XX.\nX.X..X\n.G....\n......\n....X.\nX....."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000018,
+    "sampling_seed": 57000171000018,
+    "rows": [
+      "G...S.",
+      "..X...",
+      "....X.",
+      "..XXX.",
+      ".X...X",
+      ".X...X"
+    ],
+    "task_key": "G.....\n..X...\n....X.\n..XXX.\n.X...X\n.X...X"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000019,
+    "sampling_seed": 57000171000019,
+    "rows": [
+      "XS....",
+      "......",
+      "..X.G.",
+      "X.....",
+      "XX.X..",
+      "......"
+    ],
+    "task_key": "X.....\n......\n..X.G.\nX.....\nXX.X..\n......"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000020,
+    "sampling_seed": 57000171000020,
+    "rows": [
+      "G...X.",
+      "......",
+      "......",
+      "X....X",
+      "X...S.",
+      "..X.X."
+    ],
+    "task_key": "G...X.\n......\n......\nX....X\nX.....\n..X.X."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000021,
+    "sampling_seed": 57000171000021,
+    "rows": [
+      "X...S.",
+      "......",
+      "......",
+      "..X...",
+      ".XX.G.",
+      "......"
+    ],
+    "task_key": "X.....\n......\n......\n..X...\n.XX.G.\n......"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000022,
+    "sampling_seed": 57000171000022,
+    "rows": [
+      "...S..",
+      "......",
+      "..G.X.",
+      "......",
+      "X.X...",
+      "..XX.X"
+    ],
+    "task_key": "......\n......\n..G.X.\n......\nX.X...\n..XX.X"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000023,
+    "sampling_seed": 57000171000023,
+    "rows": [
+      ".X...X",
+      "X..S..",
+      ".....X",
+      "......",
+      "...X..",
+      "X...G."
+    ],
+    "task_key": ".X...X\nX.....\n.....X\n......\n...X..\nX...G."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000024,
+    "sampling_seed": 57000171000024,
+    "rows": [
+      "....X.",
+      "S...X.",
+      "XG....",
+      "......",
+      "......",
+      "......"
+    ],
+    "task_key": "....X.\n....X.\nXG....\n......\n......\n......"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000025,
+    "sampling_seed": 57000171000025,
+    "rows": [
+      "...G..",
+      "....S.",
+      "...X.X",
+      "...X..",
+      "X....X",
+      "..XX.X"
+    ],
+    "task_key": "...G..\n......\n...X.X\n...X..\nX....X\n..XX.X"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000026,
+    "sampling_seed": 57000171000026,
+    "rows": [
+      "..X...",
+      "...X.G",
+      "X.....",
+      ".....X",
+      ".....X",
+      "...S.X"
+    ],
+    "task_key": "..X...\n...X.G\nX.....\n.....X\n.....X\n.....X"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000027,
+    "sampling_seed": 57000171000027,
+    "rows": [
+      "X...X.",
+      "....S.",
+      "X..X..",
+      "X.....",
+      ".X.XG.",
+      "......"
+    ],
+    "task_key": "X...X.\n......\nX..X..\nX.....\n.X.XG.\n......"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000028,
+    "sampling_seed": 57000171000028,
+    "rows": [
+      "..X...",
+      "G.X.X.",
+      "...X..",
+      "..X...",
+      "...X..",
+      "S....."
+    ],
+    "task_key": "..X...\nG.X.X.\n...X..\n..X...\n...X..\n......"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000029,
+    "sampling_seed": 57000171000029,
+    "rows": [
+      "...GX.",
+      "....X.",
+      "...S..",
+      "XXX.X.",
+      "..XX.X",
+      "X....."
+    ],
+    "task_key": "...GX.\n....X.\n......\nXXX.X.\n..XX.X\nX....."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000000,
+    "sampling_seed": 58000174000000,
+    "rows": [
+      "X.XX..",
+      ".....X",
+      "..G.S.",
+      "...X..",
+      "..XXX.",
+      "X....X"
+    ],
+    "task_key": "X.XX..\n.....X\n..G...\n...X..\n..XXX.\nX....X"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000001,
+    "sampling_seed": 58000174000001,
+    "rows": [
+      ".....X",
+      "..X..S",
+      "X.....",
+      "......",
+      "....X.",
+      "....G."
+    ],
+    "task_key": ".....X\n..X...\nX.....\n......\n....X.\n....G."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000002,
+    "sampling_seed": 58000174000002,
+    "rows": [
+      ".XX...",
+      "XX....",
+      "S.G...",
+      "......",
+      "..X...",
+      "......"
+    ],
+    "task_key": ".XX...\nXX....\n..G...\n......\n..X...\n......"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000003,
+    "sampling_seed": 58000174000003,
+    "rows": [
+      "X.X...",
+      "......",
+      "...SXX",
+      "..X...",
+      "..X...",
+      ".G...."
+    ],
+    "task_key": "X.X...\n......\n....XX\n..X...\n..X...\n.G...."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000004,
+    "sampling_seed": 58000174000004,
+    "rows": [
+      "......",
+      "...XS.",
+      "......",
+      ".X....",
+      "..X...",
+      ".G...X"
+    ],
+    "task_key": "......\n...X..\n......\n.X....\n..X...\n.G...X"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000005,
+    "sampling_seed": 58000174000005,
+    "rows": [
+      "..GX..",
+      "....X.",
+      ".X....",
+      "..X..X",
+      ".X.XS.",
+      "X.X..."
+    ],
+    "task_key": "..GX..\n....X.\n.X....\n..X..X\n.X.X..\nX.X..."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000006,
+    "sampling_seed": 58000174000006,
+    "rows": [
+      "X...XX",
+      ".XX.X.",
+      "XX..G.",
+      "XX..X.",
+      ".XXX..",
+      "X.X.SX"
+    ],
+    "task_key": "X...XX\n.XX.X.\nXX..G.\nXX..X.\n.XXX..\nX.X..X"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000007,
+    "sampling_seed": 58000174000007,
+    "rows": [
+      "..XXX.",
+      ".G.XX.",
+      "X.X.XX",
+      "...XX.",
+      ".X.X..",
+      "S.X..."
+    ],
+    "task_key": "..XXX.\n.G.XX.\nX.X.XX\n...XX.\n.X.X..\n..X..."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000008,
+    "sampling_seed": 58000174000008,
+    "rows": [
+      "......",
+      ".X.S..",
+      "......",
+      "X.....",
+      "X.X...",
+      ".GX..X"
+    ],
+    "task_key": "......\n.X....\n......\nX.....\nX.X...\n.GX..X"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000009,
+    "sampling_seed": 58000174000009,
+    "rows": [
+      "..X.GX",
+      "X...X.",
+      "S.XX.X",
+      "...X..",
+      "......",
+      "....X."
+    ],
+    "task_key": "..X.GX\nX...X.\n..XX.X\n...X..\n......\n....X."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000010,
+    "sampling_seed": 58000174000010,
+    "rows": [
+      "X....G",
+      "...X..",
+      "....X.",
+      "..XX..",
+      "..X...",
+      "S.X..."
+    ],
+    "task_key": "X....G\n...X..\n....X.\n..XX..\n..X...\n..X..."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000011,
+    "sampling_seed": 58000174000011,
+    "rows": [
+      "..GX..",
+      "..SX..",
+      "X...X.",
+      ".....X",
+      ".X...X",
+      "...X.."
+    ],
+    "task_key": "..GX..\n...X..\nX...X.\n.....X\n.X...X\n...X.."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000012,
+    "sampling_seed": 58000174000012,
+    "rows": [
+      "....X.",
+      ".....X",
+      ".X....",
+      "...X..",
+      "...XSG",
+      "..XX.."
+    ],
+    "task_key": "....X.\n.....X\n.X....\n...X..\n...X.G\n..XX.."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000013,
+    "sampling_seed": 58000174000013,
+    "rows": [
+      "X.XG.S",
+      "X..X.X",
+      "...X.X",
+      "..X...",
+      ".X..X.",
+      "..XXX."
+    ],
+    "task_key": "X.XG..\nX..X.X\n...X.X\n..X...\n.X..X.\n..XXX."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000014,
+    "sampling_seed": 58000174000014,
+    "rows": [
+      "S.X.XX",
+      "..X...",
+      "X.....",
+      ".X.G..",
+      ".X..X.",
+      "...X.."
+    ],
+    "task_key": "..X.XX\n..X...\nX.....\n.X.G..\n.X..X.\n...X.."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000015,
+    "sampling_seed": 58000174000015,
+    "rows": [
+      "X.X..S",
+      ".G....",
+      "...X..",
+      "..X...",
+      ".X...X",
+      "...X.."
+    ],
+    "task_key": "X.X...\n.G....\n...X..\n..X...\n.X...X\n...X.."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000016,
+    "sampling_seed": 58000174000016,
+    "rows": [
+      "XX..X.",
+      "X.....",
+      ".X.X.X",
+      "X....S",
+      ".GX...",
+      ".X..XX"
+    ],
+    "task_key": "XX..X.\nX.....\n.X.X.X\nX.....\n.GX...\n.X..XX"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000017,
+    "sampling_seed": 58000174000017,
+    "rows": [
+      ".SX..X",
+      "......",
+      "....G.",
+      "......",
+      "....X.",
+      "....X."
+    ],
+    "task_key": "..X..X\n......\n....G.\n......\n....X.\n....X."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000018,
+    "sampling_seed": 58000174000018,
+    "rows": [
+      "......",
+      ".....S",
+      "...X..",
+      "......",
+      "X.X.G.",
+      ".X...."
+    ],
+    "task_key": "......\n......\n...X..\n......\nX.X.G.\n.X...."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000019,
+    "sampling_seed": 58000174000019,
+    "rows": [
+      "....X.",
+      ".XX...",
+      "....X.",
+      "....XX",
+      "...X..",
+      "GSX..."
+    ],
+    "task_key": "....X.\n.XX...\n....X.\n....XX\n...X..\nG.X..."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000020,
+    "sampling_seed": 58000174000020,
+    "rows": [
+      "X.X..X",
+      "..X.G.",
+      "..X..S",
+      "XX.X..",
+      ".X....",
+      ".X...."
+    ],
+    "task_key": "X.X..X\n..X.G.\n..X...\nXX.X..\n.X....\n.X...."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000021,
+    "sampling_seed": 58000174000021,
+    "rows": [
+      "XX..GX",
+      "XS....",
+      "..X..X",
+      "..X...",
+      "..X..X",
+      "X....."
+    ],
+    "task_key": "XX..GX\nX.....\n..X..X\n..X...\n..X..X\nX....."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000022,
+    "sampling_seed": 58000174000022,
+    "rows": [
+      "......",
+      ".X....",
+      "......",
+      "..X..S",
+      "..X...",
+      "X...G."
+    ],
+    "task_key": "......\n.X....\n......\n..X...\n..X...\nX...G."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000023,
+    "sampling_seed": 58000174000023,
+    "rows": [
+      "X..X..",
+      ".GX..X",
+      ".X...X",
+      "S....X",
+      "...X..",
+      "...X.."
+    ],
+    "task_key": "X..X..\n.GX..X\n.X...X\n.....X\n...X..\n...X.."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000024,
+    "sampling_seed": 58000174000024,
+    "rows": [
+      ".X...X",
+      "......",
+      ".X.XSX",
+      ".XXX.X",
+      "......",
+      "XG..X."
+    ],
+    "task_key": ".X...X\n......\n.X.X.X\n.XXX.X\n......\nXG..X."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000025,
+    "sampling_seed": 58000174000025,
+    "rows": [
+      ".X..X.",
+      "..S...",
+      "..X.XG",
+      ".X...X",
+      ".X....",
+      "......"
+    ],
+    "task_key": ".X..X.\n......\n..X.XG\n.X...X\n.X....\n......"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000026,
+    "sampling_seed": 58000174000026,
+    "rows": [
+      ".X.X..",
+      "...X..",
+      "XX....",
+      ".X..G.",
+      "....S.",
+      "...X.X"
+    ],
+    "task_key": ".X.X..\n...X..\nXX....\n.X..G.\n......\n...X.X"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000027,
+    "sampling_seed": 58000174000027,
+    "rows": [
+      "....G.",
+      "...X..",
+      "SXX.XX",
+      "..X...",
+      "X...X.",
+      "......"
+    ],
+    "task_key": "....G.\n...X..\n.XX.XX\n..X...\nX...X.\n......"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000028,
+    "sampling_seed": 58000174000028,
+    "rows": [
+      "..XXX.",
+      "......",
+      "SX....",
+      "...GX.",
+      ".X.XX.",
+      ".X...X"
+    ],
+    "task_key": "..XXX.\n......\n.X....\n...GX.\n.X.XX.\n.X...X"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000029,
+    "sampling_seed": 58000174000029,
+    "rows": [
+      "..X.X.",
+      ".X....",
+      "X...X.",
+      "..G...",
+      "..X.XX",
+      "..X..S"
+    ],
+    "task_key": "..X.X.\n.X....\nX...X.\n..G...\n..X.XX\n..X..."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000000,
+    "sampling_seed": 59000177000000,
+    "rows": [
+      ".X.X.X",
+      ".X....",
+      "......",
+      "....X.",
+      "....GS",
+      "X..X.."
+    ],
+    "task_key": ".X.X.X\n.X....\n......\n....X.\n....G.\nX..X.."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000001,
+    "sampling_seed": 59000177000001,
+    "rows": [
+      "..XX..",
+      "X...X.",
+      "X.....",
+      ".XX...",
+      "......",
+      "G..XS."
+    ],
+    "task_key": "..XX..\nX...X.\nX.....\n.XX...\n......\nG..X.."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000002,
+    "sampling_seed": 59000177000002,
+    "rows": [
+      "...G.X",
+      ".X....",
+      ".S....",
+      "X.X...",
+      "...X.X",
+      "...X.."
+    ],
+    "task_key": "...G.X\n.X....\n......\nX.X...\n...X.X\n...X.."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000003,
+    "sampling_seed": 59000177000003,
+    "rows": [
+      "X....X",
+      ".S.X.G",
+      "......",
+      "XX....",
+      ".X....",
+      "X..X.X"
+    ],
+    "task_key": "X....X\n...X.G\n......\nXX....\n.X....\nX..X.X"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000004,
+    "sampling_seed": 59000177000004,
+    "rows": [
+      "X....X",
+      "....S.",
+      "...X..",
+      ".....G",
+      ".....X",
+      "..XXXX"
+    ],
+    "task_key": "X....X\n......\n...X..\n.....G\n.....X\n..XXXX"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000005,
+    "sampling_seed": 59000177000005,
+    "rows": [
+      "..S.X.",
+      "..X...",
+      "......",
+      "..X...",
+      "G.....",
+      "..X..X"
+    ],
+    "task_key": "....X.\n..X...\n......\n..X...\nG.....\n..X..X"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000006,
+    "sampling_seed": 59000177000006,
+    "rows": [
+      "...X..",
+      "..X...",
+      ".....S",
+      "..XXX.",
+      "......",
+      ".X.G.X"
+    ],
+    "task_key": "...X..\n..X...\n......\n..XXX.\n......\n.X.G.X"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000007,
+    "sampling_seed": 59000177000007,
+    "rows": [
+      ".G...X",
+      "..X...",
+      "X....S",
+      "......",
+      ".X.X..",
+      ".....X"
+    ],
+    "task_key": ".G...X\n..X...\nX.....\n......\n.X.X..\n.....X"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000008,
+    "sampling_seed": 59000177000008,
+    "rows": [
+      "..X.G.",
+      ".X....",
+      "......",
+      "......",
+      ".X..S.",
+      "..X..."
+    ],
+    "task_key": "..X.G.\n.X....\n......\n......\n.X....\n..X..."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000009,
+    "sampling_seed": 59000177000009,
+    "rows": [
+      "...X..",
+      "......",
+      ".S.X..",
+      "..X...",
+      "GX....",
+      "X..X.."
+    ],
+    "task_key": "...X..\n......\n...X..\n..X...\nGX....\nX..X.."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000010,
+    "sampling_seed": 59000177000010,
+    "rows": [
+      "X.XXX.",
+      "....XX",
+      "G.....",
+      ".....S",
+      "XX....",
+      "......"
+    ],
+    "task_key": "X.XXX.\n....XX\nG.....\n......\nXX....\n......"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000011,
+    "sampling_seed": 59000177000011,
+    "rows": [
+      "...X..",
+      ".....X",
+      "......",
+      ".GS...",
+      "....X.",
+      "..XX.X"
+    ],
+    "task_key": "...X..\n.....X\n......\n.G....\n....X.\n..XX.X"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000012,
+    "sampling_seed": 59000177000012,
+    "rows": [
+      "..X.GX",
+      "......",
+      "......",
+      ".....X",
+      "..XS.X",
+      "...X.."
+    ],
+    "task_key": "..X.GX\n......\n......\n.....X\n..X..X\n...X.."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000013,
+    "sampling_seed": 59000177000013,
+    "rows": [
+      "......",
+      "......",
+      "SGX.X.",
+      "..X.X.",
+      "X.....",
+      "...X.."
+    ],
+    "task_key": "......\n......\n.GX.X.\n..X.X.\nX.....\n...X.."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000014,
+    "sampling_seed": 59000177000014,
+    "rows": [
+      "XS....",
+      "...X.G",
+      "X...X.",
+      "X...X.",
+      "..X...",
+      ".....X"
+    ],
+    "task_key": "X.....\n...X.G\nX...X.\nX...X.\n..X...\n.....X"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000015,
+    "sampling_seed": 59000177000015,
+    "rows": [
+      ".XXXXX",
+      ".G..S.",
+      ".X.XX.",
+      ".X.XX.",
+      "......",
+      "....X."
+    ],
+    "task_key": ".XXXXX\n.G....\n.X.XX.\n.X.XX.\n......\n....X."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000016,
+    "sampling_seed": 59000177000016,
+    "rows": [
+      "...X..",
+      "......",
+      "......",
+      "X.X.X.",
+      "X.S.G.",
+      "...X.X"
+    ],
+    "task_key": "...X..\n......\n......\nX.X.X.\nX...G.\n...X.X"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000017,
+    "sampling_seed": 59000177000017,
+    "rows": [
+      ".XX...",
+      "..GXS.",
+      ".....X",
+      "X.....",
+      "X.....",
+      "......"
+    ],
+    "task_key": ".XX...\n..GX..\n.....X\nX.....\nX.....\n......"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000018,
+    "sampling_seed": 59000177000018,
+    "rows": [
+      "..XXG.",
+      "..X.X.",
+      "XX....",
+      "S..X..",
+      ".X.X..",
+      ".XX..."
+    ],
+    "task_key": "..XXG.\n..X.X.\nXX....\n...X..\n.X.X..\n.XX..."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000019,
+    "sampling_seed": 59000177000019,
+    "rows": [
+      "G.....",
+      ".....X",
+      "XX...X",
+      "....XX",
+      "X.....",
+      "S..X.X"
+    ],
+    "task_key": "G.....\n.....X\nXX...X\n....XX\nX.....\n...X.X"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000020,
+    "sampling_seed": 59000177000020,
+    "rows": [
+      ".....X",
+      "G.....",
+      "X.....",
+      ".XX...",
+      ".....X",
+      ".S...."
+    ],
+    "task_key": ".....X\nG.....\nX.....\n.XX...\n.....X\n......"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000021,
+    "sampling_seed": 59000177000021,
+    "rows": [
+      "X.X...",
+      "X...X.",
+      ".XG...",
+      "...X..",
+      "....S.",
+      ".X..X."
+    ],
+    "task_key": "X.X...\nX...X.\n.XG...\n...X..\n......\n.X..X."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000022,
+    "sampling_seed": 59000177000022,
+    "rows": [
+      "X.X..G",
+      "X...X.",
+      "XXX...",
+      "....X.",
+      "S.....",
+      ".....X"
+    ],
+    "task_key": "X.X..G\nX...X.\nXXX...\n....X.\n......\n.....X"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000023,
+    "sampling_seed": 59000177000023,
+    "rows": [
+      "......",
+      "X....X",
+      "....X.",
+      ".SX...",
+      "XG....",
+      "X.XX.X"
+    ],
+    "task_key": "......\nX....X\n....X.\n..X...\nXG....\nX.XX.X"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000024,
+    "sampling_seed": 59000177000024,
+    "rows": [
+      ".X..X.",
+      ".....X",
+      "..XX.X",
+      ".X..XX",
+      "XX...G",
+      ".XSX.."
+    ],
+    "task_key": ".X..X.\n.....X\n..XX.X\n.X..XX\nXX...G\n.X.X.."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000025,
+    "sampling_seed": 59000177000025,
+    "rows": [
+      "..X...",
+      "..G.SX",
+      "....X.",
+      "......",
+      "......",
+      "..X..."
+    ],
+    "task_key": "..X...\n..G..X\n....X.\n......\n......\n..X..."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000026,
+    "sampling_seed": 59000177000026,
+    "rows": [
+      "S..XXG",
+      "......",
+      "X...X.",
+      "......",
+      ".....X",
+      "...X.."
+    ],
+    "task_key": "...XXG\n......\nX...X.\n......\n.....X\n...X.."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000027,
+    "sampling_seed": 59000177000027,
+    "rows": [
+      "X...X.",
+      "G.....",
+      "......",
+      "......",
+      "....X.",
+      "S....."
+    ],
+    "task_key": "X...X.\nG.....\n......\n......\n....X.\n......"
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000028,
+    "sampling_seed": 59000177000028,
+    "rows": [
+      "X.XX.X",
+      "......",
+      ".....S",
+      ".X.X..",
+      ".X....",
+      "X...G."
+    ],
+    "task_key": "X.XX.X\n......\n......\n.X.X..\n.X....\nX...G."
+  },
+  {
+    "size": 6,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000029,
+    "sampling_seed": 59000177000029,
+    "rows": [
+      ".X..G.",
+      "....X.",
+      "...X..",
+      ".X....",
+      "..SX..",
+      "..XX.."
+    ],
+    "task_key": ".X..G.\n....X.\n...X..\n.X....\n...X..\n..XX.."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000000,
+    "sampling_seed": 57000171000000,
+    "rows": [
+      "..X...XX",
+      "..X.....",
+      "......XX",
+      "..X.X...",
+      "X...G...",
+      "X.......",
+      "X..S....",
+      "XXXXX..X"
+    ],
+    "task_key": "..X...XX\n..X.....\n......XX\n..X.X...\nX...G...\nX.......\nX.......\nXXXXX..X"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000001,
+    "sampling_seed": 57000171000001,
+    "rows": [
+      "X....G.X",
+      "..X...X.",
+      ".......X",
+      "..X..X..",
+      "........",
+      "XX......",
+      "XS......",
+      "..X..X.."
+    ],
+    "task_key": "X....G.X\n..X...X.\n.......X\n..X..X..\n........\nXX......\nX.......\n..X..X.."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000002,
+    "sampling_seed": 57000171000002,
+    "rows": [
+      ".....X..",
+      "..X....X",
+      "........",
+      "...X..X.",
+      "....X.X.",
+      ".G..X...",
+      "...XX..X",
+      "..S.X..X"
+    ],
+    "task_key": ".....X..\n..X....X\n........\n...X..X.\n....X.X.\n.G..X...\n...XX..X\n....X..X"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000003,
+    "sampling_seed": 57000171000003,
+    "rows": [
+      "...S....",
+      ".X.XX.X.",
+      "........",
+      ".X.....G",
+      "X...X.X.",
+      ".X.....X",
+      "...X....",
+      ".......X"
+    ],
+    "task_key": "........\n.X.XX.X.\n........\n.X.....G\nX...X.X.\n.X.....X\n...X....\n.......X"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000004,
+    "sampling_seed": 57000171000004,
+    "rows": [
+      ".....XS.",
+      "X......X",
+      "..XX...X",
+      "...XG...",
+      "XX....XX",
+      "..X....X",
+      "..XX.X..",
+      "X...X.X."
+    ],
+    "task_key": ".....X..\nX......X\n..XX...X\n...XG...\nXX....XX\n..X....X\n..XX.X..\nX...X.X."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000005,
+    "sampling_seed": 57000171000005,
+    "rows": [
+      "........",
+      ".X.XX...",
+      "...XX.X.",
+      "........",
+      "S..XXG.X",
+      "..X....X",
+      ".....X..",
+      "........"
+    ],
+    "task_key": "........\n.X.XX...\n...XX.X.\n........\n...XXG.X\n..X....X\n.....X..\n........"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000006,
+    "sampling_seed": 57000171000006,
+    "rows": [
+      "X.......",
+      "..S..X.X",
+      "........",
+      "....X...",
+      "........",
+      "X...XX..",
+      ".......X",
+      "......G."
+    ],
+    "task_key": "X.......\n.....X.X\n........\n....X...\n........\nX...XX..\n.......X\n......G."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000007,
+    "sampling_seed": 57000171000007,
+    "rows": [
+      "...XX...",
+      ".X.SX..X",
+      "X...X..G",
+      "....X...",
+      "..X...XX",
+      ".......X",
+      "....XX.X",
+      "...XX..."
+    ],
+    "task_key": "...XX...\n.X..X..X\nX...X..G\n....X...\n..X...XX\n.......X\n....XX.X\n...XX..."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000008,
+    "sampling_seed": 57000171000008,
+    "rows": [
+      "..S.X...",
+      "X...X.XX",
+      "X...X...",
+      ".......G",
+      ".X....X.",
+      ".......X",
+      ".X.X....",
+      "..X.XX.X"
+    ],
+    "task_key": "....X...\nX...X.XX\nX...X...\n.......G\n.X....X.\n.......X\n.X.X....\n..X.XX.X"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000009,
+    "sampling_seed": 57000171000009,
+    "rows": [
+      "........",
+      "..X....X",
+      "....S...",
+      "........",
+      ".X.X.X..",
+      "...GX..X",
+      "....XX..",
+      "....X..."
+    ],
+    "task_key": "........\n..X....X\n........\n........\n.X.X.X..\n...GX..X\n....XX..\n....X..."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000010,
+    "sampling_seed": 57000171000010,
+    "rows": [
+      ".X......",
+      "..X.....",
+      "X..XX.X.",
+      ".X.XS...",
+      "...X...X",
+      "X.......",
+      "..X.XX..",
+      "...GX..."
+    ],
+    "task_key": ".X......\n..X.....\nX..XX.X.\n.X.X....\n...X...X\nX.......\n..X.XX..\n...GX..."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000011,
+    "sampling_seed": 57000171000011,
+    "rows": [
+      "X....XXX",
+      "........",
+      ".......X",
+      ".....X.X",
+      "SX..X...",
+      "...X.X..",
+      "X.X.G...",
+      "...XX..."
+    ],
+    "task_key": "X....XXX\n........\n.......X\n.....X.X\n.X..X...\n...X.X..\nX.X.G...\n...XX..."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000012,
+    "sampling_seed": 57000171000012,
+    "rows": [
+      ".....XX.",
+      ".XX.....",
+      "..X.X...",
+      "...X....",
+      "........",
+      ".X.G....",
+      "SX.X.XX.",
+      ".X......"
+    ],
+    "task_key": ".....XX.\n.XX.....\n..X.X...\n...X....\n........\n.X.G....\n.X.X.XX.\n.X......"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000013,
+    "sampling_seed": 57000171000013,
+    "rows": [
+      "X....XX.",
+      "........",
+      "..XX....",
+      "........",
+      "........",
+      "....X.X.",
+      "..XXS...",
+      ".X.....G"
+    ],
+    "task_key": "X....XX.\n........\n..XX....\n........\n........\n....X.X.\n..XX....\n.X.....G"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000014,
+    "sampling_seed": 57000171000014,
+    "rows": [
+      "...X....",
+      "........",
+      ".XXX....",
+      "........",
+      "X..XX.X.",
+      "........",
+      "....G...",
+      "X..S.XXX"
+    ],
+    "task_key": "...X....\n........\n.XXX....\n........\nX..XX.X.\n........\n....G...\nX....XXX"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000015,
+    "sampling_seed": 57000171000015,
+    "rows": [
+      ".XXXG..S",
+      ".X....XX",
+      "...X....",
+      "...X..XX",
+      "...X....",
+      "...X...X",
+      "....X...",
+      "X...X..."
+    ],
+    "task_key": ".XXXG...\n.X....XX\n...X....\n...X..XX\n...X....\n...X...X\n....X...\nX...X..."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000016,
+    "sampling_seed": 57000171000016,
+    "rows": [
+      "X.......",
+      "....XX..",
+      "...X....",
+      "...S....",
+      "..G.....",
+      "X....XX.",
+      ".......X",
+      "X.X....."
+    ],
+    "task_key": "X.......\n....XX..\n...X....\n........\n..G.....\nX....XX.\n.......X\nX.X....."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000017,
+    "sampling_seed": 57000171000017,
+    "rows": [
+      "X..XX.X.",
+      "X..S.X..",
+      "........",
+      "....X.X.",
+      "..X...XX",
+      "...X....",
+      "......XX",
+      "....G..."
+    ],
+    "task_key": "X..XX.X.\nX....X..\n........\n....X.X.\n..X...XX\n...X....\n......XX\n....G..."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000018,
+    "sampling_seed": 57000171000018,
+    "rows": [
+      "........",
+      "X.......",
+      "X...XXX.",
+      ".X...G.X",
+      "...XX...",
+      ".X....XX",
+      "....XSX.",
+      "......X."
+    ],
+    "task_key": "........\nX.......\nX...XXX.\n.X...G.X\n...XX...\n.X....XX\n....X.X.\n......X."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000019,
+    "sampling_seed": 57000171000019,
+    "rows": [
+      "X.......",
+      "......X.",
+      "..X.....",
+      "XX.X..S.",
+      "......X.",
+      ".....X.X",
+      ".....X.X",
+      "G...X..."
+    ],
+    "task_key": "X.......\n......X.\n..X.....\nXX.X....\n......X.\n.....X.X\n.....X.X\nG...X..."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000020,
+    "sampling_seed": 57000171000020,
+    "rows": [
+      "....X...",
+      "........",
+      "..X....G",
+      "X.......",
+      "X.X....X",
+      "..XXX..X",
+      "...XX...",
+      ".X.X.S.."
+    ],
+    "task_key": "....X...\n........\n..X....G\nX.......\nX.X....X\n..XXX..X\n...XX...\n.X.X...."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000021,
+    "sampling_seed": 57000171000021,
+    "rows": [
+      "X.......",
+      "........",
+      "....X...",
+      ".XX..S.G",
+      ".....X..",
+      "X.....X.",
+      "XX......",
+      ".....X.."
+    ],
+    "task_key": "X.......\n........\n....X...\n.XX....G\n.....X..\nX.....X.\nXX......\n.....X.."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000022,
+    "sampling_seed": 57000171000022,
+    "rows": [
+      "........",
+      "........",
+      "X..S....",
+      "X.X.....",
+      "XX.XX...",
+      "X..XG...",
+      "....X...",
+      "X.....X."
+    ],
+    "task_key": "........\n........\nX.......\nX.X.....\nXX.XX...\nX..XG...\n....X...\nX.....X."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000023,
+    "sampling_seed": 57000171000023,
+    "rows": [
+      ".X...XX.",
+      "........",
+      ".X......",
+      "..GX..X.",
+      ".S...X..",
+      "X...XX..",
+      "..X...X.",
+      ".XXX...."
+    ],
+    "task_key": ".X...XX.\n........\n.X......\n..GX..X.\n.....X..\nX...XX..\n..X...X.\n.XXX...."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000024,
+    "sampling_seed": 57000171000024,
+    "rows": [
+      "....X...",
+      "..X.X...",
+      "........",
+      "S.......",
+      ".....X.X",
+      "........",
+      ".......G",
+      "......X."
+    ],
+    "task_key": "....X...\n..X.X...\n........\n........\n.....X.X\n........\n.......G\n......X."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000025,
+    "sampling_seed": 57000171000025,
+    "rows": [
+      "........",
+      "......SX",
+      ".X...X..",
+      "X....X..",
+      "XX.XG..X",
+      "X.X.....",
+      ".....X..",
+      "XXX....."
+    ],
+    "task_key": "........\n.......X\n.X...X..\nX....X..\nXX.XG..X\nX.X.....\n.....X..\nXXX....."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000026,
+    "sampling_seed": 57000171000026,
+    "rows": [
+      "S.X.....",
+      ".X.XX...",
+      ".......X",
+      "G....X..",
+      "...X....",
+      ".X..X...",
+      "...X....",
+      ".X......"
+    ],
+    "task_key": "..X.....\n.X.XX...\n.......X\nG....X..\n...X....\n.X..X...\n...X....\n.X......"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000027,
+    "sampling_seed": 57000171000027,
+    "rows": [
+      ".X......",
+      ".....X..",
+      ".XX.XX..",
+      ".......X",
+      ".X......",
+      ".SX..G..",
+      "X..X....",
+      ".XX..X.."
+    ],
+    "task_key": ".X......\n.....X..\n.XX.XX..\n.......X\n.X......\n..X..G..\nX..X....\n.XX..X.."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000028,
+    "sampling_seed": 57000171000028,
+    "rows": [
+      "..X...G.",
+      "X.X....X",
+      "....X...",
+      "...X....",
+      ".....S..",
+      "XX....X.",
+      ".X..X...",
+      ".XX.X..."
+    ],
+    "task_key": "..X...G.\nX.X....X\n....X...\n...X....\n........\nXX....X.\n.X..X...\n.XX.X..."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 57000000,
+    "maze_seed": 57000029,
+    "sampling_seed": 57000171000029,
+    "rows": [
+      "..S.X...",
+      "..X.....",
+      "..XXX.X.",
+      "..XX.XX.",
+      "....G...",
+      "..X.X.X.",
+      "........",
+      "...X...X"
+    ],
+    "task_key": "....X...\n..X.....\n..XXX.X.\n..XX.XX.\n....G...\n..X.X.X.\n........\n...X...X"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000000,
+    "sampling_seed": 58000174000000,
+    "rows": [
+      "X.XX....",
+      "...X....",
+      ".....X..",
+      "..XXX.X.",
+      "...X..G.",
+      "...X.X..",
+      "....X...",
+      "..X..SX."
+    ],
+    "task_key": "X.XX....\n...X....\n.....X..\n..XXX.X.\n...X..G.\n...X.X..\n....X...\n..X...X."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000001,
+    "sampling_seed": 58000174000001,
+    "rows": [
+      ".....X..",
+      "X...G...",
+      "........",
+      "....X...",
+      "........",
+      ".....S..",
+      "X.X.X..X",
+      "....XX.."
+    ],
+    "task_key": ".....X..\nX...G...\n........\n....X...\n........\n........\nX.X.X..X\n....XX.."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000002,
+    "sampling_seed": 58000174000002,
+    "rows": [
+      ".XG...XX",
+      "........",
+      "........",
+      "..X.....",
+      "....S...",
+      ".....XX.",
+      "....X...",
+      ".XXX...."
+    ],
+    "task_key": ".XG...XX\n........\n........\n..X.....\n........\n.....XX.\n....X...\n.XXX...."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000003,
+    "sampling_seed": 58000174000003,
+    "rows": [
+      "X.X....S",
+      "........",
+      "XX..X...",
+      "..G.....",
+      ".......X",
+      "....X...",
+      ".......X",
+      "X..X..XX"
+    ],
+    "task_key": "X.X.....\n........\nXX..X...\n..G.....\n.......X\n....X...\n.......X\nX..X..XX"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000004,
+    "sampling_seed": 58000174000004,
+    "rows": [
+      "........",
+      ".X......",
+      "...X....",
+      "..X.....",
+      "...XX...",
+      "........",
+      "...GX.X.",
+      "..X..X.S"
+    ],
+    "task_key": "........\n.X......\n...X....\n..X.....\n...XX...\n........\n...GX.X.\n..X..X.."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000005,
+    "sampling_seed": 58000174000005,
+    "rows": [
+      "...X....",
+      "..G..X..",
+      "....X..X",
+      ".X.X..X.",
+      "X.....X.",
+      "......X.",
+      "..X....S",
+      ".......X"
+    ],
+    "task_key": "...X....\n..G..X..\n....X..X\n.X.X..X.\nX.....X.\n......X.\n..X.....\n.......X"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000006,
+    "sampling_seed": 58000174000006,
+    "rows": [
+      "X...XX.X",
+      "X.X.XX..",
+      "X.XX..X.",
+      ".XXX..X.",
+      "X..X..XG",
+      "......S.",
+      "..X.....",
+      "..X....X"
+    ],
+    "task_key": "X...XX.X\nX.X.XX..\nX.XX..X.\n.XXX..X.\nX..X..XG\n........\n..X.....\n..X....X"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000007,
+    "sampling_seed": 58000174000007,
+    "rows": [
+      "..XXX...",
+      ".XX.X.X.",
+      "XX...XX.",
+      ".X.X..X.",
+      "X.......",
+      "...X....",
+      ".XX..X..",
+      "GXS....X"
+    ],
+    "task_key": "..XXX...\n.XX.X.X.\nXX...XX.\n.X.X..X.\nX.......\n...X....\n.XX..X..\nGX.....X"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000008,
+    "sampling_seed": 58000174000008,
+    "rows": [
+      ".S.....X",
+      "........",
+      "..X.G...",
+      "X.X.....",
+      "X..X..XX",
+      "..X..X..",
+      "........",
+      "X.....X."
+    ],
+    "task_key": ".......X\n........\n..X.G...\nX.X.....\nX..X..XX\n..X..X..\n........\nX.....X."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000009,
+    "sampling_seed": 58000174000009,
+    "rows": [
+      "..XS.XX.",
+      "..X...XX",
+      ".X...G..",
+      "........",
+      "..X..XX.",
+      "X.X.X...",
+      ".X.X..X.",
+      ".XXX...."
+    ],
+    "task_key": "..X..XX.\n..X...XX\n.X...G..\n........\n..X..XX.\nX.X.X...\n.X.X..X.\n.XXX...."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000010,
+    "sampling_seed": 58000174000010,
+    "rows": [
+      "X....X..",
+      ".X......",
+      "X...XX..",
+      "..X.....",
+      "X.......",
+      "SG.XX..X",
+      "...X....",
+      ".X.XX..."
+    ],
+    "task_key": "X....X..\n.X......\nX...XX..\n..X.....\nX.......\n.G.XX..X\n...X....\n.X.XX..."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000011,
+    "sampling_seed": 58000174000011,
+    "rows": [
+      "...X....",
+      ".X..X...",
+      "X..G...X",
+      ".X...X..",
+      ".X..X.X.",
+      "XXX.....",
+      "......XS",
+      "XX...X.."
+    ],
+    "task_key": "...X....\n.X..X...\nX..G...X\n.X...X..\n.X..X.X.\nXXX.....\n......X.\nXX...X.."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000012,
+    "sampling_seed": 58000174000012,
+    "rows": [
+      "....X...",
+      "...X.X..",
+      ".....X..",
+      "...S....",
+      "XX.....X",
+      "X.......",
+      ".G...X..",
+      "...X...X"
+    ],
+    "task_key": "....X...\n...X.X..\n.....X..\n........\nXX.....X\nX.......\n.G...X..\n...X...X"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000013,
+    "sampling_seed": 58000174000013,
+    "rows": [
+      "....X..G",
+      "....X.X.",
+      "........",
+      "..X..X..",
+      "..X.XX.X",
+      ".X....S.",
+      ".X......",
+      ".....X.."
+    ],
+    "task_key": "....X..G\n....X.X.\n........\n..X..X..\n..X.XX.X\n.X......\n.X......\n.....X.."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000014,
+    "sampling_seed": 58000174000014,
+    "rows": [
+      "..X.XX..",
+      "X...X...",
+      "...X....",
+      ".X..X...",
+      ".SG....X",
+      ".....X..",
+      "...X....",
+      ".XXXX..."
+    ],
+    "task_key": "..X.XX..\nX...X...\n...X....\n.X..X...\n..G....X\n.....X..\n...X....\n.XXXX..."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000015,
+    "sampling_seed": 58000174000015,
+    "rows": [
+      "X.X.GX.X",
+      ".......X",
+      ".S..X...",
+      ".X...X..",
+      ".X..XX..",
+      "........",
+      ".......X",
+      "X......."
+    ],
+    "task_key": "X.X.GX.X\n.......X\n....X...\n.X...X..\n.X..XX..\n........\n.......X\nX......."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000016,
+    "sampling_seed": 58000174000016,
+    "rows": [
+      "XS..X.X.",
+      ".....X.X",
+      ".XX.....",
+      "..X....X",
+      "..GX...X",
+      "........",
+      ".......X",
+      "........"
+    ],
+    "task_key": "X...X.X.\n.....X.X\n.XX.....\n..X....X\n..GX...X\n........\n.......X\n........"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000017,
+    "sampling_seed": 58000174000017,
+    "rows": [
+      "..X..X..",
+      "........",
+      "........",
+      "..G.X...",
+      ".SX.X.X.",
+      ".X..XX..",
+      "........",
+      "........"
+    ],
+    "task_key": "..X..X..\n........\n........\n..G.X...\n..X.X.X.\n.X..XX..\n........\n........"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000018,
+    "sampling_seed": 58000174000018,
+    "rows": [
+      "....S...",
+      ".......X",
+      "........",
+      "X.X.X..X",
+      ".......X",
+      "......G.",
+      "........",
+      "....X..."
+    ],
+    "task_key": "........\n.......X\n........\nX.X.X..X\n.......X\n......G.\n........\n....X..."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000019,
+    "sampling_seed": 58000174000019,
+    "rows": [
+      "....X..X",
+      "X......S",
+      "X.....XX",
+      "...X....",
+      "X......X",
+      "X.X..X..",
+      "X.....XG",
+      "..X..XX."
+    ],
+    "task_key": "....X..X\nX.......\nX.....XX\n...X....\nX......X\nX.X..X..\nX.....XG\n..X..XX."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000020,
+    "sampling_seed": 58000174000020,
+    "rows": [
+      "....X.X.",
+      "......X.",
+      "..XX.X.X",
+      "..X.....",
+      "...X.XX.",
+      ".X.....X",
+      "X...X.SG",
+      ".X......"
+    ],
+    "task_key": "....X.X.\n......X.\n..XX.X.X\n..X.....\n...X.XX.\n.X.....X\nX...X..G\n.X......"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000021,
+    "sampling_seed": 58000174000021,
+    "rows": [
+      "...X.X..",
+      ".....S..",
+      ".XX.....",
+      "......X.",
+      "XXX..X..",
+      ".X....X.",
+      "..XX..GX",
+      "....X..."
+    ],
+    "task_key": "...X.X..\n........\n.XX.....\n......X.\nXXX..X..\n.X....X.\n..XX..GX\n....X..."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000022,
+    "sampling_seed": 58000174000022,
+    "rows": [
+      ".......X",
+      "........",
+      "G...X...",
+      "..X...X.",
+      "......XX",
+      ".X.....X",
+      "....S...",
+      "X....XX."
+    ],
+    "task_key": ".......X\n........\nG...X...\n..X...X.\n......XX\n.X.....X\n........\nX....XX."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000023,
+    "sampling_seed": 58000174000023,
+    "rows": [
+      "X..X..G.",
+      "X..X.X..",
+      ".X.....X",
+      "...X....",
+      ".X...X..",
+      "S...X..X",
+      ".......X",
+      "....X..."
+    ],
+    "task_key": "X..X..G.\nX..X.X..\n.X.....X\n...X....\n.X...X..\n....X..X\n.......X\n....X..."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000024,
+    "sampling_seed": 58000174000024,
+    "rows": [
+      ".X..GX..",
+      ".....X.X",
+      "XX.XXX.X",
+      "......X.",
+      "..X..X..",
+      "XX...X..",
+      ".......X",
+      "S..X...."
+    ],
+    "task_key": ".X..GX..\n.....X.X\nXX.XXX.X\n......X.\n..X..X..\nXX...X..\n.......X\n...X...."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000025,
+    "sampling_seed": 58000174000025,
+    "rows": [
+      ".X..XS..",
+      "......X.",
+      "XXGX...X",
+      ".X......",
+      "....X.X.",
+      "........",
+      "XX..X...",
+      "....X.X."
+    ],
+    "task_key": ".X..X...\n......X.\nXXGX...X\n.X......\n....X.X.\n........\nXX..X...\n....X.X."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000026,
+    "sampling_seed": 58000174000026,
+    "rows": [
+      "SX.X....",
+      ".X..XX..",
+      "...X....",
+      "........",
+      "GX.X....",
+      "........",
+      "X....XX.",
+      ".....X.."
+    ],
+    "task_key": ".X.X....\n.X..XX..\n...X....\n........\nGX.X....\n........\nX....XX.\n.....X.."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000027,
+    "sampling_seed": 58000174000027,
+    "rows": [
+      "........",
+      ".X...XX.",
+      "XX..X...",
+      "X...X...",
+      "..G.X.XX",
+      ".X...S..",
+      "X.X.....",
+      "........"
+    ],
+    "task_key": "........\n.X...XX.\nXX..X...\nX...X...\n..G.X.XX\n.X......\nX.X.....\n........"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000028,
+    "sampling_seed": 58000174000028,
+    "rows": [
+      ".XXX....",
+      ".X......",
+      "...S....",
+      "X..XX...",
+      "........",
+      "........",
+      ".......G",
+      "X...XX.X"
+    ],
+    "task_key": ".XXX....\n.X......\n........\nX..XX...\n........\n........\n.......G\nX...XX.X"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 58000000,
+    "maze_seed": 58000029,
+    "sampling_seed": 58000174000029,
+    "rows": [
+      "..X.X..X",
+      "....X...",
+      "X...X...",
+      "..S.XX..",
+      "X.......",
+      "XXG.....",
+      "XX.X....",
+      ".XX.XX.."
+    ],
+    "task_key": "..X.X..X\n....X...\nX...X...\n....XX..\nX.......\nXXG.....\nXX.X....\n.XX.XX.."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000000,
+    "sampling_seed": 59000177000000,
+    "rows": [
+      ".X.X.X.X",
+      "........",
+      "......X.",
+      ".....XX.",
+      ".X....XX",
+      "G..XXX..",
+      ".......X",
+      "...SX..."
+    ],
+    "task_key": ".X.X.X.X\n........\n......X.\n.....XX.\n.X....XX\nG..XXX..\n.......X\n....X..."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000001,
+    "sampling_seed": 59000177000001,
+    "rows": [
+      "..XX..X.",
+      "..X.X...",
+      "...XX.G.",
+      "........",
+      ".X......",
+      "..X.....",
+      "S......X",
+      ".XX.X..X"
+    ],
+    "task_key": "..XX..X.\n..X.X...\n...XX.G.\n........\n.X......\n..X.....\n.......X\n.XX.X..X"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000002,
+    "sampling_seed": 59000177000002,
+    "rows": [
+      "...S.X.X",
+      ".......X",
+      ".....X.X",
+      "....X..X",
+      ".X......",
+      "...X.X..",
+      "........",
+      "X.XG...."
+    ],
+    "task_key": ".....X.X\n.......X\n.....X.X\n....X..X\n.X......\n...X.X..\n........\nX.XG...."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000003,
+    "sampling_seed": 59000177000003,
+    "rows": [
+      "X....X.S",
+      ".X.X....",
+      "..XX....",
+      ".X....X.",
+      ".X.XX...",
+      "X.......",
+      "XG......",
+      "..X..X.."
+    ],
+    "task_key": "X....X..\n.X.X....\n..XX....\n.X....X.\n.X.XX...\nX.......\nXG......\n..X..X.."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000004,
+    "sampling_seed": 59000177000004,
+    "rows": [
+      "X....G..",
+      ".......X",
+      ".......X",
+      ".....X..",
+      "XXXX....",
+      "S.......",
+      ".X....X.",
+      "......X."
+    ],
+    "task_key": "X....G..\n.......X\n.......X\n.....X..\nXXXX....\n........\n.X....X.\n......X."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000005,
+    "sampling_seed": 59000177000005,
+    "rows": [
+      ".G..X...",
+      "X..S....",
+      "....X...",
+      "........",
+      "X..XX...",
+      "....XX..",
+      "......X.",
+      "...X.X.."
+    ],
+    "task_key": ".G..X...\nX.......\n....X...\n........\nX..XX...\n....XX..\n......X.\n...X.X.."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000006,
+    "sampling_seed": 59000177000006,
+    "rows": [
+      "...X....",
+      "X.......",
+      "...GXXX.",
+      ".......X",
+      ".X.X....",
+      "S....X..",
+      ".XX...XX",
+      "..XX...."
+    ],
+    "task_key": "...X....\nX.......\n...GXXX.\n.......X\n.X.X....\n.....X..\n.XX...XX\n..XX...."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000007,
+    "sampling_seed": 59000177000007,
+    "rows": [
+      ".....XS.",
+      "X...X...",
+      "........",
+      ".X.X....",
+      "...X...X",
+      "..GX..X.",
+      "........",
+      "..X....."
+    ],
+    "task_key": ".....X..\nX...X...\n........\n.X.X....\n...X...X\n..GX..X.\n........\n..X....."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000008,
+    "sampling_seed": 59000177000008,
+    "rows": [
+      "..X....X",
+      ".....S..",
+      "........",
+      ".X......",
+      "X...G...",
+      ".......X",
+      "X..XX...",
+      ".......X"
+    ],
+    "task_key": "..X....X\n........\n........\n.X......\nX...G...\n.......X\nX..XX...\n.......X"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000009,
+    "sampling_seed": 59000177000009,
+    "rows": [
+      "...X....",
+      ".......X",
+      "...SX...",
+      "XX....X.",
+      ".X....G.",
+      "..X.....",
+      ".....X.X",
+      "........"
+    ],
+    "task_key": "...X....\n.......X\n....X...\nXX....X.\n.X....G.\n..X.....\n.....X.X\n........"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000010,
+    "sampling_seed": 59000177000010,
+    "rows": [
+      "X.XXX...",
+      "..XXX...",
+      "........",
+      "XX......",
+      ".......X",
+      "XX.X....",
+      ".X..X..X",
+      "....XG.S"
+    ],
+    "task_key": "X.XXX...\n..XXX...\n........\nXX......\n.......X\nXX.X....\n.X..X..X\n....XG.."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000011,
+    "sampling_seed": 59000177000011,
+    "rows": [
+      ".S.X....",
+      "..GX....",
+      "........",
+      "....X...",
+      "XX.X....",
+      ".X......",
+      ".X.X.XX.",
+      "XX......"
+    ],
+    "task_key": "...X....\n..GX....\n........\n....X...\nXX.X....\n.X......\n.X.X.XX.\nXX......"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000012,
+    "sampling_seed": 59000177000012,
+    "rows": [
+      "....X.XX",
+      "........",
+      ".X.XXX.S",
+      "X...X...",
+      ".X.....X",
+      ".X.X.X..",
+      "...X.G..",
+      "....X..X"
+    ],
+    "task_key": "....X.XX\n........\n.X.XXX..\nX...X...\n.X.....X\n.X.X.X..\n...X.G..\n....X..X"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000013,
+    "sampling_seed": 59000177000013,
+    "rows": [
+      "........",
+      "....XXG.",
+      "X...X.X.",
+      "X.......",
+      "SX..X...",
+      "...X....",
+      "........",
+      ".....X.."
+    ],
+    "task_key": "........\n....XXG.\nX...X.X.\nX.......\n.X..X...\n...X....\n........\n.....X.."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000014,
+    "sampling_seed": 59000177000014,
+    "rows": [
+      "XX......",
+      ".X..X...",
+      "X.X...S.",
+      "..X.....",
+      "...X.X..",
+      "....XG..",
+      "..X....X",
+      "X......."
+    ],
+    "task_key": "XX......\n.X..X...\nX.X.....\n..X.....\n...X.X..\n....XG..\n..X....X\nX......."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000015,
+    "sampling_seed": 59000177000015,
+    "rows": [
+      ".XXXXX..",
+      ".....X.X",
+      "X.GX.XX.",
+      "........",
+      "..S.X...",
+      "X.X.....",
+      "..X.....",
+      "........"
+    ],
+    "task_key": ".XXXXX..\n.....X.X\nX.GX.XX.\n........\n....X...\nX.X.....\n..X.....\n........"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000016,
+    "sampling_seed": 59000177000016,
+    "rows": [
+      "...XS...",
+      "........",
+      "..X.X.X.",
+      "X.......",
+      ".X.X....",
+      "........",
+      "..G.....",
+      ".XXX...."
+    ],
+    "task_key": "...X....\n........\n..X.X.X.\nX.......\n.X.X....\n........\n..G.....\n.XXX...."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000017,
+    "sampling_seed": 59000177000017,
+    "rows": [
+      ".XX.....",
+      "XX......",
+      ".XX.....",
+      "X...G...",
+      ".....X..",
+      "........",
+      "..X.....",
+      "....S..."
+    ],
+    "task_key": ".XX.....\nXX......\n.XX.....\nX...G...\n.....X..\n........\n..X.....\n........"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000018,
+    "sampling_seed": 59000177000018,
+    "rows": [
+      "..XX....",
+      "S.X.XX..",
+      ".....X..",
+      "GX.X...X",
+      "X.......",
+      "X.......",
+      "...XXXX.",
+      "XX.X...."
+    ],
+    "task_key": "..XX....\n..X.XX..\n.....X..\nGX.X...X\nX.......\nX.......\n...XXXX.\nXX.X...."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000019,
+    "sampling_seed": 59000177000019,
+    "rows": [
+      "....G...",
+      "...XXX..",
+      ".X....XX",
+      "X.......",
+      ".X.X.X..",
+      ".......X",
+      ".X..X...",
+      "S.XX...."
+    ],
+    "task_key": "....G...\n...XXX..\n.X....XX\nX.......\n.X.X.X..\n.......X\n.X..X...\n..XX...."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000020,
+    "sampling_seed": 59000177000020,
+    "rows": [
+      ".....X..",
+      "..S.X...",
+      "...XX...",
+      ".....G.X",
+      ".......X",
+      ".X......",
+      ".X.X....",
+      "....X..."
+    ],
+    "task_key": ".....X..\n....X...\n...XX...\n.....G.X\n.......X\n.X......\n.X.X....\n....X..."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000021,
+    "sampling_seed": 59000177000021,
+    "rows": [
+      "...XX.X.",
+      "..XX....",
+      ".....X..",
+      "..X..XX.",
+      ".X.X..XS",
+      "...X....",
+      ".G......",
+      "........"
+    ],
+    "task_key": "...XX.X.\n..XX....\n.....X..\n..X..XX.\n.X.X..X.\n...X....\n.G......\n........"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000022,
+    "sampling_seed": 59000177000022,
+    "rows": [
+      "X.X...X.",
+      "..X.XSX.",
+      "......X.",
+      "........",
+      "...X.G..",
+      "X....X..",
+      "........",
+      "...X...."
+    ],
+    "task_key": "X.X...X.\n..X.X.X.\n......X.\n........\n...X.G..\nX....X..\n........\n...X...."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000023,
+    "sampling_seed": 59000177000023,
+    "rows": [
+      "......X.",
+      "..SX....",
+      "X...X...",
+      "XX....X.",
+      "XX.X....",
+      "........",
+      ".X.XGX..",
+      ".X...XX."
+    ],
+    "task_key": "......X.\n...X....\nX...X...\nXX....X.\nXX.X....\n........\n.X.XGX..\n.X...XX."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000024,
+    "sampling_seed": 59000177000024,
+    "rows": [
+      ".X..X...",
+      "...X..XX",
+      ".X.X..XX",
+      "GX...X.X",
+      ".X......",
+      "X.......",
+      "S..XX...",
+      "X.X....X"
+    ],
+    "task_key": ".X..X...\n...X..XX\n.X.X..XX\nGX...X.X\n.X......\nX.......\n...XX...\nX.X....X"
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000025,
+    "sampling_seed": 59000177000025,
+    "rows": [
+      "..X.....",
+      ".S.X....",
+      "X.......",
+      "........",
+      "X...X...",
+      "........",
+      "X.G.X...",
+      "...X..X."
+    ],
+    "task_key": "..X.....\n...X....\nX.......\n........\nX...X...\n........\nX.G.X...\n...X..X."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000026,
+    "sampling_seed": 59000177000026,
+    "rows": [
+      "...XX...",
+      "....X...",
+      "X.....G.",
+      ".....X.S",
+      ".X..X...",
+      ".X......",
+      ".XX....X",
+      "...XX..."
+    ],
+    "task_key": "...XX...\n....X...\nX.....G.\n.....X..\n.X..X...\n.X......\n.XX....X\n...XX..."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000027,
+    "sampling_seed": 59000177000027,
+    "rows": [
+      "X...X...",
+      "........",
+      "........",
+      "....X...",
+      ".......X",
+      "X.S..XX.",
+      ".......X",
+      ".....XG."
+    ],
+    "task_key": "X...X...\n........\n........\n....X...\n.......X\nX....XX.\n.......X\n.....XG."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000028,
+    "sampling_seed": 59000177000028,
+    "rows": [
+      "X.XX.X..",
+      "........",
+      "...X.X..",
+      ".X....X.",
+      "..X....X",
+      "G.X.X...",
+      "..X...X.",
+      "S.....X."
+    ],
+    "task_key": "X.XX.X..\n........\n...X.X..\n.X....X.\n..X....X\nG.X.X...\n..X...X.\n......X."
+  },
+  {
+    "size": 8,
+    "split": "different_size",
+    "cohort_seed": 59000000,
+    "maze_seed": 59000029,
+    "sampling_seed": 59000177000029,
+    "rows": [
+      ".X......",
+      "..X....X",
+      "...X....",
+      "..SX....",
+      "XX.G..X.",
+      "........",
+      "X...X...",
+      "....X.X."
+    ],
+    "task_key": ".X......\n..X....X\n...X....\n...X....\nXX.G..X.\n........\nX...X...\n....X.X."
+  }
+]

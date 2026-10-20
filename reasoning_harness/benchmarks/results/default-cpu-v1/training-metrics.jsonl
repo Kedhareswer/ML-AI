@@ -1,0 +1,2 @@
+{"step": 1, "loss": 4.9305100440979, "elapsed_seconds": 0.15121760700003506, "supervised_tokens": 5, "peak_cuda_bytes": 0}
+{"step": 2, "loss": 3.3446762561798096, "elapsed_seconds": 0.2761734719999822, "supervised_tokens": 7, "peak_cuda_bytes": 0}

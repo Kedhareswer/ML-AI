@@ -1,0 +1,6 @@
+{
+  "width": 32,
+  "layers": 2,
+  "heads": 4,
+  "context": 256
+}

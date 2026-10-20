@@ -1,0 +1,511 @@
+{
+  "validation": {
+    "count": 100,
+    "seed": 4000000,
+    "supervised_tokens": 376,
+    "answer_NLL": 3.428937567041275,
+    "answer_perplexity": 30.84385580681343,
+    "unconstrained_next_token_accuracy": 0.21010638297872342,
+    "note": "Teacher-forced answer-token metrics, not free-generation planning accuracy"
+  },
+  "stress": [
+    {
+      "name": "adjacent_goal",
+      "rows": [
+        "SG..",
+        "....",
+        "....",
+        "...."
+      ],
+      "reachable": true,
+      "shortest_moves": 1,
+      "training_overlap": false,
+      "greedy": {
+        "solved": false,
+        "attempts_used": 1,
+        "history": [
+          {
+            "path": "RRRRRRRRRRRRRRRR",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 3
+          }
+        ],
+        "seconds": 0.1656505399996604,
+        "generated_moves": 16
+      },
+      "feedback": {
+        "solved": false,
+        "attempts_used": 4,
+        "history": [
+          {
+            "path": "DD",
+            "valid": false,
+            "optimal": false,
+            "reason": "incomplete",
+            "at": 2
+          },
+          {
+            "path": "DRRRDDRDR",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 6
+          },
+          {
+            "path": "RD",
+            "valid": false,
+            "optimal": false,
+            "reason": "incomplete",
+            "at": 2
+          },
+          {
+            "path": "RR",
+            "valid": false,
+            "optimal": false,
+            "reason": "incomplete",
+            "at": 2
+          }
+        ],
+        "seconds": 0.24706709100018998,
+        "generated_moves": 15
+      },
+      "no_feedback": {
+        "solved": false,
+        "attempts_used": 4,
+        "history": [
+          {
+            "path": "DD",
+            "valid": false,
+            "optimal": false,
+            "reason": "incomplete",
+            "at": 2
+          },
+          {
+            "path": "DRRRDDRDR",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 6
+          },
+          {
+            "path": "RR",
+            "valid": false,
+            "optimal": false,
+            "reason": "incomplete",
+            "at": 2
+          },
+          {
+            "path": "RR",
+            "valid": false,
+            "optimal": false,
+            "reason": "incomplete",
+            "at": 2
+          }
+        ],
+        "seconds": 0.18921718900037376,
+        "generated_moves": 15
+      }
+    },
+    {
+      "name": "open_diagonal",
+      "rows": [
+        "S...",
+        "....",
+        "....",
+        "...G"
+      ],
+      "reachable": true,
+      "shortest_moves": 6,
+      "training_overlap": false,
+      "greedy": {
+        "solved": false,
+        "attempts_used": 1,
+        "history": [
+          {
+            "path": "RRRRRRRRRRRRRRRR",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 3
+          }
+        ],
+        "seconds": 0.15922928999998476,
+        "generated_moves": 16
+      },
+      "feedback": {
+        "solved": false,
+        "attempts_used": 4,
+        "history": [
+          {
+            "path": "DD",
+            "valid": false,
+            "optimal": false,
+            "reason": "incomplete",
+            "at": 2
+          },
+          {
+            "path": "DRRRDDRDR",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 6
+          },
+          {
+            "path": "RD",
+            "valid": false,
+            "optimal": false,
+            "reason": "incomplete",
+            "at": 2
+          },
+          {
+            "path": "RR",
+            "valid": false,
+            "optimal": false,
+            "reason": "incomplete",
+            "at": 2
+          }
+        ],
+        "seconds": 0.24620588299967494,
+        "generated_moves": 15
+      },
+      "no_feedback": {
+        "solved": false,
+        "attempts_used": 4,
+        "history": [
+          {
+            "path": "DD",
+            "valid": false,
+            "optimal": false,
+            "reason": "incomplete",
+            "at": 2
+          },
+          {
+            "path": "DRRRDDRDR",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 6
+          },
+          {
+            "path": "RR",
+            "valid": false,
+            "optimal": false,
+            "reason": "incomplete",
+            "at": 2
+          },
+          {
+            "path": "RR",
+            "valid": false,
+            "optimal": false,
+            "reason": "incomplete",
+            "at": 2
+          }
+        ],
+        "seconds": 0.18606713200006197,
+        "generated_moves": 15
+      }
+    },
+    {
+      "name": "forced_detour",
+      "rows": [
+        "S...",
+        "XXX.",
+        "....",
+        "GXXX"
+      ],
+      "reachable": true,
+      "shortest_moves": 9,
+      "training_overlap": false,
+      "greedy": {
+        "solved": false,
+        "attempts_used": 1,
+        "history": [
+          {
+            "path": "RRRRRRRRRRRRRRRR",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 3
+          }
+        ],
+        "seconds": 0.15887990999999602,
+        "generated_moves": 16
+      },
+      "feedback": {
+        "solved": false,
+        "attempts_used": 4,
+        "history": [
+          {
+            "path": "DD",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "DRRRDDRDR",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "RD",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 1
+          },
+          {
+            "path": "RR",
+            "valid": false,
+            "optimal": false,
+            "reason": "incomplete",
+            "at": 2
+          }
+        ],
+        "seconds": 0.2534818440003619,
+        "generated_moves": 15
+      },
+      "no_feedback": {
+        "solved": false,
+        "attempts_used": 4,
+        "history": [
+          {
+            "path": "DD",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "DRRRDDRDR",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "RR",
+            "valid": false,
+            "optimal": false,
+            "reason": "incomplete",
+            "at": 2
+          },
+          {
+            "path": "RR",
+            "valid": false,
+            "optimal": false,
+            "reason": "incomplete",
+            "at": 2
+          }
+        ],
+        "seconds": 0.17960902499999065,
+        "generated_moves": 15
+      }
+    },
+    {
+      "name": "long_corridor_8x8",
+      "rows": [
+        "S.......",
+        "XXXXXXX.",
+        "........",
+        ".XXXXXXX",
+        "........",
+        "XXXXXXX.",
+        "........",
+        "GXXXXXXX"
+      ],
+      "reachable": true,
+      "shortest_moves": 35,
+      "training_overlap": false,
+      "greedy": {
+        "solved": false,
+        "attempts_used": 1,
+        "history": [
+          {
+            "path": "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 7
+          }
+        ],
+        "seconds": 1.2562653330001012,
+        "generated_moves": 62
+      },
+      "feedback": {
+        "solved": false,
+        "attempts_used": 4,
+        "history": [
+          {
+            "path": "DD",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "DRRRDDRDR",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "RD",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 1
+          },
+          {
+            "path": "RR",
+            "valid": false,
+            "optimal": false,
+            "reason": "incomplete",
+            "at": 2
+          }
+        ],
+        "seconds": 0.3708523159998549,
+        "generated_moves": 15
+      },
+      "no_feedback": {
+        "solved": false,
+        "attempts_used": 4,
+        "history": [
+          {
+            "path": "DD",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "DRRRDDRDR",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "RD",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 1
+          },
+          {
+            "path": "RR",
+            "valid": false,
+            "optimal": false,
+            "reason": "incomplete",
+            "at": 2
+          }
+        ],
+        "seconds": 0.3204337040001519,
+        "generated_moves": 15
+      }
+    },
+    {
+      "name": "impossible",
+      "rows": [
+        "SXX",
+        "XXX",
+        "XXG"
+      ],
+      "reachable": false,
+      "shortest_moves": null,
+      "training_overlap": false,
+      "greedy": {
+        "solved": false,
+        "attempts_used": 1,
+        "history": [
+          {
+            "path": "RRRRRRRRR",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          }
+        ],
+        "seconds": 0.09364375099994504,
+        "generated_moves": 9
+      },
+      "feedback": {
+        "solved": false,
+        "attempts_used": 4,
+        "history": [
+          {
+            "path": "DD",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "DRRRDDRDR",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "",
+            "valid": false,
+            "optimal": false,
+            "reason": "incomplete",
+            "at": 0
+          },
+          {
+            "path": "RD",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          }
+        ],
+        "seconds": 0.2578366430002461,
+        "generated_moves": 13
+      },
+      "no_feedback": {
+        "solved": false,
+        "attempts_used": 4,
+        "history": [
+          {
+            "path": "DD",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "DRRRDDRDR",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "LRD",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          },
+          {
+            "path": "RR",
+            "valid": false,
+            "optimal": false,
+            "reason": "blocked",
+            "at": 0
+          }
+        ],
+        "seconds": 0.1731650360002277,
+        "generated_moves": 16
+      }
+    }
+  ]
+}
