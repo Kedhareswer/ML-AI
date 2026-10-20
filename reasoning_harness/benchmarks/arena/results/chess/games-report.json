@@ -1,0 +1,323 @@
+{
+  "Trained network only vs random mover": {
+    "win": 15,
+    "draw": 5,
+    "loss": 0,
+    "games": [
+      {
+        "net_white": true,
+        "result": "1-0",
+        "termination": "checkmate",
+        "plies": 33
+      },
+      {
+        "net_white": false,
+        "result": "0-1",
+        "termination": "checkmate",
+        "plies": 58
+      },
+      {
+        "net_white": true,
+        "result": "1/2-1/2",
+        "termination": "threefold_repetition",
+        "plies": 136
+      },
+      {
+        "net_white": false,
+        "result": "0-1",
+        "termination": "checkmate",
+        "plies": 16
+      },
+      {
+        "net_white": true,
+        "result": "1/2-1/2",
+        "termination": "threefold_repetition",
+        "plies": 91
+      },
+      {
+        "net_white": false,
+        "result": "0-1",
+        "termination": "checkmate",
+        "plies": 20
+      },
+      {
+        "net_white": true,
+        "result": "1/2-1/2",
+        "termination": "threefold_repetition",
+        "plies": 71
+      },
+      {
+        "net_white": false,
+        "result": "0-1",
+        "termination": "checkmate",
+        "plies": 64
+      },
+      {
+        "net_white": true,
+        "result": "1-0",
+        "termination": "checkmate",
+        "plies": 105
+      },
+      {
+        "net_white": false,
+        "result": "0-1",
+        "termination": "checkmate",
+        "plies": 92
+      },
+      {
+        "net_white": true,
+        "result": "1-0",
+        "termination": "checkmate",
+        "plies": 101
+      },
+      {
+        "net_white": false,
+        "result": "0-1",
+        "termination": "checkmate",
+        "plies": 64
+      },
+      {
+        "net_white": true,
+        "result": "1-0",
+        "termination": "checkmate",
+        "plies": 53
+      },
+      {
+        "net_white": false,
+        "result": "0-1",
+        "termination": "checkmate",
+        "plies": 44
+      },
+      {
+        "net_white": true,
+        "result": "1/2-1/2",
+        "termination": "threefold_repetition",
+        "plies": 125
+      },
+      {
+        "net_white": false,
+        "result": "0-1",
+        "termination": "checkmate",
+        "plies": 28
+      },
+      {
+        "net_white": true,
+        "result": "1-0",
+        "termination": "checkmate",
+        "plies": 73
+      },
+      {
+        "net_white": false,
+        "result": "0-1",
+        "termination": "checkmate",
+        "plies": 56
+      },
+      {
+        "net_white": true,
+        "result": "1-0",
+        "termination": "checkmate",
+        "plies": 13
+      },
+      {
+        "net_white": false,
+        "result": "1/2-1/2",
+        "termination": "stalemate",
+        "plies": 126
+      }
+    ]
+  },
+  "Trained network only vs 1-ply material engine": {
+    "win": 0,
+    "draw": 10,
+    "loss": 10,
+    "games": [
+      {
+        "net_white": true,
+        "result": "0-1",
+        "termination": "checkmate",
+        "plies": 82
+      },
+      {
+        "net_white": false,
+        "result": "1/2-1/2",
+        "termination": "threefold_repetition",
+        "plies": 56
+      },
+      {
+        "net_white": true,
+        "result": "0-1",
+        "termination": "checkmate",
+        "plies": 82
+      },
+      {
+        "net_white": false,
+        "result": "1/2-1/2",
+        "termination": "threefold_repetition",
+        "plies": 56
+      },
+      {
+        "net_white": true,
+        "result": "0-1",
+        "termination": "checkmate",
+        "plies": 82
+      },
+      {
+        "net_white": false,
+        "result": "1/2-1/2",
+        "termination": "threefold_repetition",
+        "plies": 56
+      },
+      {
+        "net_white": true,
+        "result": "0-1",
+        "termination": "checkmate",
+        "plies": 82
+      },
+      {
+        "net_white": false,
+        "result": "1/2-1/2",
+        "termination": "threefold_repetition",
+        "plies": 56
+      },
+      {
+        "net_white": true,
+        "result": "0-1",
+        "termination": "checkmate",
+        "plies": 82
+      },
+      {
+        "net_white": false,
+        "result": "1/2-1/2",
+        "termination": "threefold_repetition",
+        "plies": 56
+      },
+      {
+        "net_white": true,
+        "result": "0-1",
+        "termination": "checkmate",
+        "plies": 82
+      },
+      {
+        "net_white": false,
+        "result": "1/2-1/2",
+        "termination": "threefold_repetition",
+        "plies": 56
+      },
+      {
+        "net_white": true,
+        "result": "0-1",
+        "termination": "checkmate",
+        "plies": 82
+      },
+      {
+        "net_white": false,
+        "result": "1/2-1/2",
+        "termination": "threefold_repetition",
+        "plies": 56
+      },
+      {
+        "net_white": true,
+        "result": "0-1",
+        "termination": "checkmate",
+        "plies": 82
+      },
+      {
+        "net_white": false,
+        "result": "1/2-1/2",
+        "termination": "threefold_repetition",
+        "plies": 56
+      },
+      {
+        "net_white": true,
+        "result": "0-1",
+        "termination": "checkmate",
+        "plies": 82
+      },
+      {
+        "net_white": false,
+        "result": "1/2-1/2",
+        "termination": "threefold_repetition",
+        "plies": 56
+      },
+      {
+        "net_white": true,
+        "result": "0-1",
+        "termination": "checkmate",
+        "plies": 82
+      },
+      {
+        "net_white": false,
+        "result": "1/2-1/2",
+        "termination": "threefold_repetition",
+        "plies": 56
+      }
+    ]
+  },
+  "Network + search vs same search without network": {
+    "win": 0,
+    "draw": 5,
+    "loss": 5,
+    "games": [
+      {
+        "net_white": true,
+        "result": "1/2-1/2",
+        "termination": "threefold_repetition",
+        "plies": 18
+      },
+      {
+        "net_white": false,
+        "result": "1-0",
+        "termination": "checkmate",
+        "plies": 49
+      },
+      {
+        "net_white": true,
+        "result": "1/2-1/2",
+        "termination": "threefold_repetition",
+        "plies": 18
+      },
+      {
+        "net_white": false,
+        "result": "1-0",
+        "termination": "checkmate",
+        "plies": 49
+      },
+      {
+        "net_white": true,
+        "result": "1/2-1/2",
+        "termination": "threefold_repetition",
+        "plies": 18
+      },
+      {
+        "net_white": false,
+        "result": "1-0",
+        "termination": "checkmate",
+        "plies": 49
+      },
+      {
+        "net_white": true,
+        "result": "1/2-1/2",
+        "termination": "threefold_repetition",
+        "plies": 18
+      },
+      {
+        "net_white": false,
+        "result": "1-0",
+        "termination": "checkmate",
+        "plies": 49
+      },
+      {
+        "net_white": true,
+        "result": "1/2-1/2",
+        "termination": "threefold_repetition",
+        "plies": 18
+      },
+      {
+        "net_white": false,
+        "result": "1-0",
+        "termination": "checkmate",
+        "plies": 49
+      }
+    ]
+  }
+}
