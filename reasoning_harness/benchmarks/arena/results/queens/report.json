@@ -1,0 +1,367 @@
+{
+  "kind": "queens",
+  "cases": 300,
+  "run": "artifacts/arena/queens",
+  "model": {
+    "kind": "queens",
+    "trained_steps": 2000,
+    "train_puzzles": 2000,
+    "seed": 0
+  },
+  "parameters": 426050,
+  "search_budget_states": 2000,
+  "exact_budget_states": 200000,
+  "summary": {
+    "oneshot:trained": {
+      "description": "One network pass, no rules",
+      "solved": 180,
+      "total": 300,
+      "rate": 60.0,
+      "wilson95": [
+        54.36,
+        65.38
+      ],
+      "mean_expanded_states": 0.0,
+      "budget_exhausted": 0,
+      "p50_ms": 5.38,
+      "p95_ms": 11.37
+    },
+    "neural:trained": {
+      "description": "Network picks every move, rules block illegal moves, no backtracking",
+      "solved": 271,
+      "total": 300,
+      "rate": 90.33,
+      "wilson95": [
+        86.46,
+        93.19
+      ],
+      "mean_expanded_states": 7.9,
+      "budget_exhausted": 0,
+      "p50_ms": 46.29,
+      "p95_ms": 85.22
+    },
+    "neural:untrained": {
+      "description": "Same, random-initialised network (control)",
+      "solved": 1,
+      "total": 300,
+      "rate": 0.33,
+      "wilson95": [
+        0.06,
+        1.86
+      ],
+      "mean_expanded_states": 5.9,
+      "budget_exhausted": 0,
+      "p50_ms": 40.24,
+      "p95_ms": 70.0
+    },
+    "search:trained": {
+      "description": "Backtracking ordered by the trained network",
+      "solved": 300,
+      "total": 300,
+      "rate": 100.0,
+      "wilson95": [
+        98.74,
+        100.0
+      ],
+      "mean_expanded_states": 13.96,
+      "budget_exhausted": 0,
+      "p50_ms": 48.41,
+      "p95_ms": 175.49
+    },
+    "search:untrained": {
+      "description": "Backtracking ordered by a random network (control)",
+      "solved": 300,
+      "total": 300,
+      "rate": 100.0,
+      "wilson95": [
+        98.74,
+        100.0
+      ],
+      "mean_expanded_states": 66.23,
+      "budget_exhausted": 0,
+      "p50_ms": 150.91,
+      "p95_ms": 708.2
+    },
+    "exact:none": {
+      "description": "Classical backtracking, no network (baseline)",
+      "solved": 300,
+      "total": 300,
+      "rate": 100.0,
+      "wilson95": [
+        98.74,
+        100.0
+      ],
+      "mean_expanded_states": 69.78,
+      "budget_exhausted": 0,
+      "p50_ms": 5.19,
+      "p95_ms": 34.45
+    }
+  },
+  "by_group": {
+    "7x7": {
+      "oneshot:trained": {
+        "description": "One network pass, no rules",
+        "solved": 64,
+        "total": 90,
+        "rate": 71.11,
+        "wilson95": [
+          61.04,
+          79.46
+        ],
+        "mean_expanded_states": 0.0,
+        "budget_exhausted": 0,
+        "p50_ms": 5.13,
+        "p95_ms": 11.66
+      },
+      "neural:trained": {
+        "description": "Network picks every move, rules block illegal moves, no backtracking",
+        "solved": 83,
+        "total": 90,
+        "rate": 92.22,
+        "wilson95": [
+          84.81,
+          96.18
+        ],
+        "mean_expanded_states": 6.92,
+        "budget_exhausted": 0,
+        "p50_ms": 38.7,
+        "p95_ms": 66.02
+      },
+      "neural:untrained": {
+        "description": "Same, random-initialised network (control)",
+        "solved": 1,
+        "total": 90,
+        "rate": 1.11,
+        "wilson95": [
+          0.2,
+          6.03
+        ],
+        "mean_expanded_states": 5.12,
+        "budget_exhausted": 0,
+        "p50_ms": 31.77,
+        "p95_ms": 58.56
+      },
+      "search:trained": {
+        "description": "Backtracking ordered by the trained network",
+        "solved": 90,
+        "total": 90,
+        "rate": 100.0,
+        "wilson95": [
+          95.91,
+          100.0
+        ],
+        "mean_expanded_states": 8.53,
+        "budget_exhausted": 0,
+        "p50_ms": 40.95,
+        "p95_ms": 99.94
+      },
+      "search:untrained": {
+        "description": "Backtracking ordered by a random network (control)",
+        "solved": 90,
+        "total": 90,
+        "rate": 100.0,
+        "wilson95": [
+          95.91,
+          100.0
+        ],
+        "mean_expanded_states": 27.98,
+        "budget_exhausted": 0,
+        "p50_ms": 81.09,
+        "p95_ms": 307.4
+      },
+      "exact:none": {
+        "description": "Classical backtracking, no network (baseline)",
+        "solved": 90,
+        "total": 90,
+        "rate": 100.0,
+        "wilson95": [
+          95.91,
+          100.0
+        ],
+        "mean_expanded_states": 29.43,
+        "budget_exhausted": 0,
+        "p50_ms": 2.61,
+        "p95_ms": 8.74
+      }
+    },
+    "8x8": {
+      "oneshot:trained": {
+        "description": "One network pass, no rules",
+        "solved": 77,
+        "total": 121,
+        "rate": 63.64,
+        "wilson95": [
+          54.77,
+          71.67
+        ],
+        "mean_expanded_states": 0.0,
+        "budget_exhausted": 0,
+        "p50_ms": 5.3,
+        "p95_ms": 9.87
+      },
+      "neural:trained": {
+        "description": "Network picks every move, rules block illegal moves, no backtracking",
+        "solved": 110,
+        "total": 121,
+        "rate": 90.91,
+        "wilson95": [
+          84.45,
+          94.85
+        ],
+        "mean_expanded_states": 7.91,
+        "budget_exhausted": 0,
+        "p50_ms": 46.61,
+        "p95_ms": 81.82
+      },
+      "neural:untrained": {
+        "description": "Same, random-initialised network (control)",
+        "solved": 0,
+        "total": 121,
+        "rate": 0.0,
+        "wilson95": [
+          0,
+          3.08
+        ],
+        "mean_expanded_states": 5.87,
+        "budget_exhausted": 0,
+        "p50_ms": 39.72,
+        "p95_ms": 69.69
+      },
+      "search:trained": {
+        "description": "Backtracking ordered by the trained network",
+        "solved": 121,
+        "total": 121,
+        "rate": 100.0,
+        "wilson95": [
+          96.92,
+          100.0
+        ],
+        "mean_expanded_states": 11.36,
+        "budget_exhausted": 0,
+        "p50_ms": 47.17,
+        "p95_ms": 101.44
+      },
+      "search:untrained": {
+        "description": "Backtracking ordered by a random network (control)",
+        "solved": 121,
+        "total": 121,
+        "rate": 100.0,
+        "wilson95": [
+          96.92,
+          100.0
+        ],
+        "mean_expanded_states": 61.16,
+        "budget_exhausted": 0,
+        "p50_ms": 169.63,
+        "p95_ms": 522.31
+      },
+      "exact:none": {
+        "description": "Classical backtracking, no network (baseline)",
+        "solved": 121,
+        "total": 121,
+        "rate": 100.0,
+        "wilson95": [
+          96.92,
+          100.0
+        ],
+        "mean_expanded_states": 56.39,
+        "budget_exhausted": 0,
+        "p50_ms": 5.11,
+        "p95_ms": 18.41
+      }
+    },
+    "9x9": {
+      "oneshot:trained": {
+        "description": "One network pass, no rules",
+        "solved": 39,
+        "total": 89,
+        "rate": 43.82,
+        "wilson95": [
+          33.98,
+          54.17
+        ],
+        "mean_expanded_states": 0.0,
+        "budget_exhausted": 0,
+        "p50_ms": 5.94,
+        "p95_ms": 12.12
+      },
+      "neural:trained": {
+        "description": "Network picks every move, rules block illegal moves, no backtracking",
+        "solved": 78,
+        "total": 89,
+        "rate": 87.64,
+        "wilson95": [
+          79.21,
+          92.96
+        ],
+        "mean_expanded_states": 8.88,
+        "budget_exhausted": 0,
+        "p50_ms": 57.0,
+        "p95_ms": 92.48
+      },
+      "neural:untrained": {
+        "description": "Same, random-initialised network (control)",
+        "solved": 0,
+        "total": 89,
+        "rate": 0.0,
+        "wilson95": [
+          0,
+          4.14
+        ],
+        "mean_expanded_states": 6.74,
+        "budget_exhausted": 0,
+        "p50_ms": 48.42,
+        "p95_ms": 72.76
+      },
+      "search:trained": {
+        "description": "Backtracking ordered by the trained network",
+        "solved": 89,
+        "total": 89,
+        "rate": 100.0,
+        "wilson95": [
+          95.86,
+          100
+        ],
+        "mean_expanded_states": 22.98,
+        "budget_exhausted": 0,
+        "p50_ms": 62.95,
+        "p95_ms": 418.42
+      },
+      "search:untrained": {
+        "description": "Backtracking ordered by a random network (control)",
+        "solved": 89,
+        "total": 89,
+        "rate": 100.0,
+        "wilson95": [
+          95.86,
+          100
+        ],
+        "mean_expanded_states": 111.8,
+        "budget_exhausted": 0,
+        "p50_ms": 296.27,
+        "p95_ms": 1138.12
+      },
+      "exact:none": {
+        "description": "Classical backtracking, no network (baseline)",
+        "solved": 89,
+        "total": 89,
+        "rate": 100.0,
+        "wilson95": [
+          95.86,
+          100
+        ],
+        "mean_expanded_states": 128.8,
+        "budget_exhausted": 0,
+        "p50_ms": 12.92,
+        "p95_ms": 47.65
+      }
+    }
+  },
+  "environment": {
+    "torch": "2.6.0+cpu",
+    "python": "3.13.16",
+    "threads": 1,
+    "device": "cpu",
+    "date": "2026-10-20"
+  }
+}
