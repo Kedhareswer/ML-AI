@@ -1,0 +1,1234 @@
+{
+  "benchmark_version": "maze-planning-v1",
+  "created_utc": "2026-10-20T17:33:51.065282+00:00",
+  "weights_sha256": "49fbc67c99cfa4dcd673d4f202d4083aa6db1829e58ec6bd53004a3cf471240d",
+  "config_sha256": "047e7c713d8620f9ef067ab63794f3906bd5a1152e1cca91495c158218da1073",
+  "case_sha256": "fc2bfea0e43e1e6874fb043bf480030f061d37c88078d9986d23ef5278daaa12",
+  "model": {
+    "config": {
+      "width": 256,
+      "layers": 12,
+      "heads": 8,
+      "context": 256
+    },
+    "parameters": 9576704,
+    "fp32_weight_MB": 38.306816
+  },
+  "training": {
+    "batch_size": 2,
+    "lr": 0.0003,
+    "size": 4,
+    "train_examples": 16,
+    "seed": 42
+  },
+  "weights_file_bytes": 38351058,
+  "settings": {
+    "count_per_size_seed": 30,
+    "sizes": [
+      4,
+      5
+    ],
+    "seeds": [
+      1000000,
+      2000000,
+      3000000
+    ],
+    "attempts": 4,
+    "temperature": 0.8
+  },
+  "runtime": {
+    "python": "3.12.14",
+    "torch": "2.6.0+cpu",
+    "platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+    "device": "cpu",
+    "gpu_name": null,
+    "cpu_threads": 2,
+    "process_peak_RSS_bytes": 354541568,
+    "memory_scope": "Entire benchmark process including both models, loading and audit; not isolated model memory",
+    "cuda_peak_allocated_bytes": null,
+    "wall_seconds": 175.20300502099985
+  },
+  "verifier_audit": {
+    "passed": true,
+    "layouts": 48,
+    "path_checks": 16512
+  },
+  "count": 180,
+  "overall": {
+    "greedy": {
+      "solved": 0,
+      "count": 180,
+      "success_rate": 0.0,
+      "success_wilson_95_ci": [
+        0.0,
+        0.02089549792161305
+      ],
+      "optimal_rate": 0.0,
+      "mean_attempts": 1,
+      "latency_p50_seconds": 0.2829676260000724,
+      "latency_p95_seconds": 0.3963636249001638,
+      "mean_generated_moves": 19.5,
+      "failures": {
+        "blocked": 180
+      }
+    },
+    "feedback": {
+      "solved": 18,
+      "count": 180,
+      "success_rate": 0.1,
+      "success_wilson_95_ci": [
+        0.06419425113081786,
+        0.15252214720647259
+      ],
+      "optimal_rate": 0.09444444444444444,
+      "mean_attempts": 3.7944444444444443,
+      "latency_p50_seconds": 0.2205498425001906,
+      "latency_p95_seconds": 0.43231348210001647,
+      "mean_generated_moves": 10.13888888888889,
+      "failures": {
+        "blocked": 362,
+        "incomplete": 303
+      }
+    },
+    "no_feedback": {
+      "solved": 16,
+      "count": 180,
+      "success_rate": 0.08888888888888889,
+      "success_wilson_95_ci": [
+        0.05545460269973843,
+        0.13950391781358787
+      ],
+      "optimal_rate": 0.08333333333333333,
+      "mean_attempts": 3.811111111111111,
+      "latency_p50_seconds": 0.1973277600000074,
+      "latency_p95_seconds": 0.3759182850999763,
+      "mean_generated_moves": 11.855555555555556,
+      "failures": {
+        "blocked": 404,
+        "incomplete": 266
+      }
+    },
+    "untrained": {
+      "solved": 20,
+      "count": 180,
+      "success_rate": 0.1111111111111111,
+      "success_wilson_95_ci": [
+        0.07308754224863465,
+        0.16538673391261993
+      ],
+      "optimal_rate": 0.1,
+      "mean_attempts": 3.7944444444444443,
+      "latency_p50_seconds": 0.2118035295000027,
+      "latency_p95_seconds": 0.43911883514983835,
+      "mean_generated_moves": 13.233333333333333,
+      "failures": {
+        "blocked": 368,
+        "incomplete": 295
+      }
+    },
+    "random": {
+      "solved": 2,
+      "count": 180,
+      "success_rate": 0.011111111111111112,
+      "success_wilson_95_ci": [
+        0.0030523748459926198,
+        0.03960100089958458
+      ],
+      "optimal_rate": 0.005555555555555556,
+      "mean_attempts": 3.977777777777778,
+      "latency_p50_seconds": 5.4280500080494676e-05,
+      "latency_p95_seconds": 9.503215003405782e-05,
+      "mean_generated_moves": 43.45,
+      "failures": {
+        "blocked": 632,
+        "incomplete": 82
+      }
+    },
+    "bfs": {
+      "solved": 180,
+      "count": 180,
+      "success_rate": 1.0,
+      "success_wilson_95_ci": [
+        0.9791045020783868,
+        1.0
+      ],
+      "optimal_rate": 1.0,
+      "mean_attempts": 1,
+      "latency_p50_seconds": 2.825699993991293e-05,
+      "latency_p95_seconds": 6.0022699801720555e-05,
+      "mean_generated_moves": 2.8722222222222222,
+      "failures": {}
+    },
+    "single_stochastic_attempt": {
+      "success_rate": 0.03333333333333333
+    },
+    "feedback_minus_resampling": {
+      "difference": 0.011111111111111112,
+      "bootstrap_95_ci": [
+        -0.011111111111111112,
+        0.03333333333333333
+      ],
+      "discordant_wins": 3,
+      "discordant_losses": 1
+    }
+  },
+  "by_size": {
+    "4": {
+      "greedy": {
+        "solved": 0,
+        "count": 90,
+        "success_rate": 0.0,
+        "success_wilson_95_ci": [
+          0.0,
+          0.04093562556432678
+        ],
+        "optimal_rate": 0.0,
+        "mean_attempts": 1,
+        "latency_p50_seconds": 0.2151979884999946,
+        "latency_p95_seconds": 0.23834558230007585,
+        "mean_generated_moves": 16,
+        "failures": {
+          "blocked": 90
+        }
+      },
+      "feedback": {
+        "solved": 9,
+        "count": 90,
+        "success_rate": 0.1,
+        "success_wilson_95_ci": [
+          0.05350675169712493,
+          0.17924174875433652
+        ],
+        "optimal_rate": 0.1,
+        "mean_attempts": 3.8333333333333335,
+        "latency_p50_seconds": 0.20661291500005063,
+        "latency_p95_seconds": 0.3956461522999006,
+        "mean_generated_moves": 10.022222222222222,
+        "failures": {
+          "blocked": 189,
+          "incomplete": 147
+        }
+      },
+      "no_feedback": {
+        "solved": 8,
+        "count": 90,
+        "success_rate": 0.08888888888888889,
+        "success_wilson_95_ci": [
+          0.045730492536794475,
+          0.16570546626054086
+        ],
+        "optimal_rate": 0.08888888888888889,
+        "mean_attempts": 3.8444444444444446,
+        "latency_p50_seconds": 0.19476894449996962,
+        "latency_p95_seconds": 0.3603130114500459,
+        "mean_generated_moves": 12.522222222222222,
+        "failures": {
+          "blocked": 222,
+          "incomplete": 116
+        }
+      },
+      "untrained": {
+        "solved": 11,
+        "count": 90,
+        "success_rate": 0.12222222222222222,
+        "success_wilson_95_ci": [
+          0.06963615965482382,
+          0.2057374241048897
+        ],
+        "optimal_rate": 0.1111111111111111,
+        "mean_attempts": 3.7777777777777777,
+        "latency_p50_seconds": 0.1965283354999201,
+        "latency_p95_seconds": 0.37433685035003916,
+        "mean_generated_moves": 12.38888888888889,
+        "failures": {
+          "blocked": 180,
+          "incomplete": 149
+        }
+      },
+      "random": {
+        "solved": 2,
+        "count": 90,
+        "success_rate": 0.022222222222222223,
+        "success_wilson_95_ci": [
+          0.006115441986325208,
+          0.07744526688625372
+        ],
+        "optimal_rate": 0.011111111111111112,
+        "mean_attempts": 3.9555555555555557,
+        "latency_p50_seconds": 6.181149990425183e-05,
+        "latency_p95_seconds": 9.478849997321959e-05,
+        "mean_generated_moves": 34.111111111111114,
+        "failures": {
+          "blocked": 302,
+          "incomplete": 52
+        }
+      },
+      "bfs": {
+        "solved": 90,
+        "count": 90,
+        "success_rate": 1.0,
+        "success_wilson_95_ci": [
+          0.9590643744356734,
+          1.0
+        ],
+        "optimal_rate": 1.0,
+        "mean_attempts": 1,
+        "latency_p50_seconds": 2.4686999950063182e-05,
+        "latency_p95_seconds": 4.280904985307643e-05,
+        "mean_generated_moves": 2.411111111111111,
+        "failures": {}
+      },
+      "single_stochastic_attempt": {
+        "success_rate": 0.022222222222222223
+      },
+      "feedback_minus_resampling": {
+        "difference": 0.011111111111111112,
+        "bootstrap_95_ci": [
+          -0.022222222222222223,
+          0.05555555555555555
+        ],
+        "discordant_wins": 2,
+        "discordant_losses": 1
+      }
+    },
+    "5": {
+      "greedy": {
+        "solved": 0,
+        "count": 90,
+        "success_rate": 0.0,
+        "success_wilson_95_ci": [
+          0.0,
+          0.04093562556432678
+        ],
+        "optimal_rate": 0.0,
+        "mean_attempts": 1,
+        "latency_p50_seconds": 0.3752237139999579,
+        "latency_p95_seconds": 0.40603406194986746,
+        "mean_generated_moves": 23,
+        "failures": {
+          "blocked": 90
+        }
+      },
+      "feedback": {
+        "solved": 9,
+        "count": 90,
+        "success_rate": 0.1,
+        "success_wilson_95_ci": [
+          0.05350675169712493,
+          0.17924174875433652
+        ],
+        "optimal_rate": 0.08888888888888889,
+        "mean_attempts": 3.7555555555555555,
+        "latency_p50_seconds": 0.23315427800025645,
+        "latency_p95_seconds": 0.4715661014500028,
+        "mean_generated_moves": 10.255555555555556,
+        "failures": {
+          "blocked": 173,
+          "incomplete": 156
+        }
+      },
+      "no_feedback": {
+        "solved": 8,
+        "count": 90,
+        "success_rate": 0.08888888888888889,
+        "success_wilson_95_ci": [
+          0.045730492536794475,
+          0.16570546626054086
+        ],
+        "optimal_rate": 0.07777777777777778,
+        "mean_attempts": 3.7777777777777777,
+        "latency_p50_seconds": 0.2029295899999397,
+        "latency_p95_seconds": 0.3999647238500529,
+        "mean_generated_moves": 11.188888888888888,
+        "failures": {
+          "blocked": 182,
+          "incomplete": 150
+        }
+      },
+      "untrained": {
+        "solved": 9,
+        "count": 90,
+        "success_rate": 0.1,
+        "success_wilson_95_ci": [
+          0.05350675169712493,
+          0.17924174875433652
+        ],
+        "optimal_rate": 0.08888888888888889,
+        "mean_attempts": 3.811111111111111,
+        "latency_p50_seconds": 0.2283312434999516,
+        "latency_p95_seconds": 0.46077341925008564,
+        "mean_generated_moves": 14.077777777777778,
+        "failures": {
+          "blocked": 188,
+          "incomplete": 146
+        }
+      },
+      "random": {
+        "solved": 0,
+        "count": 90,
+        "success_rate": 0.0,
+        "success_wilson_95_ci": [
+          0.0,
+          0.04093562556432678
+        ],
+        "optimal_rate": 0.0,
+        "mean_attempts": 4,
+        "latency_p50_seconds": 5.230250008025905e-05,
+        "latency_p95_seconds": 0.00010061399991627693,
+        "mean_generated_moves": 52.78888888888889,
+        "failures": {
+          "blocked": 330,
+          "incomplete": 30
+        }
+      },
+      "bfs": {
+        "solved": 90,
+        "count": 90,
+        "success_rate": 1.0,
+        "success_wilson_95_ci": [
+          0.9590643744356734,
+          1.0
+        ],
+        "optimal_rate": 1.0,
+        "mean_attempts": 1,
+        "latency_p50_seconds": 3.8247000020419364e-05,
+        "latency_p95_seconds": 6.422704998385597e-05,
+        "mean_generated_moves": 3.3333333333333335,
+        "failures": {}
+      },
+      "single_stochastic_attempt": {
+        "success_rate": 0.044444444444444446
+      },
+      "feedback_minus_resampling": {
+        "difference": 0.011111111111111112,
+        "bootstrap_95_ci": [
+          0.0,
+          0.03333333333333333
+        ],
+        "discordant_wins": 1,
+        "discordant_losses": 0
+      }
+    }
+  },
+  "by_seed": {
+    "4:1000000": {
+      "greedy": {
+        "solved": 0,
+        "count": 30,
+        "success_rate": 0.0,
+        "success_wilson_95_ci": [
+          0.0,
+          0.11351339317396876
+        ],
+        "optimal_rate": 0.0,
+        "mean_attempts": 1,
+        "latency_p50_seconds": 0.21250837949992274,
+        "latency_p95_seconds": 0.26126642485005497,
+        "mean_generated_moves": 16,
+        "failures": {
+          "blocked": 30
+        }
+      },
+      "feedback": {
+        "solved": 3,
+        "count": 30,
+        "success_rate": 0.1,
+        "success_wilson_95_ci": [
+          0.03459988874733419,
+          0.25621082579184085
+        ],
+        "optimal_rate": 0.1,
+        "mean_attempts": 3.8333333333333335,
+        "latency_p50_seconds": 0.2226865129999851,
+        "latency_p95_seconds": 0.42503776910001534,
+        "mean_generated_moves": 11.4,
+        "failures": {
+          "blocked": 65,
+          "incomplete": 47
+        }
+      },
+      "no_feedback": {
+        "solved": 2,
+        "count": 30,
+        "success_rate": 0.06666666666666667,
+        "success_wilson_95_ci": [
+          0.018477023791270378,
+          0.2132345836261692
+        ],
+        "optimal_rate": 0.06666666666666667,
+        "mean_attempts": 3.8333333333333335,
+        "latency_p50_seconds": 0.19476894449996962,
+        "latency_p95_seconds": 0.361438161350145,
+        "mean_generated_moves": 13.633333333333333,
+        "failures": {
+          "blocked": 76,
+          "incomplete": 37
+        }
+      },
+      "untrained": {
+        "solved": 2,
+        "count": 30,
+        "success_rate": 0.06666666666666667,
+        "success_wilson_95_ci": [
+          0.018477023791270378,
+          0.2132345836261692
+        ],
+        "optimal_rate": 0.03333333333333333,
+        "mean_attempts": 3.8333333333333335,
+        "latency_p50_seconds": 0.19626690749998943,
+        "latency_p95_seconds": 0.4256402440500775,
+        "mean_generated_moves": 13.366666666666667,
+        "failures": {
+          "blocked": 62,
+          "incomplete": 51
+        }
+      },
+      "random": {
+        "solved": 0,
+        "count": 30,
+        "success_rate": 0.0,
+        "success_wilson_95_ci": [
+          0.0,
+          0.11351339317396876
+        ],
+        "optimal_rate": 0.0,
+        "mean_attempts": 4,
+        "latency_p50_seconds": 5.970849986169924e-05,
+        "latency_p95_seconds": 8.498915003656294e-05,
+        "mean_generated_moves": 35,
+        "failures": {
+          "blocked": 103,
+          "incomplete": 17
+        }
+      },
+      "bfs": {
+        "solved": 30,
+        "count": 30,
+        "success_rate": 1.0,
+        "success_wilson_95_ci": [
+          0.8864866068260312,
+          0.9999999999999999
+        ],
+        "optimal_rate": 1.0,
+        "mean_attempts": 1,
+        "latency_p50_seconds": 2.660400002696406e-05,
+        "latency_p95_seconds": 4.350550005938203e-05,
+        "mean_generated_moves": 2.566666666666667,
+        "failures": {}
+      },
+      "single_stochastic_attempt": {
+        "success_rate": 0.03333333333333333
+      },
+      "feedback_minus_resampling": {
+        "difference": 0.03333333333333333,
+        "bootstrap_95_ci": [
+          0.0,
+          0.1
+        ],
+        "discordant_wins": 1,
+        "discordant_losses": 0
+      }
+    },
+    "4:2000000": {
+      "greedy": {
+        "solved": 0,
+        "count": 30,
+        "success_rate": 0.0,
+        "success_wilson_95_ci": [
+          0.0,
+          0.11351339317396876
+        ],
+        "optimal_rate": 0.0,
+        "mean_attempts": 1,
+        "latency_p50_seconds": 0.21816672950001248,
+        "latency_p95_seconds": 0.22727290779998838,
+        "mean_generated_moves": 16,
+        "failures": {
+          "blocked": 30
+        }
+      },
+      "feedback": {
+        "solved": 4,
+        "count": 30,
+        "success_rate": 0.13333333333333333,
+        "success_wilson_95_ci": [
+          0.053096554840547455,
+          0.296813266820363
+        ],
+        "optimal_rate": 0.13333333333333333,
+        "mean_attempts": 3.7666666666666666,
+        "latency_p50_seconds": 0.2040937594999832,
+        "latency_p95_seconds": 0.3655567586498704,
+        "mean_generated_moves": 9.633333333333333,
+        "failures": {
+          "blocked": 57,
+          "incomplete": 52
+        }
+      },
+      "no_feedback": {
+        "solved": 4,
+        "count": 30,
+        "success_rate": 0.13333333333333333,
+        "success_wilson_95_ci": [
+          0.053096554840547455,
+          0.296813266820363
+        ],
+        "optimal_rate": 0.13333333333333333,
+        "mean_attempts": 3.8,
+        "latency_p50_seconds": 0.21587087800014615,
+        "latency_p95_seconds": 0.35790707009995215,
+        "mean_generated_moves": 12.533333333333333,
+        "failures": {
+          "blocked": 73,
+          "incomplete": 37
+        }
+      },
+      "untrained": {
+        "solved": 5,
+        "count": 30,
+        "success_rate": 0.16666666666666666,
+        "success_wilson_95_ci": [
+          0.0733654237184855,
+          0.3356435050641603
+        ],
+        "optimal_rate": 0.16666666666666666,
+        "mean_attempts": 3.7666666666666666,
+        "latency_p50_seconds": 0.2134754509999084,
+        "latency_p95_seconds": 0.3789024542500101,
+        "mean_generated_moves": 12.7,
+        "failures": {
+          "blocked": 57,
+          "incomplete": 51
+        }
+      },
+      "random": {
+        "solved": 0,
+        "count": 30,
+        "success_rate": 0.0,
+        "success_wilson_95_ci": [
+          0.0,
+          0.11351339317396876
+        ],
+        "optimal_rate": 0.0,
+        "mean_attempts": 4,
+        "latency_p50_seconds": 6.63634999682472e-05,
+        "latency_p95_seconds": 9.840599991548513e-05,
+        "mean_generated_moves": 33.6,
+        "failures": {
+          "blocked": 102,
+          "incomplete": 18
+        }
+      },
+      "bfs": {
+        "solved": 30,
+        "count": 30,
+        "success_rate": 1.0,
+        "success_wilson_95_ci": [
+          0.8864866068260312,
+          0.9999999999999999
+        ],
+        "optimal_rate": 1.0,
+        "mean_attempts": 1,
+        "latency_p50_seconds": 2.3289500063583546e-05,
+        "latency_p95_seconds": 4.234854989135783e-05,
+        "mean_generated_moves": 2.433333333333333,
+        "failures": {}
+      },
+      "single_stochastic_attempt": {
+        "success_rate": 0.0
+      },
+      "feedback_minus_resampling": {
+        "difference": 0,
+        "bootstrap_95_ci": [
+          -0.1,
+          0.1
+        ],
+        "discordant_wins": 1,
+        "discordant_losses": 1
+      }
+    },
+    "4:3000000": {
+      "greedy": {
+        "solved": 0,
+        "count": 30,
+        "success_rate": 0.0,
+        "success_wilson_95_ci": [
+          0.0,
+          0.11351339317396876
+        ],
+        "optimal_rate": 0.0,
+        "mean_attempts": 1,
+        "latency_p50_seconds": 0.21347590800007765,
+        "latency_p95_seconds": 0.22950450524992902,
+        "mean_generated_moves": 16,
+        "failures": {
+          "blocked": 30
+        }
+      },
+      "feedback": {
+        "solved": 2,
+        "count": 30,
+        "success_rate": 0.06666666666666667,
+        "success_wilson_95_ci": [
+          0.018477023791270378,
+          0.2132345836261692
+        ],
+        "optimal_rate": 0.06666666666666667,
+        "mean_attempts": 3.9,
+        "latency_p50_seconds": 0.1887540984999987,
+        "latency_p95_seconds": 0.3414849556999229,
+        "mean_generated_moves": 9.033333333333333,
+        "failures": {
+          "blocked": 67,
+          "incomplete": 48
+        }
+      },
+      "no_feedback": {
+        "solved": 2,
+        "count": 30,
+        "success_rate": 0.06666666666666667,
+        "success_wilson_95_ci": [
+          0.018477023791270378,
+          0.2132345836261692
+        ],
+        "optimal_rate": 0.06666666666666667,
+        "mean_attempts": 3.9,
+        "latency_p50_seconds": 0.171720083000082,
+        "latency_p95_seconds": 0.35234568640000813,
+        "mean_generated_moves": 11.4,
+        "failures": {
+          "blocked": 73,
+          "incomplete": 42
+        }
+      },
+      "untrained": {
+        "solved": 4,
+        "count": 30,
+        "success_rate": 0.13333333333333333,
+        "success_wilson_95_ci": [
+          0.053096554840547455,
+          0.296813266820363
+        ],
+        "optimal_rate": 0.13333333333333333,
+        "mean_attempts": 3.7333333333333334,
+        "latency_p50_seconds": 0.18452172100001007,
+        "latency_p95_seconds": 0.34851270574990845,
+        "mean_generated_moves": 11.1,
+        "failures": {
+          "blocked": 61,
+          "incomplete": 47
+        }
+      },
+      "random": {
+        "solved": 2,
+        "count": 30,
+        "success_rate": 0.06666666666666667,
+        "success_wilson_95_ci": [
+          0.018477023791270378,
+          0.2132345836261692
+        ],
+        "optimal_rate": 0.03333333333333333,
+        "mean_attempts": 3.8666666666666667,
+        "latency_p50_seconds": 6.426550010019128e-05,
+        "latency_p95_seconds": 9.478849997321959e-05,
+        "mean_generated_moves": 33.733333333333334,
+        "failures": {
+          "blocked": 97,
+          "incomplete": 17
+        }
+      },
+      "bfs": {
+        "solved": 30,
+        "count": 30,
+        "success_rate": 1.0,
+        "success_wilson_95_ci": [
+          0.8864866068260312,
+          0.9999999999999999
+        ],
+        "optimal_rate": 1.0,
+        "mean_attempts": 1,
+        "latency_p50_seconds": 2.492700002676429e-05,
+        "latency_p95_seconds": 3.7288000055468724e-05,
+        "mean_generated_moves": 2.2333333333333334,
+        "failures": {}
+      },
+      "single_stochastic_attempt": {
+        "success_rate": 0.03333333333333333
+      },
+      "feedback_minus_resampling": {
+        "difference": 0,
+        "bootstrap_95_ci": [
+          0.0,
+          0.0
+        ],
+        "discordant_wins": 0,
+        "discordant_losses": 0
+      }
+    },
+    "5:1000000": {
+      "greedy": {
+        "solved": 0,
+        "count": 30,
+        "success_rate": 0.0,
+        "success_wilson_95_ci": [
+          0.0,
+          0.11351339317396876
+        ],
+        "optimal_rate": 0.0,
+        "mean_attempts": 1,
+        "latency_p50_seconds": 0.37641880699993635,
+        "latency_p95_seconds": 0.4058030414000541,
+        "mean_generated_moves": 23,
+        "failures": {
+          "blocked": 30
+        }
+      },
+      "feedback": {
+        "solved": 3,
+        "count": 30,
+        "success_rate": 0.1,
+        "success_wilson_95_ci": [
+          0.03459988874733419,
+          0.25621082579184085
+        ],
+        "optimal_rate": 0.1,
+        "mean_attempts": 3.7666666666666666,
+        "latency_p50_seconds": 0.2778810129998419,
+        "latency_p95_seconds": 0.48730656794991756,
+        "mean_generated_moves": 12.133333333333333,
+        "failures": {
+          "blocked": 68,
+          "incomplete": 42
+        }
+      },
+      "no_feedback": {
+        "solved": 2,
+        "count": 30,
+        "success_rate": 0.06666666666666667,
+        "success_wilson_95_ci": [
+          0.018477023791270378,
+          0.2132345836261692
+        ],
+        "optimal_rate": 0.06666666666666667,
+        "mean_attempts": 3.8333333333333335,
+        "latency_p50_seconds": 0.24842293250003422,
+        "latency_p95_seconds": 0.44107730800003514,
+        "mean_generated_moves": 12.966666666666667,
+        "failures": {
+          "blocked": 70,
+          "incomplete": 43
+        }
+      },
+      "untrained": {
+        "solved": 4,
+        "count": 30,
+        "success_rate": 0.13333333333333333,
+        "success_wilson_95_ci": [
+          0.053096554840547455,
+          0.296813266820363
+        ],
+        "optimal_rate": 0.1,
+        "mean_attempts": 3.7333333333333334,
+        "latency_p50_seconds": 0.2657799625001189,
+        "latency_p95_seconds": 0.5127949173497878,
+        "mean_generated_moves": 14.733333333333333,
+        "failures": {
+          "blocked": 58,
+          "incomplete": 50
+        }
+      },
+      "random": {
+        "solved": 0,
+        "count": 30,
+        "success_rate": 0.0,
+        "success_wilson_95_ci": [
+          0.0,
+          0.11351339317396876
+        ],
+        "optimal_rate": 0.0,
+        "mean_attempts": 4,
+        "latency_p50_seconds": 5.376000012802251e-05,
+        "latency_p95_seconds": 9.626969981582074e-05,
+        "mean_generated_moves": 52.93333333333333,
+        "failures": {
+          "blocked": 106,
+          "incomplete": 14
+        }
+      },
+      "bfs": {
+        "solved": 30,
+        "count": 30,
+        "success_rate": 1.0,
+        "success_wilson_95_ci": [
+          0.8864866068260312,
+          0.9999999999999999
+        ],
+        "optimal_rate": 1.0,
+        "mean_attempts": 1,
+        "latency_p50_seconds": 3.381500027899165e-05,
+        "latency_p95_seconds": 7.767645004150831e-05,
+        "mean_generated_moves": 3.3,
+        "failures": {}
+      },
+      "single_stochastic_attempt": {
+        "success_rate": 0.03333333333333333
+      },
+      "feedback_minus_resampling": {
+        "difference": 0.03333333333333333,
+        "bootstrap_95_ci": [
+          0.0,
+          0.1
+        ],
+        "discordant_wins": 1,
+        "discordant_losses": 0
+      }
+    },
+    "5:2000000": {
+      "greedy": {
+        "solved": 0,
+        "count": 30,
+        "success_rate": 0.0,
+        "success_wilson_95_ci": [
+          0.0,
+          0.11351339317396876
+        ],
+        "optimal_rate": 0.0,
+        "mean_attempts": 1,
+        "latency_p50_seconds": 0.3745416070000829,
+        "latency_p95_seconds": 0.4077414907498905,
+        "mean_generated_moves": 23,
+        "failures": {
+          "blocked": 30
+        }
+      },
+      "feedback": {
+        "solved": 3,
+        "count": 30,
+        "success_rate": 0.1,
+        "success_wilson_95_ci": [
+          0.03459988874733419,
+          0.25621082579184085
+        ],
+        "optimal_rate": 0.06666666666666667,
+        "mean_attempts": 3.7333333333333334,
+        "latency_p50_seconds": 0.19665604249985336,
+        "latency_p95_seconds": 0.39397313940028184,
+        "mean_generated_moves": 9.133333333333333,
+        "failures": {
+          "incomplete": 59,
+          "blocked": 50
+        }
+      },
+      "no_feedback": {
+        "solved": 3,
+        "count": 30,
+        "success_rate": 0.1,
+        "success_wilson_95_ci": [
+          0.03459988874733419,
+          0.25621082579184085
+        ],
+        "optimal_rate": 0.06666666666666667,
+        "mean_attempts": 3.7333333333333334,
+        "latency_p50_seconds": 0.2037503800002014,
+        "latency_p95_seconds": 0.34281623300005304,
+        "mean_generated_moves": 10.366666666666667,
+        "failures": {
+          "incomplete": 52,
+          "blocked": 57
+        }
+      },
+      "untrained": {
+        "solved": 3,
+        "count": 30,
+        "success_rate": 0.1,
+        "success_wilson_95_ci": [
+          0.03459988874733419,
+          0.25621082579184085
+        ],
+        "optimal_rate": 0.1,
+        "mean_attempts": 3.8,
+        "latency_p50_seconds": 0.2529488290001609,
+        "latency_p95_seconds": 0.5267652841499509,
+        "mean_generated_moves": 14.833333333333334,
+        "failures": {
+          "blocked": 64,
+          "incomplete": 47
+        }
+      },
+      "random": {
+        "solved": 0,
+        "count": 30,
+        "success_rate": 0.0,
+        "success_wilson_95_ci": [
+          0.0,
+          0.11351339317396876
+        ],
+        "optimal_rate": 0.0,
+        "mean_attempts": 4,
+        "latency_p50_seconds": 5.2767999932257226e-05,
+        "latency_p95_seconds": 8.710210006483976e-05,
+        "mean_generated_moves": 53.03333333333333,
+        "failures": {
+          "blocked": 110,
+          "incomplete": 10
+        }
+      },
+      "bfs": {
+        "solved": 30,
+        "count": 30,
+        "success_rate": 1.0,
+        "success_wilson_95_ci": [
+          0.8864866068260312,
+          0.9999999999999999
+        ],
+        "optimal_rate": 1.0,
+        "mean_attempts": 1,
+        "latency_p50_seconds": 4.015450008409971e-05,
+        "latency_p95_seconds": 6.288209985996218e-05,
+        "mean_generated_moves": 3.3666666666666667,
+        "failures": {}
+      },
+      "single_stochastic_attempt": {
+        "success_rate": 0.06666666666666667
+      },
+      "feedback_minus_resampling": {
+        "difference": 0,
+        "bootstrap_95_ci": [
+          0.0,
+          0.0
+        ],
+        "discordant_wins": 0,
+        "discordant_losses": 0
+      }
+    },
+    "5:3000000": {
+      "greedy": {
+        "solved": 0,
+        "count": 30,
+        "success_rate": 0.0,
+        "success_wilson_95_ci": [
+          0.0,
+          0.11351339317396876
+        ],
+        "optimal_rate": 0.0,
+        "mean_attempts": 1,
+        "latency_p50_seconds": 0.37580710949987406,
+        "latency_p95_seconds": 0.39696403390000795,
+        "mean_generated_moves": 23,
+        "failures": {
+          "blocked": 30
+        }
+      },
+      "feedback": {
+        "solved": 3,
+        "count": 30,
+        "success_rate": 0.1,
+        "success_wilson_95_ci": [
+          0.03459988874733419,
+          0.25621082579184085
+        ],
+        "optimal_rate": 0.1,
+        "mean_attempts": 3.7666666666666666,
+        "latency_p50_seconds": 0.21946629200010648,
+        "latency_p95_seconds": 0.4693804555000041,
+        "mean_generated_moves": 9.5,
+        "failures": {
+          "blocked": 55,
+          "incomplete": 55
+        }
+      },
+      "no_feedback": {
+        "solved": 3,
+        "count": 30,
+        "success_rate": 0.1,
+        "success_wilson_95_ci": [
+          0.03459988874733419,
+          0.25621082579184085
+        ],
+        "optimal_rate": 0.1,
+        "mean_attempts": 3.7666666666666666,
+        "latency_p50_seconds": 0.18658752450005522,
+        "latency_p95_seconds": 0.38475724699990216,
+        "mean_generated_moves": 10.233333333333333,
+        "failures": {
+          "blocked": 55,
+          "incomplete": 55
+        }
+      },
+      "untrained": {
+        "solved": 2,
+        "count": 30,
+        "success_rate": 0.06666666666666667,
+        "success_wilson_95_ci": [
+          0.018477023791270378,
+          0.2132345836261692
+        ],
+        "optimal_rate": 0.06666666666666667,
+        "mean_attempts": 3.9,
+        "latency_p50_seconds": 0.22489598300012403,
+        "latency_p95_seconds": 0.40203821115005667,
+        "mean_generated_moves": 12.666666666666666,
+        "failures": {
+          "incomplete": 49,
+          "blocked": 66
+        }
+      },
+      "random": {
+        "solved": 0,
+        "count": 30,
+        "success_rate": 0.0,
+        "success_wilson_95_ci": [
+          0.0,
+          0.11351339317396876
+        ],
+        "optimal_rate": 0.0,
+        "mean_attempts": 4,
+        "latency_p50_seconds": 5.179699996915588e-05,
+        "latency_p95_seconds": 0.00010157814997455714,
+        "mean_generated_moves": 52.4,
+        "failures": {
+          "blocked": 114,
+          "incomplete": 6
+        }
+      },
+      "bfs": {
+        "solved": 30,
+        "count": 30,
+        "success_rate": 1.0,
+        "success_wilson_95_ci": [
+          0.8864866068260312,
+          0.9999999999999999
+        ],
+        "optimal_rate": 1.0,
+        "mean_attempts": 1,
+        "latency_p50_seconds": 3.828200010502769e-05,
+        "latency_p95_seconds": 6.15436998714358e-05,
+        "mean_generated_moves": 3.3333333333333335,
+        "failures": {}
+      },
+      "single_stochastic_attempt": {
+        "success_rate": 0.03333333333333333
+      },
+      "feedback_minus_resampling": {
+        "difference": 0,
+        "bootstrap_95_ci": [
+          0.0,
+          0.0
+        ],
+        "discordant_wins": 0,
+        "discordant_losses": 0
+      }
+    }
+  },
+  "robustness": [
+    {
+      "rows": [
+        "SX",
+        "XG"
+      ],
+      "correctly_unsolved": true,
+      "solved": false,
+      "attempts_used": 4,
+      "history": [
+        {
+          "path": "RRRR",
+          "valid": false,
+          "optimal": false,
+          "reason": "blocked",
+          "at": 0
+        },
+        {
+          "path": "",
+          "valid": false,
+          "optimal": false,
+          "reason": "incomplete",
+          "at": 0
+        },
+        {
+          "path": "R",
+          "valid": false,
+          "optimal": false,
+          "reason": "blocked",
+          "at": 0
+        },
+        {
+          "path": "RDD",
+          "valid": false,
+          "optimal": false,
+          "reason": "blocked",
+          "at": 0
+        }
+      ],
+      "seconds": 0.1446232139996937,
+      "generated_moves": 8
+    },
+    {
+      "rows": [
+        "SXX",
+        "XXX",
+        "XXG"
+      ],
+      "correctly_unsolved": true,
+      "solved": false,
+      "attempts_used": 4,
+      "history": [
+        {
+          "path": "RRRR",
+          "valid": false,
+          "optimal": false,
+          "reason": "blocked",
+          "at": 0
+        },
+        {
+          "path": "R",
+          "valid": false,
+          "optimal": false,
+          "reason": "blocked",
+          "at": 0
+        },
+        {
+          "path": "RDD",
+          "valid": false,
+          "optimal": false,
+          "reason": "blocked",
+          "at": 0
+        },
+        {
+          "path": "",
+          "valid": false,
+          "optimal": false,
+          "reason": "incomplete",
+          "at": 0
+        }
+      ],
+      "seconds": 0.1638953629999378,
+      "generated_moves": 8
+    }
+  ],
+  "thresholds": {
+    "id_success": 0.8,
+    "larger_maze_success": 0.6,
+    "note": "Provisional engineering acceptance targets, not external benchmark standards; set before evaluating a candidate"
+  },
+  "gates": {
+    "weight_size_30_to_100_MB": true,
+    "verifier_exhaustive_audit": true,
+    "bfs_all_cases_valid_and_optimal": true,
+    "no_training_overlap": true,
+    "multiple_evaluation_seeds": true,
+    "id_quality_target": false,
+    "larger_maze_quality_target": false,
+    "positive_feedback_effect_95_CI": false,
+    "bounded_failure_on_impossible_mazes": true,
+    "gpu_runtime_measured": false
+  },
+  "ready": false,
+  "limitations": [
+    "Synthetic maze benchmark only; not a natural-language, multimodal or general reasoning benchmark",
+    "Evaluation seeds measure sampling/task variability, not independent training runs",
+    "Bootstrap intervals are exploratory, not corrected for multiple comparisons",
+    "Latency is sequential eager inference; hardware-specific and includes verifier work",
+    "GPU inference measurement does not validate GPU mixed-precision training or remote Colab execution",
+    "No training result may be called complete solely because benchmark execution succeeded"
+  ]
+}

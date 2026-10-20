@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tiny-system2"
+version = "0.1.0"
+description = "Scratch-trained maze planning with verified retries"
+requires-python = ">=3.10"
+dependencies = ["torch>=2.6,<3"]
+
+[project.optional-dependencies]
+evidence = ["matplotlib>=3.8,<4", "playwright>=1.49,<2"]
+
+[project.scripts]
+sys2 = "sys2.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["sys2*"]
+
+[tool.setuptools.package-data]
+sys2 = ["*.html"]

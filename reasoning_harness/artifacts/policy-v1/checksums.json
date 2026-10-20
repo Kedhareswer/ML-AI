@@ -1,0 +1,22 @@
+{
+  "weights.pt": {
+    "bytes": 32099618,
+    "sha256": "85a48e49244b1a48f2ed7877030e8b0e437f9bfc59477a47f4cadcafe709e474"
+  },
+  "config.json": {
+    "bytes": 62,
+    "sha256": "c1727e3e74a2dbd526c336b80bf319f427660f5a58390d43a52f89d835f40ca8"
+  },
+  "MODEL_CARD.md": {
+    "bytes": 5543,
+    "sha256": "05ed62ff005cf8ccef42b80887b560eb03f00d6a7d01a43057d2f6288096a7b5"
+  },
+  "manifest.json": {
+    "bytes": 117011,
+    "sha256": "ff05d8f1dd0c3e6b46d469f4834fb18605fcbd93acbedab30409fd3d992c1bd4"
+  },
+  "metrics.jsonl": {
+    "bytes": 121346,
+    "sha256": "81d28bc391ea641c263b009fb9da98166c155090238df4641fbced00e75acdc8"
+  }
+}

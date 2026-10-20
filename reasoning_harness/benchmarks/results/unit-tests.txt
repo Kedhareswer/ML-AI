@@ -1,0 +1,37 @@
+test_learning_and_invalid_inference_controls (test_benchmarks.BenchmarkTests.test_learning_and_invalid_inference_controls) ... {"device": "cpu", "config": {"width": 32, "layers": 2, "heads": 4, "context": 256}, "parameters": 37856, "fp32_weight_MB": 0.151424, "precision": "fp32"}
+{"step": 1, "loss": 4.838564872741699, "elapsed_seconds": 0.010682399999950576, "supervised_tokens": 25, "peak_cuda_bytes": 0}
+{"step": 25, "loss": 1.371234655380249, "elapsed_seconds": 0.17177345400023114, "supervised_tokens": 20, "peak_cuda_bytes": 0}
+{"step": 50, "loss": 0.7814200520515442, "elapsed_seconds": 0.33916754700021556, "supervised_tokens": 21, "peak_cuda_bytes": 0}
+{"step": 75, "loss": 0.4378773272037506, "elapsed_seconds": 0.5092075840002508, "supervised_tokens": 24, "peak_cuda_bytes": 0}
+{"step": 100, "loss": 0.24702969193458557, "elapsed_seconds": 0.6721075460000066, "supervised_tokens": 20, "peak_cuda_bytes": 0}
+ok
+test_saved_benchmark_evidence_and_failure_gates (test_benchmarks.BenchmarkTests.test_saved_benchmark_evidence_and_failure_gates) ... {"device": "cpu", "config": {"width": 16, "layers": 1, "heads": 2, "context": 256}, "parameters": 9504, "fp32_weight_MB": 0.038016, "precision": "fp32"}
+{"step": 1, "loss": 4.873848915100098, "elapsed_seconds": 0.0024281290002363676, "supervised_tokens": 6, "peak_cuda_bytes": 0}
+{"size": 3, "seed": 100, "completed": 2}
+{"size": 3, "seed": 200, "completed": 4}
+{"size": 3, "seed": 300, "completed": 6}
+{"size": 4, "seed": 100, "completed": 8}
+{"size": 4, "seed": 200, "completed": 10}
+{"size": 4, "seed": 300, "completed": 12}
+ok
+test_statistics_and_independent_audit (test_benchmarks.BenchmarkTests.test_statistics_and_independent_audit) ... ok
+test_causal_attention_and_masking (test_harness.ModelTests.test_causal_attention_and_masking) ... ok
+test_production_artifact_size (test_harness.ModelTests.test_production_artifact_size) ... ok
+test_train_resume_eval_and_ui (test_harness.ModelTests.test_train_resume_eval_and_ui) ... {"device": "cpu", "config": {"width": 32, "layers": 2, "heads": 4, "context": 256}, "parameters": 37856, "fp32_weight_MB": 0.151424, "precision": "fp32"}
+{"step": 1, "loss": 4.831036567687988, "elapsed_seconds": 0.00485011000000668, "supervised_tokens": 14, "peak_cuda_bytes": 0}
+{"step": 2, "loss": 4.777658462524414, "elapsed_seconds": 0.008738290000110283, "supervised_tokens": 12, "peak_cuda_bytes": 0}
+{"device": "cpu", "config": {"width": 32, "layers": 2, "heads": 4, "context": 256}, "parameters": 37856, "fp32_weight_MB": 0.151424, "precision": "fp32"}
+{"step": 3, "loss": 4.717506408691406, "elapsed_seconds": 0.0038399290001507325, "supervised_tokens": 14, "peak_cuda_bytes": 0}
+{"device": "cpu", "config": {"width": 32, "layers": 2, "heads": 4, "context": 256}, "parameters": 37856, "fp32_weight_MB": 0.151424, "precision": "fp32"}
+{"step": 1, "loss": 4.831036567687988, "elapsed_seconds": 0.003864465000333439, "supervised_tokens": 14, "peak_cuda_bytes": 0}
+{"step": 2, "loss": 4.777658462524414, "elapsed_seconds": 0.007487170000331389, "supervised_tokens": 12, "peak_cuda_bytes": 0}
+{"step": 4, "loss": 4.65372896194458, "elapsed_seconds": 0.017563338999934786, "supervised_tokens": 13, "peak_cuda_bytes": 0}
+ok
+test_feedback_reaches_model (test_harness.TaskTests.test_feedback_reaches_model) ... ok
+test_synthetic_data (test_harness.TaskTests.test_synthetic_data) ... ok
+test_verifier (test_harness.TaskTests.test_verifier) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 1.820s
+
+OK
