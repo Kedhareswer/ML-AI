@@ -153,6 +153,9 @@ class GameTests(unittest.TestCase):
         import chess
         from arena.games.chess_engine import Searcher
         board = chess.Board("6k1/p4ppp/8/8/8/8/5PPP/3R2K1 w - - 0 1")
+        before = board.fen()
+        Searcher(None, 30, 3).choose(board)  # budget stop mid-search must not corrupt the board
+        self.assertEqual(board.fen(), before)
         move = Searcher(None, 5000, 2).choose(board)
         board.push(move)
         self.assertTrue(board.is_checkmate())

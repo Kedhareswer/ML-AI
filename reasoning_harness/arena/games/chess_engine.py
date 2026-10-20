@@ -99,6 +99,7 @@ class Searcher:
 
     def choose(self, board):
         """Iterative deepening; returns the best move of the deepest finished iteration."""
+        board = board.copy()  # a budget stop can leave moves pushed; never touch the caller's board
         self.nodes = 0
         moves, pri = self.order(board, 0)
         best_move = moves[0]
