@@ -1,0 +1,178 @@
+[
+  {
+    "tab": "sudoku",
+    "button": "Solve: network + backtracking",
+    "status_text": "Network + backtracking: \u2713 solved, verified\n54 states \u00b7 792.67 ms",
+    "api": {
+      "solved": true,
+      "mode": "search",
+      "expanded_states": 54,
+      "ms": 792.67,
+      "result": null,
+      "plies": null,
+      "words": null,
+      "played": null,
+      "solution": null
+    }
+  },
+  {
+    "tab": "mini_sudoku",
+    "button": "Solve: network only (no backtracking)",
+    "status_text": "Network only: \u2713 solved, verified\n26 states \u00b7 88.12 ms",
+    "api": {
+      "solved": true,
+      "mode": "neural",
+      "expanded_states": 26,
+      "ms": 88.12,
+      "result": null,
+      "plies": null,
+      "words": null,
+      "played": null,
+      "solution": null
+    }
+  },
+  {
+    "tab": "tango",
+    "button": "Solve: network only (no backtracking)",
+    "status_text": "Network only: \u2713 solved, verified\n32 states \u00b7 143.84 ms",
+    "api": {
+      "solved": true,
+      "mode": "neural",
+      "expanded_states": 32,
+      "ms": 143.84,
+      "result": null,
+      "plies": null,
+      "words": null,
+      "played": null,
+      "solution": null
+    }
+  },
+  {
+    "tab": "queens",
+    "button": "Solve: network only (no backtracking)",
+    "status_text": "Network only: \u2713 solved, verified\n7 states \u00b7 46.33 ms",
+    "api": {
+      "solved": true,
+      "mode": "neural",
+      "expanded_states": 7,
+      "ms": 46.33,
+      "result": null,
+      "plies": null,
+      "words": null,
+      "played": null,
+      "solution": null
+    }
+  },
+  {
+    "tab": "zip",
+    "button": "Solve: network + backtracking",
+    "status_text": "Network + backtracking: \u2713 solved, verified\n48 states \u00b7 139.65 ms",
+    "api": {
+      "solved": true,
+      "mode": "search",
+      "expanded_states": 48,
+      "ms": 139.65,
+      "result": null,
+      "plies": null,
+      "words": null,
+      "played": null,
+      "solution": null
+    }
+  },
+  {
+    "tab": "patches",
+    "button": "Solve: network only (no backtracking)",
+    "status_text": "Network only: \u2713 solved, verified\n12 states \u00b7 62.11 ms",
+    "api": {
+      "solved": true,
+      "mode": "neural",
+      "expanded_states": 12,
+      "ms": 62.11,
+      "result": null,
+      "plies": null,
+      "words": null,
+      "played": null,
+      "solution": null
+    }
+  },
+  {
+    "tab": "wend",
+    "button": "Solve: network + backtracking",
+    "status_text": "Network + backtracking: \u2713 solved, verified\n4 states \u00b7 15.99 ms\nwords: bee, carrier, stands, moments",
+    "api": {
+      "solved": true,
+      "mode": "search",
+      "expanded_states": 4,
+      "ms": 15.99,
+      "result": null,
+      "plies": null,
+      "words": [
+        "bee",
+        "carrier",
+        "stands",
+        "moments"
+      ],
+      "played": null,
+      "solution": null
+    }
+  },
+  {
+    "tab": "chess",
+    "button": "Solve: network only (no search)",
+    "status_text": "Network only: \u2717 missed\nplayed e4e5\nsolution e3f4 f1f4",
+    "api": {
+      "solved": false,
+      "mode": "neural",
+      "expanded_states": null,
+      "ms": null,
+      "result": null,
+      "plies": null,
+      "words": null,
+      "played": [
+        "e4e5"
+      ],
+      "solution": [
+        "e3f4",
+        "d6f4",
+        "f1f4"
+      ]
+    }
+  },
+  {
+    "tab": "checkers",
+    "button": "Play: network vs material engine",
+    "status_text": "trained network (depth 2) vs material engine: draw after 200 plies.",
+    "api": {
+      "solved": null,
+      "mode": null,
+      "expanded_states": null,
+      "ms": null,
+      "result": 0,
+      "plies": 200,
+      "words": null,
+      "played": null,
+      "solution": null
+    }
+  },
+  {
+    "tab": "pinpoint",
+    "button": "Reveal clues and guess",
+    "status_text": "\u2717 not the top guess",
+    "api": {
+      "clues": [
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday"
+      ],
+      "top_guess_after_each_clue": [
+        "time",
+        "hour",
+        "hour",
+        "hour",
+        "hour"
+      ]
+    }
+  }
+]

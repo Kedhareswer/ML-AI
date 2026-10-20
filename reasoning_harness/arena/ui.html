@@ -73,9 +73,9 @@ function buttons(){
  const B=$("buttons");B.innerHTML="";
  const add=(t,f,p)=>{const b=document.createElement("button");b.textContent=t;b.onclick=f;if(p)b.className="primary";B.appendChild(b)};
  if(kind==="checkers"){add("Play: network vs material engine",()=>game("material"),1);add("Play: network vs random mover",()=>game("random"));return}
- if(kind==="pinpoint"){add("New example",newPuzzle);add("Reveal clues and guess",pinpoint,1);
+ if(kind==="pinpoint"){add("New example",()=>newPuzzle());add("Reveal clues and guess",()=>pinpoint(false),1);
    const box=document.createElement("div");box.innerHTML='<div class="meta">Or type your own clues:</div>'+[1,2,3,4,5].map(i=>`<input class="pin" id="pin${i}" placeholder="clue ${i}">`).join("")+'';B.appendChild(box);add("Guess my clues",()=>pinpoint(true));return}
- add("New held-out puzzle",newPuzzle);
+ add("New held-out puzzle",()=>newPuzzle());
  if(kind==="chess"){add("Lichess daily puzzle",()=>newPuzzle("chess_daily"));add("Solve: network only (no search)",()=>chessSolve("neural"),1);add("Solve: network + search",()=>chessSolve("search"));add("Classical search, no network",()=>chessSolve("classic"));return}
  add("Solve: network only (no backtracking)",()=>solve("neural"),1);add("Solve: network + backtracking",()=>solve("search"));add("Classical solver, no network",()=>solve("exact"));
 }
@@ -156,7 +156,7 @@ function drawChess(b,hl,flip){const st=$("stage");st.innerHTML="";const z=Math.m
   if(hl&&hl.some(([a,bb])=>a===r&&bb===c))d.style.boxShadow="inset 0 0 0 4px rgba(47,111,222,.85)";g.appendChild(d)}st.appendChild(g)}
 async function chessSolve(mode){if(busy)return;busy=true;stop();status("Thinking…");
  try{const r=await api("/api/chess/solve",{puzzle:row,mode});row._start=r.start_fen;
-  let b=fenBoard(r.start_fen);const seq=[];for(let i=0;i<r.played.length;i++){seq.push({u:r.played[i],mine:true});if(r.played[i]!==r.solution[i]&&!r.solved)break;if(i*2+1<r.solution.length&&i<r.played.length-1)seq.push({u:r.solution[i*2+1]})}
+  let b=fenBoard(r.start_fen);
   // rebuild alternating line: solver move, then the puzzle's reply
   const line=[];let si=0;for(let i=0;i<r.solution.length;i++){if(i%2===0){const u=r.played[si++];if(!u)break;line.push(u);if(u!==r.solution[i])break}else line.push(r.solution[i])}
   let i=0;drawChess(b);timer=setInterval(()=>{if(i>=line.length){stop();return}const u=line[i++];b=applyMove(b,u);drawChess(b,[sq(u.slice(0,2)),sq(u.slice(2,4))])},900);
