@@ -1,0 +1,40 @@
+{"answer": "planet", "accept": ["planets"], "clues": ["mercury", "venus", "mars", "jupiter", "saturn"]}
+{"answer": "fruit", "accept": ["fruits"], "clues": ["apple", "banana", "cherry", "mango", "peach"]}
+{"answer": "color", "accept": ["colour", "colors", "colours"], "clues": ["red", "blue", "green", "yellow", "purple"]}
+{"answer": "instrument", "accept": ["instruments"], "clues": ["guitar", "piano", "violin", "drum", "flute"]}
+{"answer": "sport", "accept": ["sports"], "clues": ["tennis", "golf", "soccer", "hockey", "baseball"]}
+{"answer": "key", "accept": ["keys"], "clues": ["piano", "keyboard", "map", "lock", "door"]}
+{"answer": "ball", "accept": ["balls"], "clues": ["base", "foot", "basket", "volley", "hand"]}
+{"answer": "chess", "accept": ["pieces"], "clues": ["king", "queen", "bishop", "knight", "pawn"]}
+{"answer": "suit", "accept": ["suits", "cards"], "clues": ["hearts", "spades", "clubs", "diamonds", "trumps"]}
+{"answer": "weather", "accept": [], "clues": ["rain", "snow", "hail", "sleet", "fog"]}
+{"answer": "metal", "accept": ["metals"], "clues": ["iron", "copper", "silver", "gold", "zinc"]}
+{"answer": "vegetable", "accept": ["vegetables"], "clues": ["carrot", "potato", "onion", "cabbage", "spinach"]}
+{"answer": "tree", "accept": ["trees"], "clues": ["oak", "maple", "pine", "birch", "willow"]}
+{"answer": "dog", "accept": ["dogs", "breed"], "clues": ["poodle", "beagle", "terrier", "collie", "spaniel"]}
+{"answer": "bird", "accept": ["birds"], "clues": ["eagle", "sparrow", "robin", "owl", "hawk"]}
+{"answer": "joint", "accept": ["joints"], "clues": ["elbow", "knee", "ankle", "wrist", "shoulder"]}
+{"answer": "furniture", "accept": [], "clues": ["chair", "table", "sofa", "desk", "bed"]}
+{"answer": "tool", "accept": ["tools"], "clues": ["hammer", "wrench", "saw", "drill", "screwdriver"]}
+{"answer": "month", "accept": ["months"], "clues": ["january", "march", "april", "june", "october"]}
+{"answer": "day", "accept": ["days", "weekday"], "clues": ["monday", "tuesday", "wednesday", "thursday", "friday"]}
+{"answer": "language", "accept": ["languages"], "clues": ["french", "spanish", "german", "italian", "russian"]}
+{"answer": "currency", "accept": ["currencies", "money"], "clues": ["dollar", "euro", "yen", "pound", "peso"]}
+{"answer": "shape", "accept": ["shapes"], "clues": ["circle", "square", "triangle", "rectangle", "hexagon"]}
+{"answer": "emotion", "accept": ["emotions", "feeling", "feelings"], "clues": ["anger", "joy", "fear", "sadness", "surprise"]}
+{"answer": "clothing", "accept": ["clothes", "garment", "garments"], "clues": ["shirt", "jacket", "trousers", "sweater", "coat"]}
+{"answer": "drink", "accept": ["drinks", "beverage", "beverages"], "clues": ["coffee", "tea", "juice", "milk", "lemonade"]}
+{"answer": "vehicle", "accept": ["vehicles"], "clues": ["car", "truck", "bus", "bicycle", "motorcycle"]}
+{"answer": "weapon", "accept": ["weapons"], "clues": ["sword", "spear", "axe", "dagger", "bow"]}
+{"answer": "gem", "accept": ["gems", "gemstone", "gemstones", "jewel", "jewels"], "clues": ["diamond", "ruby", "emerald", "sapphire", "pearl"]}
+{"answer": "insect", "accept": ["insects"], "clues": ["ant", "bee", "beetle", "moth", "wasp"]}
+{"answer": "letter", "accept": ["letters", "greek"], "clues": ["alpha", "beta", "gamma", "delta", "omega"]}
+{"answer": "composer", "accept": ["composers"], "clues": ["mozart", "bach", "beethoven", "chopin", "haydn"]}
+{"answer": "river", "accept": ["rivers"], "clues": ["nile", "amazon", "danube", "thames", "rhine"]}
+{"answer": "gas", "accept": ["gases"], "clues": ["oxygen", "nitrogen", "hydrogen", "helium", "argon"]}
+{"answer": "dance", "accept": ["dances"], "clues": ["waltz", "tango", "salsa", "foxtrot", "ballet"]}
+{"answer": "fly", "accept": ["flies"], "clues": ["butter", "dragon", "fire", "house", "horse"]}
+{"answer": "fish", "accept": [], "clues": ["salmon", "trout", "cod", "tuna", "herring"]}
+{"answer": "cheese", "accept": ["cheeses"], "clues": ["cheddar", "brie", "gouda", "feta", "parmesan"]}
+{"answer": "pasta", "accept": [], "clues": ["spaghetti", "penne", "lasagna", "ravioli", "macaroni"]}
+{"answer": "house", "accept": ["houses"], "clues": ["light", "green", "ware", "farm", "play"]}

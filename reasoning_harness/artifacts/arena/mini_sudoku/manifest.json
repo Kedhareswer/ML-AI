@@ -1,0 +1,16 @@
+{
+  "kind": "mini_sudoku",
+  "steps": 2000,
+  "batch_size": 64,
+  "lr": 0.001,
+  "seed": 0,
+  "train_puzzles": 10000,
+  "bf16_autocast": true,
+  "trained_steps": 2000,
+  "parameters": 426886,
+  "weights_bytes": 1731890,
+  "train_seconds": 313.6,
+  "torch": "2.6.0+cpu",
+  "device": "cpu",
+  "initialisation": "random (torch.manual_seed)"
+}
