@@ -6,7 +6,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from arena.registry import build, identity, read_jsonl  # noqa: E402
 
-SIZES = {"mini_sudoku": 6000, "tango": 3000, "queens": 3000, "zip": 3000, "patches": 15000, "wend": 15000}
+SIZES = {"mini_sudoku": 6000, "tango": 2800, "queens": 2000, "zip": 2000, "patches": 15000, "wend": 15000}
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--out", default="data")
