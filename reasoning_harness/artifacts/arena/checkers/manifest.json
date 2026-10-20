@@ -1,0 +1,11 @@
+{
+  "kind": "checkers_value",
+  "generations": 15,
+  "games_per_generation": 300,
+  "self_play_games": 4500,
+  "parameters": 637697,
+  "search": "1-ply during self-play, 15% random moves",
+  "target": "final game result for the side to move",
+  "initialisation": "random (torch.manual_seed 0)",
+  "train_seconds": 5306.5
+}

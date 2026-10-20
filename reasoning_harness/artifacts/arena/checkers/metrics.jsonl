@@ -1,0 +1,15 @@
+{"generation": 1, "positions": 28536, "mse": 0.2601, "draw_rate": 0.347, "elapsed_s": 142.8}
+{"generation": 2, "positions": 56606, "mse": 0.2745, "draw_rate": 0.27, "elapsed_s": 344.9}
+{"generation": 3, "positions": 84907, "mse": 0.2913, "draw_rate": 0.187, "elapsed_s": 579.8}
+{"generation": 4, "positions": 113271, "mse": 0.2885, "draw_rate": 0.103, "elapsed_s": 871.1}
+{"generation": 5, "positions": 143671, "mse": 0.2745, "draw_rate": 0.123, "elapsed_s": 1176.6}
+{"generation": 6, "positions": 173058, "mse": 0.2586, "draw_rate": 0.11, "elapsed_s": 1531.7}
+{"generation": 7, "positions": 199436, "mse": 0.2582, "draw_rate": 0.093, "elapsed_s": 1934.5}
+{"generation": 8, "positions": 200000, "mse": 0.237, "draw_rate": 0.13, "elapsed_s": 2376.6}
+{"generation": 9, "positions": 200000, "mse": 0.2451, "draw_rate": 0.09, "elapsed_s": 2837.6}
+{"generation": 10, "positions": 200000, "mse": 0.2482, "draw_rate": 0.097, "elapsed_s": 3248.7}
+{"generation": 11, "positions": 200000, "mse": 0.2455, "draw_rate": 0.11, "elapsed_s": 3651.2}
+{"generation": 12, "positions": 200000, "mse": 0.2503, "draw_rate": 0.09, "elapsed_s": 4074.3}
+{"generation": 13, "positions": 200000, "mse": 0.2393, "draw_rate": 0.063, "elapsed_s": 4464.7}
+{"generation": 14, "positions": 200000, "mse": 0.2431, "draw_rate": 0.153, "elapsed_s": 4899.5}
+{"generation": 15, "positions": 200000, "mse": 0.2459, "draw_rate": 0.063, "elapsed_s": 5306.5}
