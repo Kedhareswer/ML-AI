@@ -135,8 +135,9 @@ def pinpoint(args):
     out = {}
     for name, puzzles in (("handwritten", hand), ("wordnet", wn)):
         res, recs = evaluate(g.rank, puzzles)
+        plain, _ = evaluate(lambda c, k=5: g.rank(c, k, use_head=False), puzzles)
         ctrl, _ = evaluate(random_guesser(cands, rng), puzzles)
-        out[name] = {"trained_vectors": res, "random_guess_control": ctrl}
+        out[name] = {"vectors_plus_category_head": res, "vectors_only": plain, "random_guess_control": ctrl}
         p = Path(args.output) / "pinpoint"
         p.mkdir(parents=True, exist_ok=True)
         with open(p / f"{name}-records.jsonl", "w") as f:

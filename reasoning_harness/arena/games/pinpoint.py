@@ -63,19 +63,27 @@ class Guesser:
         cand = candidates if candidates is not None else self.words
         self.cand = [w for w in cand if w in self.index]
         self.cand_idx = np.array([self.index[w] for w in self.cand])
+        self.head = None
+        head_path = model_dir / "category_head.pt"
+        if head_path.exists():
+            import torch
+            self.head = CategoryHead(self, torch.load(head_path, map_location="cpu", weights_only=True))
 
     def known(self, word):
         return word.lower() in self.index
 
-    def rank(self, clues, k=5):
+    def rank(self, clues, k=5, use_head=True):
         ids = [self.index[c.lower()] for c in clues if c.lower() in self.index]
         if not ids:
             return []
-        centroid = self.vecs[ids].mean(0)
-        sims = self.vecs[self.cand_idx] @ centroid
-        # a category word should relate to every clue, not just one: blend mean and minimum similarity
-        per = self.vecs[self.cand_idx] @ self.vecs[ids].T
-        score = 0.5 * sims / max(np.linalg.norm(centroid), 1e-6) + 0.5 * per.min(1)
+        if self.head is not None and use_head:
+            score = self.head.logits(ids)
+        else:
+            centroid = self.vecs[ids].mean(0)
+            sims = self.vecs[self.cand_idx] @ centroid
+            # a category word should relate to every clue, not just one: blend mean and minimum similarity
+            per = self.vecs[self.cand_idx] @ self.vecs[ids].T
+            score = 0.5 * sims / max(np.linalg.norm(centroid), 1e-6) + 0.5 * per.min(1)
         banned = {c.lower() for c in clues}
         order = np.argsort(-score)
         out = []
@@ -137,3 +145,77 @@ def evaluate(guess, puzzles):
     n = max(len(puzzles), 1)
     return {"cases": len(puzzles), "top1_after_k_clues": (100 * top1 / n).round(1).tolist(),
             "top5_after_k_clues": (100 * top5 / n).round(1).tolist()}, records
+
+
+class CategoryHead:
+    """Small network, trained from scratch, mapping the mean clue vector to the category word.
+
+    Training pairs come from WordNet categories (kinds -> category). Every answer of
+    the evaluation sets is excluded, so test categories are never seen in training.
+    """
+
+    def __init__(self, guesser, state=None, hidden=512):
+        import torch
+        from torch import nn
+        self.g = guesser
+        dim = guesser.vecs.shape[1]
+        self.net = nn.Sequential(nn.Linear(dim, hidden), nn.GELU(), nn.Linear(hidden, dim))
+        if state is not None:
+            self.net.load_state_dict(state)
+        self.net.eval()
+        self.cand = torch.from_numpy(guesser.vecs[guesser.cand_idx])
+
+    def logits(self, ids):
+        import torch
+        x = torch.from_numpy(self.g.vecs[ids].mean(0, keepdims=True))
+        with torch.no_grad():
+            q = self.net(x) + x
+        q = q / q.norm(dim=1, keepdim=True)
+        return (q @ self.cand.T)[0].numpy()
+
+
+def train_category_head(guesser, exclude, nltk_dir=None, steps=4000, seed=0, log=print):
+    import os
+    import torch
+    import torch.nn.functional as F
+    if nltk_dir:
+        os.environ.setdefault("NLTK_DATA", nltk_dir)
+    from nltk.corpus import wordnet as wn
+    torch.manual_seed(seed)
+    rng = random.Random(seed)
+    cand_pos = {w: i for i, w in enumerate(guesser.cand)}
+    exclude = set(exclude)
+    groups = []
+    for syn in wn.all_synsets("n"):
+        heads = [l.lower() for l in syn.lemma_names() if "_" not in l]
+        if not heads or any(h in exclude for h in heads) or heads[0] not in cand_pos:
+            continue
+        kids = set()
+        for h in syn.closure(lambda s: s.hyponyms(), depth=2):
+            for lemma in h.lemma_names():
+                lemma = lemma.lower()
+                if "_" not in lemma and lemma in guesser.index and lemma not in heads:
+                    kids.add(guesser.index[lemma])
+        if len(kids) >= 4:
+            groups.append((cand_pos[heads[0]], sorted(kids)))
+    head = CategoryHead(guesser)
+    head.net.train()
+    opt = torch.optim.AdamW(head.net.parameters(), lr=2e-3, weight_decay=1e-4)
+    vecs = torch.from_numpy(guesser.vecs)
+    for step in range(1, steps + 1):
+        batch = [groups[rng.randrange(len(groups))] for _ in range(128)]
+        xs = []
+        for _, kids in batch:
+            k = rng.randint(1, min(5, len(kids)))
+            xs.append(vecs[rng.sample(kids, k)].mean(0))
+        x = torch.stack(xs)
+        q = head.net(x) + x
+        q = q / q.norm(dim=1, keepdim=True)
+        loss = F.cross_entropy(20 * q @ head.cand.T, torch.tensor([t for t, _ in batch]))
+        opt.zero_grad()
+        loss.backward()
+        opt.step()
+        if step % 500 == 0:
+            log(json.dumps({"step": step, "loss": round(loss.item(), 4)}))
+    head.net.eval()
+    return head, len(groups)
