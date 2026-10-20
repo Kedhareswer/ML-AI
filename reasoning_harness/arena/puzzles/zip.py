@@ -154,7 +154,7 @@ class Zip(GridPuzzle):
         return [float(logp[0][v]) for v in values]
 
     def random_partial(self, solution, rng):
-        k = rng.randrange(1, len(solution))
+        k = int(rng.integers(1, len(solution))) if hasattr(rng, "integers") else rng.randrange(1, len(solution))
         return tuple(tuple(c) for c in solution[:k])
 
 

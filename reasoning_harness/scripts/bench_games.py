@@ -100,6 +100,9 @@ def checkers_games(args):
     rng = random.Random(11)
     trained = {"kind": "net", "net": net, "depth": 2}
     matches = [
+        ("Trained network (depth 1) vs random mover", {"kind": "net", "net": net, "depth": 1}, {"kind": "random"}),
+        ("Trained network (depth 1) vs material engine (depth 1)", {"kind": "net", "net": net, "depth": 1},
+         {"kind": "material", "depth": 1}),
         ("Trained network (depth 2) vs random mover", trained, {"kind": "random"}),
         ("Trained network (depth 2) vs material engine (depth 2)", trained, {"kind": "material", "depth": 2}),
         ("Trained network (depth 2) vs material engine (depth 4)", trained, {"kind": "material", "depth": 4}),

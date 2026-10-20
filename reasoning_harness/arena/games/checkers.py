@@ -158,6 +158,10 @@ def choose(b, player, rng, plies_since_progress=0):
     vals = np.array(vals)
     if player.get("explore", 0) > 0 and rng.random() < player["explore"]:
         return rng.choice(moves)
+    tau = player.get("temperature", 0)
+    if tau > 0:  # self-play diversity: sample moves in proportion to exp(value / tau)
+        p = np.exp((vals - vals.max()) / tau)
+        return moves[int(np.searchsorted(np.cumsum(p / p.sum()), rng.random()))]
     best = np.flatnonzero(vals >= vals.max() - 1e-6)
     return moves[int(rng.choice(list(best)))]
 
@@ -182,7 +186,29 @@ def play(p_black, p_white, rng, opening_random=2, max_plies=200, record=False):
     return 0, history, max_plies
 
 
-def train_selfplay(run, generations=12, games_per_gen=300, epochs=4, seed=0, log=print):
+def td_targets(net, hist, result, lam):
+    """TD(lambda) targets for one game, each from the mover's point of view.
+
+    The last position takes the game result; earlier ones blend the (negated)
+    value of the next position with the target after it.
+    """
+    boards = [b for b, _ in hist]
+    sides = [s for _, s in hist]
+    v = net_values(net, boards) if boards else np.zeros(0)
+    out = np.zeros(len(boards), np.float32)
+    nxt = None
+    for t in range(len(boards) - 1, -1, -1):
+        z = result if sides[t] == 0 else -result
+        if nxt is None:
+            out[t] = z
+        else:
+            out[t] = (1 - lam) * (-v[t + 1]) + lam * (-nxt)
+        nxt = out[t]
+    return out
+
+
+def train_selfplay(run, generations=12, games_per_gen=300, epochs=4, seed=0, log=print,
+                   explore=0.15, temperature=0.0, td_lambda=None):
     from pathlib import Path
     import json
     torch.manual_seed(seed)
@@ -195,15 +221,18 @@ def train_selfplay(run, generations=12, games_per_gen=300, epochs=4, seed=0, log
     t0 = time.time()
     metrics = open(run / "metrics.jsonl", "w")
     for gen in range(1, generations + 1):
-        player = {"kind": "net", "net": net, "depth": 1, "explore": 0.15}
+        player = {"kind": "net", "net": net, "depth": 1, "explore": explore, "temperature": temperature}
         results = []
         for _ in range(games_per_gen):
             result, hist, _ = play(player, player, rng, opening_random=4, record=True)
             results.append(result)
-            for board, side in hist:
-                z = result if side == 0 else -result  # result from the mover's perspective
+            if td_lambda is None:
+                targets = [result if side == 0 else -result for _, side in hist]  # result for the mover
+            else:
+                targets = td_targets(net, hist, result, td_lambda)
+            for (board, _), z in zip(hist, targets):
                 buffer_x.append(board)
-                buffer_y.append(z)
+                buffer_y.append(float(z))
         buffer_x, buffer_y = buffer_x[-200_000:], buffer_y[-200_000:]
         net.train()
         y_all = torch.tensor(buffer_y, dtype=torch.float32)
