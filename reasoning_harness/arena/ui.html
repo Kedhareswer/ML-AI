@@ -20,7 +20,12 @@ main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;padding:8px
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
 #stage{display:flex;justify-content:center;align-items:center;min-height:420px}
 .controls button{display:block;width:100%;margin:6px 0;padding:9px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;font-size:14px;text-align:left}
-.controls button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.controls button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.controls h3{margin:12px 0 2px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.status b.k{display:inline-block;min-width:62px;color:var(--muted);font-weight:500}
+.legend{display:flex;gap:14px;justify-content:center;margin-top:10px;font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+.moves{margin-top:8px;font:12px/1.5 ui-monospace,monospace;color:var(--muted);max-height:96px;overflow:auto}
 .controls button:disabled{opacity:.5;cursor:wait}
 .status{margin-top:10px;padding:10px;border-radius:10px;background:var(--bg);min-height:48px;font-size:14px}
 .status .ok{color:var(--ok);font-weight:600}.status .bad{color:var(--bad);font-weight:600}
@@ -61,27 +66,34 @@ const KINDS={
  patches:{label:"Patches",rules:"Cut the grid into rectangles, one clue each. The number is the area; ■ square, ▬ wide, ▮ tall, ✱ any."},
  wend:{label:"Wend",rules:"Split the letters into hidden words. Words bend through tiles that touch up/down/left/right, every tile used once; dark tiles are walls."},
  chess:{label:"Chess puzzles",rules:"Real Lichess puzzle from games never used in training. Find the winning line; any mating move is accepted."},
- checkers:{label:"Checkers",rules:"American checkers. Watch the trained network (black, bottom) play an engine. Captures are compulsory."},
- pinpoint:{label:"Pinpoint",rules:"Five clue words share a category. The word-vector model (trained from scratch on Wikipedia text) guesses after each clue."}
+ checkers:{label:"Checkers",rules:"American checkers. The trained network plays Black (bottom, dark pieces) against an engine playing Red (top). Captures are compulsory."},
+ pinpoint:{label:"Pinpoint",rules:"Five clue words share a category. Experimental and weak: word vectors trained from scratch on Wikipedia text name the category as their top guess only about 5% of the time (answer in the top 5 about a third of the time). Real Pinpoint needs a large pretrained language model, which this project deliberately does not use."}
 };
+const MODES={neural:"Network only (one pass, no backtracking)",search:"Network + backtracking search",exact:"Classical solver (no network)"};
+const CHESS_MODES={neural:"Network only (policy, no search)",search:"Network + alpha-beta search",classic:"Classical alpha-beta search (no network)"};
 let kind="sudoku",row=null,busy=false,timer=null;
 const $=id=>document.getElementById(id);
 const tabs=$("tabs");
 for(const k in KINDS){const b=document.createElement("button");b.textContent=KINDS[k].label;b.dataset.k=k;b.onclick=()=>select(k);tabs.appendChild(b)}
 async function api(path,body){const r=await fetch(path,body?{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)}:{});const j=await r.json();if(!r.ok)throw new Error(j.error||r.status);return j}
 function status(html){$("status").innerHTML=html}
+// one labelled block: where the puzzle came from, who answered, and the outcome
+function report(rows){status(rows.filter(r=>r&&r[1]!==undefined&&r[1]!=="").map(([k,v])=>`<div><b class="k">${k}</b> ${v}</div>`).join(""))}
 function stop(){if(timer){clearInterval(timer);timer=null}}
-async function select(k){stop();kind=k;for(const b of tabs.children)b.classList.toggle("on",b.dataset.k===k);$("rules").textContent=KINDS[k].rules;buttons();await newPuzzle()}
+// highlight the button whose action produced what is on screen
+function mark(id){for(const b of $("buttons").querySelectorAll("button[data-id]"))b.classList.toggle("on",b.dataset.id===id)}
+async function select(k){stop();busy=false;kind=k;for(const b of tabs.children)b.classList.toggle("on",b.dataset.k===k);$("rules").textContent=KINDS[k].rules;buttons();await newPuzzle()}
 function buttons(){
  const B=$("buttons");B.innerHTML="";
- const add=(t,f,p)=>{const b=document.createElement("button");b.textContent=t;b.onclick=f;if(p)b.className="primary";B.appendChild(b)};
- if(kind!=="pinpoint")uploader(B);
- if(kind==="checkers"){add("Play: network vs material engine",()=>game("material"),1);add("Play: network vs random mover",()=>game("random"));return}
- if(kind==="pinpoint"){add("New example",()=>newPuzzle());add("Reveal clues and guess",()=>pinpoint(false),1);
-   const box=document.createElement("div");box.innerHTML='<div class="meta">Or type your own clues:</div>'+[1,2,3,4,5].map(i=>`<input class="pin" id="pin${i}" placeholder="clue ${i}">`).join("")+'';B.appendChild(box);add("Guess my clues",()=>pinpoint(true));return}
- add("New held-out puzzle",()=>newPuzzle());
- if(kind==="chess"){add("Lichess daily puzzle",()=>newPuzzle("chess_daily"));add("Solve: network only (no search)",()=>chessSolve("neural"),1);add("Solve: network + search",()=>chessSolve("search"));add("Classical search, no network",()=>chessSolve("classic"));return}
- add("Solve: network only (no backtracking)",()=>solve("neural"),1);add("Solve: network + backtracking",()=>solve("search"));add("Classical solver, no network",()=>solve("exact"));
+ const head=t=>B.appendChild(el("h3","",t));
+ const add=(t,f,id)=>{const b=document.createElement("button");b.textContent=t;b.onclick=f;if(id)b.dataset.id=id;B.appendChild(b)};
+ if(kind==="checkers"){head("Watch a full game");add("Network vs material engine",()=>game("material"),"g-material");add("Network vs random mover",()=>game("random"),"g-random");head("Or find the best move in a screenshot");uploader(B);return}
+ if(kind==="pinpoint"){head("Puzzle");add("New example",()=>newPuzzle());head("Model");add("Reveal clues one by one and guess",()=>pinpoint(false),"pp");
+   const box=document.createElement("div");box.innerHTML='<div class="meta">Or type your own clues:</div>'+[1,2,3,4,5].map(i=>`<input class="pin" id="pin${i}" placeholder="clue ${i}">`).join("")+'';B.appendChild(box);add("Guess my clues",()=>pinpoint(true),"pp-own");return}
+ head("1 · Pick a puzzle");add("New held-out puzzle",()=>newPuzzle());
+ if(kind==="chess"){add("Lichess daily puzzle",()=>newPuzzle("chess_daily"));uploader(B);head("2 · Choose who solves it");for(const m in CHESS_MODES)add(CHESS_MODES[m],()=>chessSolve(m),m);
+   head("Or watch a full game");add("Network (White) vs classical search",()=>chessGame("classic"),"g-classic");add("Network (White) vs random mover",()=>chessGame("random"),"g-random");return}
+ uploader(B);head("2 · Choose who solves it");for(const m in MODES)add(MODES[m],()=>solve(m),m);
 }
 function uploader(B){
  const d=el("div","upload");
@@ -91,35 +103,39 @@ function uploader(B){
 }
 document.addEventListener("paste",e=>{for(const it of e.clipboardData.items)if(it.type.startsWith("image/")){fromImage(it.getAsFile());break}});
 function dataURL(file){return new Promise((ok,bad)=>{const r=new FileReader();r.onload=()=>ok(r.result);r.onerror=bad;r.readAsDataURL(file)})}
-async function fromImage(file){if(busy||kind==="pinpoint")return;stop();status("Reading the image…");
+async function fromImage(file){if(busy||kind==="pinpoint")return;stop();mark(null);status("Reading the image…");
  try{const tm=$("tomove")?$("tomove").value:undefined;
   const r=await api("/api/read",{kind,image:await dataURL(file),to_move:tm});
-  const warn=r.low_confidence?' <span class="bad">(low confidence: check the grid)</span>':"";
-  const info=`Read from image: ${r.n}×${r.n} grid, lowest cell confidence ${(100*r.confidence).toFixed(0)}%${warn}`;
-  if(kind==="chess"){row={FEN:r.fen,_start:r.fen,Moves:""};drawChess(fenBoard(r.fen));status(info+"<br>Thinking…");
-   const b=await api("/api/chess/best",{fen:r.fen});const after=applyMove(fenBoard(r.fen),b.uci);
-   drawChess(after,[sq(b.uci.slice(0,2)),sq(b.uci.slice(2,4))]);status(`${info}<br>Best move (network + search): <b>${b.san}</b><br><span class="meta">${r.fen}</span>`);return}
-  if(kind==="checkers"){drawCheckers(r.board);status(info+"<br>Thinking…");
+  const warn=r.low_confidence?' <span class="bad">low: check the board below against your image</span>':"";
+  const src=`your screenshot (${r.n}×${r.n}, lowest cell confidence ${(100*r.confidence).toFixed(0)}%)${warn}`;
+  const fixed=r.corrections&&r.corrections.length?`${r.corrections.length} unsure cell${r.corrections.length>1?"s":""} changed so the puzzle has a solution: ${r.corrections.map(c=>c.cell).join(", ")}`:"";
+  if(kind==="chess"){row={FEN:r.fen,_start:r.fen,Moves:"",_src:src};drawChess(fenBoard(r.fen));report([["Puzzle",src],["Solver",CHESS_MODES.search],["Result","thinking…"]]);
+   const b=await api("/api/chess/best",{fen:r.fen});const after=applyMove(fenBoard(r.fen),b.uci);mark("search");
+   drawChess(after,[sq(b.uci.slice(0,2)),sq(b.uci.slice(2,4))]);report([["Puzzle",src],["Solver",CHESS_MODES.search],["Answer",`best move <b>${b.san}</b>`],["FEN",`<span class="meta">${r.fen}</span>`]]);return}
+  if(kind==="checkers"){drawCheckers(r.board);report([["Position",src],["Solver","Network + 4-ply search"],["Result","thinking…"]]);
    const b=await api("/api/checkers/best",{board:r.board,to_move:tm});
-   if(!b.move){status(`${info}<br>${b.message}`);return}
+   if(!b.move){report([["Position",src],["Result",b.message]]);return}
    const names=b.move.map(([a,c])=>"abcdefgh"[c]+(8-a));
-   setTimeout(()=>drawCheckers(b.after),900);status(`${info}<br>Best move (network, 4-ply search): <b>${names.join(b.captures?"x":"-")}</b>`);return}
-  row=r.puzzle;row._src="image";draw(row,null,0);$("meta").innerHTML=info;
-  await solve("search");$("status").innerHTML=info+"<br>"+$("status").innerHTML;
+   setTimeout(()=>drawCheckers(b.after),900);report([["Position",src],["Solver","Network + 4-ply search"],["Answer",`best move <b>${names.join(b.captures?"x":"-")}</b>`]]);return}
+  row=r.puzzle;row._src=src;row._fixed=fixed;draw(row,null,0);
+  await solve("search");
  }catch(e){status(`<span class="bad">Could not read this image: ${e.message}</span>`)}}
-async function newPuzzle(src){stop();status("Loading…");$("meta").textContent="";
- const j=await api(`/api/example?kind=${src||kind}`);row=j.row;row._src=src||kind;
- if(kind==="chess"){drawChess(fenBoard(startFen(row)),null);status(`Lichess puzzle ${row.PuzzleId}, rating ${row.Rating}${row.DailyDate?` · daily puzzle ${row.DailyDate}`:""}. ${turnOf(startFen(row))} to move.`)}
- else if(kind==="pinpoint"){drawPin(row.clues.map(c=>({c,g:[]})),row.answer,0);status("Example puzzle. Press “Reveal clues and guess”.")}
- else if(kind==="checkers"){drawCheckers(null)}
- else {draw(row,null,0);status(`Held-out ${KINDS[kind].label} puzzle #${j.index}.`)}
- const m=await api("/api/models");const key=kind==="chess"?"chess":kind;if(m[key])$("meta").textContent=meta(m[key]);
+async function newPuzzle(src){stop();mark(null);status("Loading…");$("meta").textContent="";
+ try{
+  if(kind==="checkers"){row=null;drawCheckers(START);report([["Network","Black (bottom, dark pieces)"],["Opponent","Red (top), chosen with the buttons"],["Result","press a button to watch a full game"]])}
+  else{const j=await api(`/api/example?kind=${src||kind}`);row=j.row;
+   if(kind==="chess"){row._src=`Lichess puzzle ${row.PuzzleId} (rating ${row.Rating})${src?" · Lichess daily puzzle":", never used in training"}`;drawChess(fenBoard(startFen(row)),null);report([["Puzzle",row._src],["To move",`${turnOf(startFen(row))} (the solver plays this side)`],["Result","choose who solves it"]])}
+   else if(kind==="pinpoint"){drawPin(row.clues.map(c=>({c,g:[]})),row.answer,0);report([["Puzzle",`example #${j.index}`],["Result","press “Reveal clues one by one and guess”"]])}
+   else{row._src=`held-out ${KINDS[kind].label} puzzle #${j.index} (never used in training)`;draw(row,null,0);report([["Puzzle",row._src],["Result","choose who solves it"]])}}
+  const m=await api("/api/models");if(m[kind])$("meta").textContent=meta(m[kind]);
+ }catch(e){status(`<span class="bad">Could not load: ${e.message}</span>`)}
 }
 function meta(m){const p=m.parameters?`${(m.parameters/1e6).toFixed(2)}M parameters`:"";return [p,m.trained_steps?`${m.trained_steps} training steps`:m.steps?`${m.steps} steps`:"",m.train_puzzles?`${m.train_puzzles.toLocaleString()} training puzzles`:"",m.train_positions?`${m.train_positions.toLocaleString()} training positions`:"",m.generations?`${m.generations} self-play generations`:"",m.corpus_words?`${(m.corpus_words/1e6).toFixed(0)}M words of training text`:"","random initialisation"].filter(Boolean).join(" · ")}
-async function solve(mode){if(busy)return;busy=true;stop();status("Solving…");
+async function solve(mode){if(busy||!row)return;busy=true;stop();mark(mode);
+ const base=[["Puzzle",row._src],["Read fix",row._fixed],["Solver",MODES[mode]]];report([...base,["Result","solving…"]]);
  try{const r=await api("/api/solve",{puzzle:row,mode});
-  const label={neural:"Network only",search:"Network + backtracking",exact:"Classical solver"}[mode];
-  status(`${label}: ${r.solved?'<span class="ok">✓ solved, verified</span>':'<span class="bad">✗ not solved</span>'}<br>${r.expanded_states} states · ${r.ms} ms${r.words?`<br>words: ${r.words.join(", ")}`:""}`);
+  report([...base,["Result",r.solved?'<span class="ok">✓ solved</span> · the answer obeys every rule (independent checker)':'<span class="bad">✗ not solved</span>'+(mode==="neural"?" · one pass without backtracking often fails; try “Network + backtracking”":"")],
+   ["Work",`${r.expanded_states} states · ${r.ms} ms`],["Words",r.words?r.words.join(", "):""]]);
   animate(r);
  }catch(e){status(`<span class="bad">${e.message}</span>`)}busy=false}
 function animate(r){
@@ -178,36 +194,54 @@ function applyMove(b,u){b=b.map(r=>r.slice());const[f1,f0]=sq(u.slice(0,2)),[t1,
  if((p==="P"||p==="p")&&f0!==t0&&!b[t1][t0])b[f1][t0]=null;
  if(u.length>4)p=p===p.toUpperCase()?u[4].toUpperCase():u[4];b[t1][t0]=p;b[f1][f0]=null;return b}
 const GLYPH={K:"♔",Q:"♕",R:"♖",B:"♗",N:"♘",P:"♙",k:"♚",q:"♛",r:"♜",b:"♝",n:"♞",p:"♟"};
-function drawChess(b,hl,flip){const st=$("stage");st.innerHTML="";const z=Math.min(58,Math.floor((Math.min(window.innerWidth,780)-60)/8));const g=grid(8,z);g.style.gap="0";
+function drawChess(b,hl,flip){const st=$("stage");st.innerHTML="";st.style.flexDirection="column";const z=Math.min(58,Math.floor((Math.min(window.innerWidth,780)-60)/8));const g=grid(8,z);g.style.gap="0";
  const black=row&&turnOf(startFen(row))==="Black";
  for(let i=0;i<64;i++){let r=Math.floor(i/8),c=i%8;if(black){r=7-r;c=7-c}const d=el("div","cell");d.style.background=(r+c)%2?"#b58863":"#f0d9b5";d.style.fontSize=`${z*.78}px`;d.style.color="#111";const p=b[r][c];if(p){d.textContent=GLYPH[p];d.style.color=p===p.toUpperCase()?"#fff":"#111";d.style.textShadow=p===p.toUpperCase()?"0 0 2px #000,0 0 1px #000":"none"}
   if(hl&&hl.some(([a,bb])=>a===r&&bb===c))d.style.boxShadow="inset 0 0 0 4px rgba(47,111,222,.85)";g.appendChild(d)}st.appendChild(g)}
-async function chessSolve(mode){if(busy)return;busy=true;stop();status("Thinking…");
+async function chessSolve(mode){if(busy||!row||!row.Moves)return;busy=true;stop();mark(mode);
+ const base=[["Puzzle",row._src],["Solver",CHESS_MODES[mode]]];report([...base,["Result","thinking…"]]);
  try{const r=await api("/api/chess/solve",{puzzle:row,mode});row._start=r.start_fen;
   let b=fenBoard(r.start_fen);
   // rebuild alternating line: solver move, then the puzzle's reply
   const line=[];let si=0;for(let i=0;i<r.solution.length;i++){if(i%2===0){const u=r.played[si++];if(!u)break;line.push(u);if(u!==r.solution[i])break}else line.push(r.solution[i])}
   let i=0;drawChess(b);timer=setInterval(()=>{if(i>=line.length){stop();return}const u=line[i++];b=applyMove(b,u);drawChess(b,[sq(u.slice(0,2)),sq(u.slice(2,4))])},900);
-  const label={neural:"Network only",search:"Network + search",classic:"Classical search, no network"}[mode];
-  status(`${label}: ${r.solved?'<span class="ok">✓ solved</span>':'<span class="bad">✗ missed</span>'}<br>played ${r.played.join(" ")}<br>solution ${r.solution.filter((_,i)=>i%2===0).join(" ")}`);
+  report([...base,["Result",r.solved?'<span class="ok">✓ solved</span> · every move matches the Lichess solution (any mate counts)':'<span class="bad">✗ missed</span> · the board replays the solver’s moves up to the first wrong one'],
+   ["Played",r.played.join(" ")],["Solution",r.solution.filter((_,i)=>i%2===0).join(" ")]]);
+ }catch(e){status(`<span class="bad">${e.message}</span>`)}busy=false}
+async function chessGame(opp){if(busy)return;busy=true;stop();mark("g-"+opp);row=null;drawChess(fenBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w"));
+ const who=[["White","trained network + search"],["Black",opp==="classic"?"classical search (no network)":"random mover"]];
+ report([...who,["Result","playing a full game on the server (up to about a minute)…"]]);
+ try{const r=await api("/api/chess/game",{opponent:opp,seed:Math.floor(Math.random()*1e6)});let i=0;
+  const end=r.result==="1-0"?'<span class="ok">network wins</span>':r.result==="0-1"?'<span class="bad">network loses</span>':"draw";
+  timer=setInterval(()=>{i++;const u=r.moves[i-1];drawChess(fenBoard(r.fens[i]),u?[sq(u.slice(0,2)),sq(u.slice(2,4))]:null);
+   const done=i>=r.moves.length;report([...who,["Move",`${Math.ceil(i/2)} · ${r.sans[i-1]||""}`],["Result",done?`<b>${end}</b> (${r.result}, ${r.termination.replaceAll("_"," ")})`:"replaying…"]]);
+   $("stage").appendChild(el("div","moves",r.sans.slice(0,i).map((s,k)=>k%2?s:`${k/2+1}. ${s}`).join(" ")));if(done)stop()},450);
  }catch(e){status(`<span class="bad">${e.message}</span>`)}busy=false}
 // ---------------------------------------------------------------- checkers
-function drawCheckers(f){const st=$("stage");st.innerHTML="";const z=Math.min(54,Math.floor((Math.min(window.innerWidth,780)-60)/8));const g=grid(8,z);g.style.gap="0";
- for(let i=0;i<64;i++){const r=Math.floor(i/8),c=i%8;const d=el("div","cell");d.style.background=(r+c)%2?"#6d8a5a":"#ece6d3";if(f&&f[r][c]){const v=f[r][c];const p=el("div");Object.assign(p.style,{width:`${z*.74}px`,height:`${z*.74}px`,borderRadius:"50%",background:v>0?"#1d1f23":"#c8312b",border:"2px solid rgba(255,255,255,.5)",display:"flex",alignItems:"center",justifyContent:"center",color:"#f5d76e",fontSize:`${z*.4}px`});if(Math.abs(v)===2)p.textContent="♛";d.appendChild(p)}g.appendChild(d)}st.appendChild(g);if(!f)status("Press play to watch a full game.")}
-async function game(opp){if(busy)return;busy=true;stop();status("Playing a full game…");
+const START=Array.from({length:8},(_,r)=>Array.from({length:8},(_,c)=>(r+c)%2&&r<3?-1:(r+c)%2&&r>4?1:0));
+function drawCheckers(f){const st=$("stage");st.innerHTML="";st.style.flexDirection="column";const z=Math.min(54,Math.floor((Math.min(window.innerWidth,780)-60)/8));const g=grid(8,z);g.style.gap="0";
+ for(let i=0;i<64;i++){const r=Math.floor(i/8),c=i%8;const d=el("div","cell");d.style.background=(r+c)%2?"#6d8a5a":"#ece6d3";if(f&&f[r][c]){const v=f[r][c];const p=el("div");Object.assign(p.style,{width:`${z*.74}px`,height:`${z*.74}px`,borderRadius:"50%",background:v>0?"#1d1f23":"#c8312b",border:"2px solid rgba(255,255,255,.5)",display:"flex",alignItems:"center",justifyContent:"center",color:"#f5d76e",fontSize:`${z*.4}px`});if(Math.abs(v)===2)p.textContent="♛";d.appendChild(p)}g.appendChild(d)}st.appendChild(g);
+ st.appendChild(Object.assign(el("div","legend"),{innerHTML:'<span><i style="background:#1d1f23;border:1px solid #888"></i>Black · trained network</span><span><i style="background:#c8312b"></i>Red · opponent</span><span>♛ king</span>'}))}
+async function game(opp){if(busy)return;busy=true;stop();mark("g-"+opp);
+ const who=[["Black","trained network (bottom)"],["Red",opp==="material"?"material-counting engine (top)":"random mover (top)"]];
+ report([...who,["Result","playing a full game…"]]);
  try{const r=await api("/api/checkers/game",{opponent:opp,seed:Math.floor(Math.random()*1e6)});let i=0;
-  timer=setInterval(()=>{drawCheckers(r.frames[i]);i++;if(i>=r.frames.length){stop();status(`${r.black} vs ${r.white}: <b>${r.result===1?'<span class="ok">network wins</span>':r.result===-1?'<span class="bad">network loses</span>':"draw"}</b> after ${r.plies} plies.`)}},180);
-  status(`Black: ${r.black}. Red: ${r.white}.`);
+  const end=r.result===1?'<span class="ok">network wins</span>':r.result===-1?'<span class="bad">network loses</span>':"draw";
+  timer=setInterval(()=>{drawCheckers(r.frames[i]);i++;const done=i>=r.frames.length;
+   report([...who,["Move",`${i-1} of ${r.plies}`],["Result",done?`<b>${end}</b> after ${r.plies} moves`:"replaying…"]]);if(done)stop()},180);
  }catch(e){status(`<span class="bad">${e.message}</span>`)}busy=false}
 // ---------------------------------------------------------------- pinpoint
 function drawPin(items,answer,shown){const st=$("stage");st.innerHTML="";const box=el("div","pp");
  items.forEach((it,i)=>{const d=el("div","clue");const b=el("b","",i<shown||!answer?it.c:"?");d.appendChild(b);if(it.g&&it.g.length){const s=el("span","g");s.innerHTML="guesses: "+it.g.map(([w])=>answer&&(w===answer||(row.accept||[]).includes(w))?`<span class="hit">${w}</span>`:w).join(", ");d.appendChild(s)}box.appendChild(d)});
  if(answer)box.appendChild(el("div","rules",`Answer: ${shown>=items.length?answer:"hidden until all clues are shown"}`));st.appendChild(box)}
-async function pinpoint(custom){if(busy)return;busy=true;stop();
+async function pinpoint(custom){if(busy)return;busy=true;stop();mark(custom?"pp-own":"pp");
  try{const clues=custom?[1,2,3,4,5].map(i=>$("pin"+i).value.trim()).filter(Boolean):row.clues;if(!clues.length)throw new Error("type at least one clue");
   const r=await api("/api/pinpoint",{clues});const ans=custom?null:row.answer;let k=0;
   const items=clues.map(c=>({c,g:[]}));
-  timer=setInterval(()=>{items[k].g=r.after[k];k++;drawPin(items,ans,k);if(k>=clues.length){stop();if(ans){const first=r.after.findIndex(g=>g[0]&&(g[0][0]===ans||(row.accept||[]).includes(g[0][0])));status(first>=0?`<span class="ok">✓ top guess correct after ${first+1} clue${first?"s":""}</span>`:`<span class="bad">✗ not the top guess</span>`)}else status(r.unknown.length?`Unknown words: ${r.unknown.join(", ")}`:"Done.")}},800);
+  timer=setInterval(()=>{items[k].g=r.after[k];k++;drawPin(items,ans,k);if(k>=clues.length){stop();const solver=["Model","word vectors trained from scratch (experimental, weak)"];
+   if(ans){const hit=w=>w===ans||(row.accept||[]).includes(w);const first=r.after.findIndex(g=>g[0]&&hit(g[0][0]));const top5=r.after.findIndex(g=>g.some(([w])=>hit(w)));
+    report([["Puzzle","example puzzle"],solver,["Result",first>=0?`<span class="ok">✓ top guess correct after ${first+1} clue${first?"s":""}</span>`:top5>=0?`<span class="bad">✗ not the top guess</span> · the answer “${ans}” was in its top 5 after ${top5+1} clue${top5?"s":""}`:`<span class="bad">✗ missed</span> · the answer “${ans}” never reached its top 5`]])}
+   else report([["Puzzle","your clues"],solver,["Result",r.unknown.length?`words it never saw in training: ${r.unknown.join(", ")}`:"top guesses shown next to each clue"]])}},800);
  }catch(e){status(`<span class="bad">${e.message}</span>`)}busy=false}
 select(new URLSearchParams(location.search).get("kind")||"sudoku");
 </script>

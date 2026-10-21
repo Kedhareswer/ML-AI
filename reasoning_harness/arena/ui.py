@@ -76,6 +76,30 @@ def handle(models, path, payload):
         line = row["Moves"].split()
         board.push_uci(line[0])
         return {"solved": ok, "played": played, "solution": line[1:], "start_fen": board.fen(), "mode": mode}
+    if path == "/api/chess/game":
+        import chess
+        from .games.chess_engine import make_player, play_game
+        rng = random.Random(payload.get("seed", 0))
+        opp = payload.get("opponent", "classic")
+        if opp not in ("classic", "random"):
+            raise ValueError("unknown opponent")
+        board, opening = chess.Board(), []
+        for _ in range(2):  # two random opening plies so games differ
+            m = rng.choice(list(board.legal_moves))
+            opening.append(m.uci())
+            board.push(m)
+        # small budgets keep a full game near a minute on two CPUs
+        white = make_player("search", models.get("chess"), budget=600, depth=2)
+        black = make_player(opp, None, budget=600, depth=2, rng=rng)
+        result, end, how = play_game(white, black, max_plies=120, opening=opening)
+        replay, fens, sans = chess.Board(), [chess.STARTING_FEN], []
+        for m in end.move_stack:
+            sans.append(replay.san(m))
+            replay.push(m)
+            fens.append(replay.fen())
+        return {"result": result, "termination": how, "fens": fens, "sans": sans,
+                "moves": [m.uci() for m in end.move_stack],
+                "white": "trained network + search", "black": "classical search (no network)" if opp == "classic" else "random mover"}
     if path == "/api/checkers/game":
         from .games import checkers as ck
         rng = random.Random(payload.get("seed", 0))

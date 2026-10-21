@@ -135,8 +135,9 @@ def _finish(img, rng):
 
 def _sun(draw, rng, ink):
     c, r = CANVAS / 2 + rng.uniform(-6, 6), CANVAS * rng.uniform(0.15, 0.25)
-    col = rng.choice([(232, 150, 46), (245, 190, 40), (240, 120, 30), (250, 210, 60), ink])
-    draw.ellipse([c - r, c - r, c + r, c + r], fill=col)
+    col = rng.choice([(232, 150, 46), (245, 190, 40), (240, 120, 30), (250, 210, 60), (255, 176, 32), ink])
+    outline = tuple(int(v * 0.7) for v in col) if rng.random() < 0.4 else None  # LinkedIn-style rim
+    draw.ellipse([c - r, c - r, c + r, c + r], fill=col, outline=outline, width=rng.randint(1, 3))
     if rng.random() < 0.6:
         for k in range(rng.choice([8, 12])):
             a = 2 * math.pi * k / (8 if k < 8 else 12)
@@ -146,10 +147,18 @@ def _sun(draw, rng, ink):
 
 def _moon(draw, rng, bg, ink):
     c, r = CANVAS / 2 + rng.uniform(-6, 6), CANVAS * rng.uniform(0.2, 0.3)
-    col = rng.choice([(61, 111, 216), (70, 90, 160), (120, 140, 200), (40, 60, 120), ink])
-    draw.ellipse([c - r, c - r, c + r, c + r], fill=col)
-    o = r * rng.uniform(0.35, 0.6)
-    draw.ellipse([c - r + o, c - r - o * 0.4, c + r + o, c + r - o * 0.4], fill=bg)
+    col = rng.choice([(61, 111, 216), (70, 90, 160), (120, 140, 200), (40, 60, 120), (74, 134, 232), ink])
+    # the bite can come from any side: crescents point left, right, up-left...
+    o, a = r * rng.uniform(0.35, 0.6), rng.uniform(0, 2 * math.pi)
+    bx, by = c + o * math.cos(a), c + o * math.sin(a)
+    mask = Image.new("L", (CANVAS, CANVAS), 0)
+    m = ImageDraw.Draw(mask)
+    m.ellipse([c - r, c - r, c + r, c + r], fill=255)
+    m.ellipse([bx - r, by - r, bx + r, by + r], fill=0)
+    if rng.random() < 0.4:  # LinkedIn-style darker rim
+        draw.bitmap((0, 0), mask, fill=tuple(int(v * 0.6) for v in col))
+        mask = mask.filter(ImageFilter.MinFilter(2 * rng.randint(1, 2) + 1))
+    draw.bitmap((0, 0), mask, fill=col)
 
 
 def render(kind, label, rng):

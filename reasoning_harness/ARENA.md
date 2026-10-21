@@ -6,6 +6,10 @@ There is also a Pinpoint experiment. No pretrained weights, no pretrained
 language model and no external solver are used. Every reported "solved" answer
 is checked by an independent rule verifier.
 
+Model card (architectures, training, results, limits):
+[ARENA_MODEL_CARD.md](ARENA_MODEL_CARD.md). Live demo:
+[huggingface.co/spaces/Kedhareswer/puzzle-arena](https://huggingface.co/spaces/Kedhareswer/puzzle-arena).
+
 ![Held-out results](evidence/arena/benchmark-summary.png)
 
 Screenshots of every game and a 2-minute screen recording of the real UI

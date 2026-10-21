@@ -5,7 +5,9 @@ set -e
 out=${1:-build/hf-space}
 rm -rf "$out"
 mkdir -p "$out/benchmarks/arena"
-cp deploy/huggingface/app.py deploy/huggingface/requirements.txt deploy/huggingface/README.md "$out/"
+cp deploy/huggingface/app.py deploy/huggingface/requirements.txt "$out/"
+# Space page = Space metadata + the model card
+cat deploy/huggingface/README.md ARENA_MODEL_CARD.md > "$out/README.md"
 cp -r arena "$out/arena"
 find "$out/arena" -name __pycache__ -prune -exec rm -rf {} +
 mkdir -p "$out/artifacts"
