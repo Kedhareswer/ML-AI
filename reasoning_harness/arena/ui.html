@@ -34,6 +34,9 @@ svg.over{position:absolute;inset:0;pointer-events:none}
 .pp .clue{display:flex;gap:10px;align-items:baseline;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--cell)}
 .pp .clue b{min-width:110px}.pp .g{color:var(--muted);font-size:13px}
 .pp .hit{color:var(--ok);font-weight:700}
+.upload{margin:4px 0 10px;padding:10px;border:1px dashed var(--line);border-radius:10px}
+.upload select{width:100%;margin-top:6px;padding:6px;border-radius:8px;border:1px solid var(--line);background:var(--cell);color:var(--ink)}
+.drop{display:block;cursor:pointer;font-weight:600}.drop input{display:block;margin-top:6px;font-size:13px;max-width:100%}
 input.pin{width:100%;padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--cell);color:var(--ink);margin:3px 0}
 </style>
 </head>
@@ -72,6 +75,7 @@ async function select(k){stop();kind=k;for(const b of tabs.children)b.classList.
 function buttons(){
  const B=$("buttons");B.innerHTML="";
  const add=(t,f,p)=>{const b=document.createElement("button");b.textContent=t;b.onclick=f;if(p)b.className="primary";B.appendChild(b)};
+ if(kind!=="pinpoint")uploader(B);
  if(kind==="checkers"){add("Play: network vs material engine",()=>game("material"),1);add("Play: network vs random mover",()=>game("random"));return}
  if(kind==="pinpoint"){add("New example",()=>newPuzzle());add("Reveal clues and guess",()=>pinpoint(false),1);
    const box=document.createElement("div");box.innerHTML='<div class="meta">Or type your own clues:</div>'+[1,2,3,4,5].map(i=>`<input class="pin" id="pin${i}" placeholder="clue ${i}">`).join("")+'';B.appendChild(box);add("Guess my clues",()=>pinpoint(true));return}
@@ -79,6 +83,30 @@ function buttons(){
  if(kind==="chess"){add("Lichess daily puzzle",()=>newPuzzle("chess_daily"));add("Solve: network only (no search)",()=>chessSolve("neural"),1);add("Solve: network + search",()=>chessSolve("search"));add("Classical search, no network",()=>chessSolve("classic"));return}
  add("Solve: network only (no backtracking)",()=>solve("neural"),1);add("Solve: network + backtracking",()=>solve("search"));add("Classical solver, no network",()=>solve("exact"));
 }
+function uploader(B){
+ const d=el("div","upload");
+ const side=kind==="chess"?'<select id="tomove"><option value="w">White to move</option><option value="b">Black to move</option></select>':kind==="checkers"?'<select id="tomove"><option value="dark">Dark to move</option><option value="light">Light to move</option></select>':"";
+ d.innerHTML=`<label class="drop">📷 Solve from a screenshot<input type="file" id="imgfile" accept="image/*"></label>${side}<div class="meta">…or paste an image (Ctrl+V)</div>`;
+ B.appendChild(d);d.querySelector("#imgfile").onchange=e=>{if(e.target.files[0])fromImage(e.target.files[0])};
+}
+document.addEventListener("paste",e=>{for(const it of e.clipboardData.items)if(it.type.startsWith("image/")){fromImage(it.getAsFile());break}});
+function dataURL(file){return new Promise((ok,bad)=>{const r=new FileReader();r.onload=()=>ok(r.result);r.onerror=bad;r.readAsDataURL(file)})}
+async function fromImage(file){if(busy||kind==="pinpoint")return;stop();status("Reading the image…");
+ try{const tm=$("tomove")?$("tomove").value:undefined;
+  const r=await api("/api/read",{kind,image:await dataURL(file),to_move:tm});
+  const warn=r.low_confidence?' <span class="bad">(low confidence: check the grid)</span>':"";
+  const info=`Read from image: ${r.n}×${r.n} grid, lowest cell confidence ${(100*r.confidence).toFixed(0)}%${warn}`;
+  if(kind==="chess"){row={FEN:r.fen,_start:r.fen,Moves:""};drawChess(fenBoard(r.fen));status(info+"<br>Thinking…");
+   const b=await api("/api/chess/best",{fen:r.fen});const after=applyMove(fenBoard(r.fen),b.uci);
+   drawChess(after,[sq(b.uci.slice(0,2)),sq(b.uci.slice(2,4))]);status(`${info}<br>Best move (network + search): <b>${b.san}</b><br><span class="meta">${r.fen}</span>`);return}
+  if(kind==="checkers"){drawCheckers(r.board);status(info+"<br>Thinking…");
+   const b=await api("/api/checkers/best",{board:r.board,to_move:tm});
+   if(!b.move){status(`${info}<br>${b.message}`);return}
+   const names=b.move.map(([a,c])=>"abcdefgh"[c]+(8-a));
+   setTimeout(()=>drawCheckers(b.after),900);status(`${info}<br>Best move (network, 4-ply search): <b>${names.join(b.captures?"x":"-")}</b>`);return}
+  row=r.puzzle;row._src="image";draw(row,null,0);$("meta").innerHTML=info;
+  await solve("search");$("status").innerHTML=info+"<br>"+$("status").innerHTML;
+ }catch(e){status(`<span class="bad">Could not read this image: ${e.message}</span>`)}}
 async function newPuzzle(src){stop();status("Loading…");$("meta").textContent="";
  const j=await api(`/api/example?kind=${src||kind}`);row=j.row;row._src=src||kind;
  if(kind==="chess"){drawChess(fenBoard(startFen(row)),null);status(`Lichess puzzle ${row.PuzzleId}, rating ${row.Rating}${row.DailyDate?` · daily puzzle ${row.DailyDate}`:""}. ${turnOf(startFen(row))} to move.`)}

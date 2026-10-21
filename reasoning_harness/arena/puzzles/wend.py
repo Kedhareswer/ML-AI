@@ -42,9 +42,10 @@ class Wend(GridPuzzle):
             raise ValueError("grid must be square, 3-7 tiles per side")
         if any(not (ch == "#" or "a" <= ch <= "z") for r in self.rows for ch in r):
             raise ValueError("tiles are letters a-z or '#' walls")
-        self.lengths = sorted(int(x) for x in lengths)
+        # lengths=None: word lengths unknown (e.g. read from a screenshot); any 3-8 letter words may be used
+        self.lengths = sorted(int(x) for x in lengths) if lengths else None
         self.open = [(r, c) for r in range(self.n) for c in range(self.n) if self.rows[r][c] != "#"]
-        if sum(self.lengths) != len(self.open):
+        if self.lengths and sum(self.lengths) != len(self.open):
             raise ValueError("word lengths must add up to the number of open tiles")
         self.paths = self._word_paths()
         self.by_cell = {cell: [] for cell in self.open}
@@ -61,7 +62,8 @@ class Wend(GridPuzzle):
 
     def _word_paths(self):
         _, trie = lexicon()
-        allowed, longest, found = set(self.lengths), max(self.lengths), []
+        allowed = set(self.lengths) if self.lengths else set(range(3, 9))
+        longest, found = max(allowed), []
 
         def dfs(cell, node, path):
             if "$" in node and len(path) in allowed:
@@ -98,6 +100,8 @@ class Wend(GridPuzzle):
         return {cell for i in state for cell in self.paths[i]}
 
     def _remaining(self, state):
+        if self.lengths is None:
+            return None
         left = list(self.lengths)
         for i in state:
             left.remove(len(self.paths[i]))
@@ -110,7 +114,9 @@ class Wend(GridPuzzle):
         return [[list(c) for c in self.paths[i]] for i in state]
 
     def domains(self, state, prune=True):
-        covered, left = self._covered(state), set(self._remaining(state))
+        covered = self._covered(state)
+        rem = self._remaining(state)
+        left = set(rem) if rem is not None else set(range(3, 9))
         out = {}
         for cell in self.open:
             if cell in covered:
@@ -134,7 +140,9 @@ class Wend(GridPuzzle):
             if self.word(path) not in vocab:
                 return False
             seen.extend(path)
-        return sorted(seen) == sorted(self.open) and sorted(len(p) for p in answer) == self.lengths
+        if sorted(seen) != sorted(self.open):
+            return False
+        return self.lengths is None or sorted(len(p) for p in answer) == self.lengths
 
     def encode(self, state):
         n = self.n
@@ -148,9 +156,9 @@ class Wend(GridPuzzle):
                 else:
                     x[ord(ch) - 97, r, c] = 1
                 x[27, r, c] = (r, c) in covered
-        for k, L in enumerate(self.lengths):
+        for k, L in enumerate(self.lengths or []):
             x[28, k // n, k % n] = L / 10  # word-length list, written into spare canvas cells
-        x[29] = len(self.lengths) / 10
+        x[29] = len(self.lengths or []) / 10
         return x
 
     def labels(self, solution, state):
