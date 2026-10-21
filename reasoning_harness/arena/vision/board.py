@@ -112,7 +112,13 @@ def find_board(rgb, sizes):
     # the largest candidate that is still clearly grid-like: a sub-block of the board is a grid too,
     # so prefer the bigger square; non-square regions (whole screenshots) are already penalised
     best = max(s[0] for s in scored)
-    pick = max((s for s in scored if s[0] >= 0.5 * best), key=lambda s: s[1]) if best > 0 else max(scored, key=lambda s: s[0])
+    if best <= 0:
+        pick = max(scored, key=lambda s: s[0])
+    else:
+        big = max((s for s in scored if s[0] >= 0.5 * best), key=lambda s: s[1])
+        # among boxes of (nearly) that size - the same board, framed slightly differently -
+        # take the one whose lines fit the grid best: it is the tightest, best-aligned frame
+        pick = max((s for s in scored if s[1] >= 0.9 * big[1]), key=lambda s: s[0])
     board, q, n = pick[4], pick[2], pick[3]
     return _trim(board, n), q, n
 
