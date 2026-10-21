@@ -55,7 +55,7 @@ def gridness(board, n):
         # also require the mid-cell positions to be quieter than the boundaries
         mids = [prof[max(0, int(round((k + .5) * s / n)) - win):int(round((k + .5) * s / n)) + win + 1].max() / base
                 for k in range(n)]
-        scores.append(np.percentile(peaks, 20) - 0.5 * np.median(mids))
+        scores.append(np.percentile(peaks, 20) - 0.15 * np.median(mids))
     return float(min(scores))
 
 
@@ -85,6 +85,7 @@ def find_board(rgb, sizes):
             if len(approx) == 4 and cv2.isContourConvex(approx):
                 cands.append(approx.reshape(4, 2).astype(np.float32))
             cands.append(np.array([[x, y], [x + bw, y], [x + bw, y + bh], [x, y + bh]], np.float32))
+    cands += [r for r in (_refine(gray, q) for q in cands) if r is not None]
     scored = []
     for q in cands:
         side = np.sqrt(cv2.contourArea(_order(q)))
@@ -102,6 +103,32 @@ def find_board(rgb, sizes):
     pick = max(scored, key=lambda s: max(s[0], 0) * np.sqrt(s[1]) + 1e-6 * s[1])
     board, q, n = pick[4], pick[2], pick[3]
     return _trim(board, n), q, n
+
+
+def _refine(gray, quad):
+    """If a candidate box is not square (e.g. a label touching the board merged into its contour),
+    snap its sides to the long straight lines that form the board border."""
+    q = _order(quad)
+    x0, y0 = q[:, 0].min(), q[:, 1].min()
+    x1, y1 = q[:, 0].max(), q[:, 1].max()
+    w, h = x1 - x0, y1 - y0
+    if w < 40 or h < 40 or abs(np.log(w / h)) < 0.03:
+        return None
+    x0, y0, x1, y1 = int(x0), int(y0), int(x1) + 1, int(y1) + 1
+    crop = gray[y0:y1, x0:x1].astype(np.float32)
+    gx = np.abs(cv2.Sobel(crop, cv2.CV_32F, 1, 0, ksize=3)) > 40
+    gy = np.abs(cv2.Sobel(crop, cv2.CV_32F, 0, 1, ksize=3)) > 40
+    cols = np.flatnonzero(gx.mean(0) > 0.6)  # columns crossed by a near full-height line
+    rows = np.flatnonzero(gy.mean(1) > 0.6)
+    if len(cols) < 2 or len(rows) < 2:
+        return None
+    l, r, t, b = cols.min(), cols.max(), rows.min(), rows.max()
+    if r - l < 0.5 * w or b - t < 0.5 * h:
+        return None
+    nw, nh = r - l, b - t
+    if abs(np.log(nw / nh)) >= abs(np.log(w / h)):
+        return None
+    return np.array([[x0 + l, y0 + t], [x0 + r, y0 + t], [x0 + r, y0 + b], [x0 + l, y0 + b]], np.float32)
 
 
 def _trim(board, n):

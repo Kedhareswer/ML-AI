@@ -1,0 +1,39 @@
+{
+  "kind": "digits",
+  "train_samples": 30000,
+  "epochs": 6,
+  "parameters": 1103034,
+  "history": [
+    {
+      "epoch": 1,
+      "loss": 0.3363,
+      "synthetic_val_acc": 0.9953
+    },
+    {
+      "epoch": 2,
+      "loss": 0.3014,
+      "synthetic_val_acc": 0.9977
+    },
+    {
+      "epoch": 3,
+      "loss": 0.2909,
+      "synthetic_val_acc": 0.9993
+    },
+    {
+      "epoch": 4,
+      "loss": 0.2866,
+      "synthetic_val_acc": 0.9997
+    },
+    {
+      "epoch": 5,
+      "loss": 0.2852,
+      "synthetic_val_acc": 0.9997
+    },
+    {
+      "epoch": 6,
+      "loss": 0.2846,
+      "synthetic_val_acc": 0.9997
+    }
+  ],
+  "train_seconds": 475.0
+}

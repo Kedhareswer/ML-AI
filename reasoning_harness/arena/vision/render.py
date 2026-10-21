@@ -286,7 +286,19 @@ def _piece(img, d, rng, name):
         img.paste(sprite, off, sprite)
     else:
         glyph = chr((0x2654 if color == "w" else 0x265A) + "KQRBNP".index(kind))
-        if rng.random() < 0.5:  # solid glyph filled with the piece colour, outlined
+        style = rng.random()
+        if style < 0.35:  # web style: white = outline glyph painted white with a dark halo; black = solid dark glyph
+            path = rng.choice(symbol_fonts())
+            font = _font(path, int(CANVAS * rng.uniform(0.6, 0.85)))
+            bbox = d.textbbox((0, 0), glyph, font=font)
+            x = (CANVAS - (bbox[2] - bbox[0])) / 2 - bbox[0]
+            y = (CANVAS - (bbox[3] - bbox[1])) / 2 - bbox[1]
+            if color == "w":
+                d.text((x, y), glyph, font=font, fill=(255, 255, 255), stroke_width=rng.randint(1, 2),
+                       stroke_fill=tuple(rng.randint(0, 60) for _ in range(3)))
+            else:
+                d.text((x, y), chr(0x265A + "KQRBNP".index(kind)), font=font, fill=tuple(rng.randint(0, 40) for _ in range(3)))
+        elif style < 0.65:  # solid glyph filled with the piece colour, outlined
             glyph = chr(0x265A + "KQRBNP".index(kind))
             fill = (255, 255, 255) if color == "w" else (0, 0, 0)
             path = rng.choice(symbol_fonts())

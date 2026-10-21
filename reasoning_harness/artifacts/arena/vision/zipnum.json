@@ -1,0 +1,39 @@
+{
+  "kind": "zipnum",
+  "train_samples": 62000,
+  "epochs": 6,
+  "parameters": 1108431,
+  "history": [
+    {
+      "epoch": 1,
+      "loss": 1.0502,
+      "synthetic_val_acc": 0.744
+    },
+    {
+      "epoch": 2,
+      "loss": 0.7019,
+      "synthetic_val_acc": 0.884
+    },
+    {
+      "epoch": 3,
+      "loss": 0.6354,
+      "synthetic_val_acc": 0.9033
+    },
+    {
+      "epoch": 4,
+      "loss": 0.5332,
+      "synthetic_val_acc": 0.9297
+    },
+    {
+      "epoch": 5,
+      "loss": 0.5087,
+      "synthetic_val_acc": 0.9307
+    },
+    {
+      "epoch": 6,
+      "loss": 0.4463,
+      "synthetic_val_acc": 0.9333
+    }
+  ],
+  "train_seconds": 899.3
+}

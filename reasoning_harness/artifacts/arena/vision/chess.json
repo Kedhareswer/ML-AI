@@ -1,0 +1,39 @@
+{
+  "kind": "chess",
+  "train_samples": 52000,
+  "epochs": 6,
+  "parameters": 1103805,
+  "history": [
+    {
+      "epoch": 1,
+      "loss": 0.3581,
+      "synthetic_val_acc": 0.992
+    },
+    {
+      "epoch": 2,
+      "loss": 0.3207,
+      "synthetic_val_acc": 0.9993
+    },
+    {
+      "epoch": 3,
+      "loss": 0.3122,
+      "synthetic_val_acc": 0.9993
+    },
+    {
+      "epoch": 4,
+      "loss": 0.3066,
+      "synthetic_val_acc": 1.0
+    },
+    {
+      "epoch": 5,
+      "loss": 0.3049,
+      "synthetic_val_acc": 1.0
+    },
+    {
+      "epoch": 6,
+      "loss": 0.3049,
+      "synthetic_val_acc": 1.0
+    }
+  ],
+  "train_seconds": 867.1
+}
