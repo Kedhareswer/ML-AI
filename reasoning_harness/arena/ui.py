@@ -161,7 +161,8 @@ def serve(root="artifacts/arena", port=7861, tests="benchmarks/arena", host="127
 
         def do_POST(self):
             origin = self.headers.get("Origin")
-            if origin and origin != f"http://{self.headers.get('Host')}":
+            # https when served behind a TLS proxy (Hugging Face Spaces)
+            if origin and origin.split("://", 1)[-1] != self.headers.get("Host"):
                 return self.send(403, {"error": "cross-origin requests are disabled"})
             try:
                 n = int(self.headers.get("Content-Length", "0"))
