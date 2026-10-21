@@ -120,10 +120,11 @@ async function fromImage(file){if(busy||kind==="pinpoint")return;stop();mark(nul
   row=r.puzzle;row._src=src;row._fixed=fixed;draw(row,null,0);
   await solve("search");
  }catch(e){status(`<span class="bad">Could not read this image: ${e.message}</span>`)}}
-async function newPuzzle(src){stop();mark(null);status("Loading…");$("meta").textContent="";
+let loads=0;
+async function newPuzzle(src){stop();mark(null);status("Loading…");$("meta").textContent="";const my=++loads;
  try{
   if(kind==="checkers"){row=null;drawCheckers(START);report([["Network","Black (bottom, dark pieces)"],["Opponent","Red (top), chosen with the buttons"],["Result","press a button to watch a full game"]])}
-  else{const j=await api(`/api/example?kind=${src||kind}`);row=j.row;
+  else{const j=await api(`/api/example?kind=${src||kind}`);if(my!==loads)return;row=j.row;  // a newer load or tab switch won
    if(kind==="chess"){row._src=`Lichess puzzle ${row.PuzzleId} (rating ${row.Rating})${src?" · Lichess daily puzzle":", never used in training"}`;drawChess(fenBoard(startFen(row)),null);report([["Puzzle",row._src],["To move",`${turnOf(startFen(row))} (the solver plays this side)`],["Result","choose who solves it"]])}
    else if(kind==="pinpoint"){drawPin(row.clues.map(c=>({c,g:[]})),row.answer,0);report([["Puzzle",`example #${j.index}`],["Result","press “Reveal clues one by one and guess”"]])}
    else{row._src=`held-out ${KINDS[kind].label} puzzle #${j.index} (never used in training)`;draw(row,null,0);report([["Puzzle",row._src],["Result","choose who solves it"]])}}
@@ -131,7 +132,7 @@ async function newPuzzle(src){stop();mark(null);status("Loading…");$("meta").t
  }catch(e){status(`<span class="bad">Could not load: ${e.message}</span>`)}
 }
 function meta(m){const p=m.parameters?`${(m.parameters/1e6).toFixed(2)}M parameters`:"";return [p,m.trained_steps?`${m.trained_steps} training steps`:m.steps?`${m.steps} steps`:"",m.train_puzzles?`${m.train_puzzles.toLocaleString()} training puzzles`:"",m.train_positions?`${m.train_positions.toLocaleString()} training positions`:"",m.generations?`${m.generations} self-play generations`:"",m.corpus_words?`${(m.corpus_words/1e6).toFixed(0)}M words of training text`:"","random initialisation"].filter(Boolean).join(" · ")}
-async function solve(mode){if(busy||!row)return;busy=true;stop();mark(mode);
+async function solve(mode){if(busy||!row)return;busy=true;stop();mark(mode);loads++;
  const base=[["Puzzle",row._src],["Read fix",row._fixed],["Solver",MODES[mode]]];report([...base,["Result","solving…"]]);
  try{const r=await api("/api/solve",{puzzle:row,mode});
   report([...base,["Result",r.solved?'<span class="ok">✓ solved</span> · the answer obeys every rule (independent checker)':'<span class="bad">✗ not solved</span>'+(mode==="neural"?" · one pass without backtracking often fails; try “Network + backtracking”":"")],
