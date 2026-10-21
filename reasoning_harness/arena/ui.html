@@ -160,7 +160,7 @@ function draw(row,r,k){
  }else if(kind==="patches"){
   const sh={square:"■",wide:"▬",tall:"▮",any:"✱"};
   if(r&&r.answer)r.answer.slice(0,k).forEach(([r0,c0,h,w],i)=>{for(let a=r0;a<r0+h;a++)for(let b=c0;b<c0+w;b++){const c=at(a,b);c.style.background=PAL[i%PAL.length];if(b===c0+w-1&&b+1<N)c.style.borderRight="2px solid #333";if(a===r0+h-1&&a+1<N)c.style.borderBottom="2px solid #333"}});
-  row.clues.forEach(([a,b,area,shape])=>{const c=at(a,b);c.innerHTML=`<span style="font-size:${z*.42}px">${area??""}</span><span style="font-size:${z*.26}px;margin-left:2px">${sh[shape]}</span>`;c.style.color="#222"});
+  row.clues.forEach(([a,b,area,shape])=>{const c=at(a,b);c.innerHTML=`<span style="font-size:${z*.42}px">${area??""}</span><span style="font-size:${z*.26}px;margin-left:2px">${sh[shape]}</span>`;c.style.color=r&&r.answer?"#222":"var(--ink)"});
  }else if(kind==="wend"){
   row.rows.forEach((rw,a)=>[...rw].forEach((ch,b)=>{const c=at(a,b);if(ch==="#"){c.style.background="#3a3e45"}else c.textContent=ch.toUpperCase()}));
   if(r&&r.answer)r.answer.slice(0,k).forEach((p,i)=>{p.forEach(([a,b])=>at(a,b).style.background=PAL[i%PAL.length]);for(let j=1;j<p.length;j++)line(ov,pos(p[j-1][1]),pos(p[j-1][0]),pos(p[j][1]),pos(p[j][0]),"rgba(0,0,0,.35)",4)});

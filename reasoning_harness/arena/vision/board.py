@@ -37,32 +37,36 @@ def warp(rgb, quad, size=WARP):
 
 
 def _profiles(board):
-    g = cv2.cvtColor(board, cv2.COLOR_RGB2GRAY).astype(np.float32)
+    """Line coverage per column/row: the fraction of the board an edge runs along.
+    Grid lines and square boundaries cover the whole board; letters and icons do not."""
+    g = cv2.GaussianBlur(cv2.cvtColor(board, cv2.COLOR_RGB2GRAY).astype(np.float32), (3, 3), 0)
     gx = np.abs(cv2.Sobel(g, cv2.CV_32F, 1, 0, ksize=3))
     gy = np.abs(cv2.Sobel(g, cv2.CV_32F, 0, 1, ksize=3))
-    return gx.mean(0), gy.mean(1)
+    thr = 25.0  # a faint 1-px grey line still clears this after blurring; flat colour fields do not
+    # a boundary may sit on one of two adjacent pixel columns: take the max over a 3-px window
+    cx = cv2.dilate((gx > thr).astype(np.uint8), np.ones((1, 3), np.uint8)).mean(0)
+    cy = cv2.dilate((gy > thr).astype(np.uint8), np.ones((3, 1), np.uint8)).mean(1)
+    return cx, cy
 
 
 def gridness(board, n):
-    """How strongly edges line up with every internal boundary of an n x n grid."""
+    """How well an n x n grid explains the board's long lines (1 = every boundary fully covered)."""
     px, py = _profiles(board)
     s = board.shape[0]
-    win = max(2, s // (n * 10))
+    win = max(2, s // (n * 12))
     scores = []
     for prof in (px, py):
-        base = np.median(prof) + 0.02 * prof.max() + 2.0  # floor: flat colour fields have ~0 gradient
-        peaks = [prof[max(0, int(round(k * s / n)) - win):int(round(k * s / n)) + win + 1].max() / base for k in range(1, n)]
-        # also require the mid-cell positions to be quieter than the boundaries
-        mids = [prof[max(0, int(round((k + .5) * s / n)) - win):int(round((k + .5) * s / n)) + win + 1].max() / base
-                for k in range(n)]
-        scores.append(np.percentile(peaks, 20) - 0.15 * np.median(mids))
+        at = lambda f: prof[max(0, int(round(f * s / n)) - win):int(round(f * s / n)) + win + 1].max()  # noqa: E731
+        peaks = [at(k) for k in range(1, n)]
+        mids = [at(k + .5) for k in range(n)]
+        scores.append(np.percentile(peaks, 20) - np.median(mids))
     return float(min(scores))
 
 
 def detect_n(board, sizes):
     sc = {n: gridness(board, n) for n in sizes}
     best = max(sc.values())
-    good = [n for n, v in sc.items() if v >= best - 0.25 * abs(best)]
+    good = [n for n, v in sc.items() if v >= best - 0.1]
     return max(good), sc
 
 

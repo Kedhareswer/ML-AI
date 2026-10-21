@@ -50,6 +50,21 @@ def canonical(kind, d):
     raise ValueError(kind)
 
 
+def _check_against_truth(kind, row, got, answer):
+    """Is the answer to the puzzle read from the image a valid answer to the true puzzle?"""
+    truth = from_json(row)
+    if kind == "patches":  # answers are listed in clue order; reorder to the true puzzle's clues
+        rect_at = {(c[0], c[1]): a for c, a in zip(got["clues"], answer)}
+        try:
+            answer = [rect_at[(c[0], c[1])] for c in row["clues"]]
+        except KeyError:
+            return False
+    if kind == "wend":  # the image does not show word lengths: any dictionary split of the true grid counts
+        from arena.puzzles.wend import Wend
+        truth = Wend(row["rows"], None)
+    return truth.verify(answer)
+
+
 def phone_like(png, rng):
     """JPEG + rescale, as a screenshot shared from a phone or chat app would be."""
     img = Image.open(io.BytesIO(png)).convert("RGB")
@@ -126,8 +141,7 @@ def main():
                 exact = canonical(kind, got) == canonical(kind, row)
                 puzzle = from_json(got)
                 sol = solve(puzzle, net, "search", budget=4000)
-                truth = from_json(row)
-                solved = bool(sol["solved"] and truth.verify(sol["answer"]))
+                solved = bool(sol["solved"] and _check_against_truth(kind, row, got, sol["answer"]))
                 err = None
             except Exception as e:  # unreadable or invalid grid counts as a failure
                 exact, solved, err, res = False, False, str(e)[:200], {"confidence": 0.0, "n": None}
