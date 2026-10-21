@@ -48,6 +48,8 @@ def main(argv=None):
     u = sub.add_parser("ui", help="local browser UI for every game")
     u.add_argument("--artifacts", default="artifacts/arena")
     u.add_argument("--port", type=int, default=7861)
+    u.add_argument("--host", default="127.0.0.1", help="0.0.0.0 to accept outside connections (e.g. in a container)")
+    u.add_argument("--tests", default="benchmarks/arena", help="held-out puzzles used for the example buttons")
 
     args = ap.parse_args(argv)
     if args.cmd == "train":
@@ -72,7 +74,7 @@ def main(argv=None):
         return 0 if result["solved"] else 1
     elif args.cmd == "ui":
         from .ui import serve
-        serve(args.artifacts, args.port)
+        serve(args.artifacts, args.port, args.tests, args.host)
 
 
 if __name__ == "__main__":

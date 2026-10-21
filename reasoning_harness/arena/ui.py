@@ -128,7 +128,7 @@ def handle(models, path, payload):
     raise KeyError(path)
 
 
-def serve(root="artifacts/arena", port=7861, tests="benchmarks/arena"):
+def serve(root="artifacts/arena", port=7861, tests="benchmarks/arena", host="127.0.0.1"):
     models = Models(root, tests)
 
     class Handler(BaseHTTPRequestHandler):
@@ -173,6 +173,6 @@ def serve(root="artifacts/arena", port=7861, tests="benchmarks/arena"):
             except (ValueError, TypeError) as e:
                 self.send(400, {"error": str(e)})
 
-    server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
-    print(f"arena UI on http://127.0.0.1:{port}", flush=True)
+    server = ThreadingHTTPServer((host, port), Handler)
+    print(f"arena UI on http://{host}:{port}", flush=True)
     server.serve_forever()
