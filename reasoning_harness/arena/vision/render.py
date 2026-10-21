@@ -73,7 +73,7 @@ def _rgb(rng, light):
 
 def _scheme(rng):
     """Background and ink colours; mostly light boards, sometimes dark mode or tinted cells."""
-    dark_mode = rng.random() < 0.25
+    dark_mode = rng.random() < 0.45
     bg = _rgb(rng, not dark_mode)
     if rng.random() < 0.3:  # tinted cell (region colours, highlights)
         bg = tuple(rng.randint(120, 255) if not dark_mode else rng.randint(20, 90) for _ in range(3))
@@ -120,7 +120,7 @@ def _finish(img, rng):
     m = rng.uniform(0, 0.1) * CANVAS
     dx, dy = rng.uniform(-0.06, 0.06) * CANVAS, rng.uniform(-0.06, 0.06) * CANVAS
     img = img.crop((m + dx, m + dy, CANVAS - m + dx, CANVAS - m + dy))
-    small = rng.choice([SIZE, 20, 24, 40, 48])
+    small = rng.choice([SIZE, 14, 16, 20, 24, 28, 40, 48])  # tiny cells: heavily downscaled screenshots
     img = img.resize((small, small), Image.BILINEAR).resize((SIZE, SIZE), Image.BILINEAR)
     arr = np.asarray(img, np.float32)
     if rng.random() < 0.5:
@@ -128,7 +128,7 @@ def _finish(img, rng):
     img = Image.fromarray(arr.clip(0, 255).astype(np.uint8))
     if rng.random() < 0.5:
         buf = io.BytesIO()
-        img.save(buf, "JPEG", quality=rng.randint(30, 95))
+        img.save(buf, "JPEG", quality=rng.randint(20, 95))
         img = Image.open(io.BytesIO(buf.getvalue())).convert("RGB")
     return img
 

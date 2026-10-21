@@ -36,13 +36,15 @@ def warp(rgb, quad, size=WARP):
     return cv2.warpPerspective(rgb, m, (size, size), flags=cv2.INTER_AREA)
 
 
-def _profiles(board):
+THRESHOLDS = (14.0, 25.0, 40.0)  # faint light-on-dark lines ... strong lines among bold glyphs
+
+
+def _profiles(board, thr):
     """Line coverage per column/row: the fraction of the board an edge runs along.
     Grid lines and square boundaries cover the whole board; letters and icons do not."""
     g = cv2.GaussianBlur(cv2.cvtColor(board, cv2.COLOR_RGB2GRAY).astype(np.float32), (3, 3), 0)
     gx = np.abs(cv2.Sobel(g, cv2.CV_32F, 1, 0, ksize=3))
     gy = np.abs(cv2.Sobel(g, cv2.CV_32F, 0, 1, ksize=3))
-    thr = 25.0  # a faint 1-px grey line still clears this after blurring; flat colour fields do not
     # a boundary may sit on one of two adjacent pixel columns: take the max over a 3-px window
     cx = cv2.dilate((gx > thr).astype(np.uint8), np.ones((1, 3), np.uint8)).mean(0)
     cy = cv2.dilate((gy > thr).astype(np.uint8), np.ones((3, 1), np.uint8)).mean(1)
@@ -50,17 +52,20 @@ def _profiles(board):
 
 
 def gridness(board, n):
-    """How well an n x n grid explains the board's long lines (1 = every boundary fully covered)."""
-    px, py = _profiles(board)
+    """How well an n x n grid explains the board's long lines (1 = every boundary fully covered),
+    at the edge threshold that suits this board best."""
     s = board.shape[0]
     win = max(2, s // (n * 12))
-    scores = []
-    for prof in (px, py):
-        at = lambda f: prof[max(0, int(round(f * s / n)) - win):int(round(f * s / n)) + win + 1].max()  # noqa: E731
-        peaks = [at(k) for k in range(1, n)]
-        mids = [at(k + .5) for k in range(n)]
-        scores.append(np.percentile(peaks, 20) - np.median(mids))
-    return float(min(scores))
+    best = -1.0
+    for thr in THRESHOLDS:
+        scores = []
+        for prof in _profiles(board, thr):
+            at = lambda f: prof[max(0, int(round(f * s / n)) - win):int(round(f * s / n)) + win + 1].max()  # noqa: E731
+            peaks = [at(k) for k in range(1, n)]
+            mids = [at(k + .5) for k in range(n)]
+            scores.append(np.percentile(peaks, 20) - np.median(mids))
+        best = max(best, float(min(scores)))
+    return best
 
 
 def detect_n(board, sizes):
