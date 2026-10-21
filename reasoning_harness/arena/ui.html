@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Puzzle Arena</title>
+<style>
+:root{--bg:#f6f5f2;--panel:#fff;--ink:#1d1f23;--muted:#6b6f76;--line:#d9d6cf;--accent:#2f6fde;--ok:#1f8a4c;--bad:#c23b32;--given:#1d1f23;--fill:#2f6fde;--cell:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#16181c;--panel:#1f2227;--ink:#e9e7e2;--muted:#9aa0a8;--line:#3a3e45;--accent:#6c9cff;--ok:#4cc27e;--bad:#ff6b5f;--given:#e9e7e2;--fill:#8fb2ff;--cell:#262a30}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{padding:16px 20px 8px}
+h1{margin:0;font-size:22px;letter-spacing:-.01em}
+header p{margin:4px 0 0;color:var(--muted)}
+nav{display:flex;flex-wrap:wrap;gap:6px;padding:8px 20px}
+nav button{border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:7px 12px;border-radius:999px;cursor:pointer;font-size:14px}
+nav button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;padding:8px 20px 24px;max-width:1100px}
+@media (max-width:820px){main{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+#stage{display:flex;justify-content:center;align-items:center;min-height:420px}
+.controls button{display:block;width:100%;margin:6px 0;padding:9px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;font-size:14px;text-align:left}
+.controls button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.controls button:disabled{opacity:.5;cursor:wait}
+.status{margin-top:10px;padding:10px;border-radius:10px;background:var(--bg);min-height:48px;font-size:14px}
+.status .ok{color:var(--ok);font-weight:600}.status .bad{color:var(--bad);font-weight:600}
+.meta{margin-top:10px;color:var(--muted);font-size:13px}
+.board{position:relative;display:grid;border:3px solid var(--ink);background:var(--line);gap:1px;user-select:none}
+.cell{background:var(--cell);display:flex;align-items:center;justify-content:center;font-weight:600;position:relative}
+.given{color:var(--given)}.filled{color:var(--fill)}
+svg.over{position:absolute;inset:0;pointer-events:none}
+.rules{font-size:13px;color:var(--muted);margin-top:8px}
+.pp{display:flex;flex-direction:column;gap:8px;width:100%;max-width:520px}
+.pp .clue{display:flex;gap:10px;align-items:baseline;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--cell)}
+.pp .clue b{min-width:110px}.pp .g{color:var(--muted);font-size:13px}
+.pp .hit{color:var(--ok);font-weight:700}
+.upload{margin:4px 0 10px;padding:10px;border:1px dashed var(--line);border-radius:10px}
+.upload select{width:100%;margin-top:6px;padding:6px;border-radius:8px;border:1px solid var(--line);background:var(--cell);color:var(--ink)}
+.drop{display:block;cursor:pointer;font-weight:600}.drop input{display:block;margin-top:6px;font-size:13px;max-width:100%}
+input.pin{width:100%;padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--cell);color:var(--ink);margin:3px 0}
+</style>
+</head>
+<body>
+<header><h1>Puzzle Arena</h1><p>Models trained from scratch on this machine. Every answer is checked by an independent rule verifier before it is called solved.</p></header>
+<nav id="tabs"></nav>
+<main>
+  <section class="card"><div id="stage"></div><div class="rules" id="rules"></div></section>
+  <aside class="card controls">
+    <div id="buttons"></div>
+    <div class="status" id="status">Pick a puzzle, then solve it.</div>
+    <div class="meta" id="meta"></div>
+  </aside>
+</main>
+<script>
+const KINDS={
+ sudoku:{label:"Sudoku",rules:"Real puzzle from the Sudoku-Extreme test set (not used in training). Fill 1-9 so every row, column and 3x3 box has each digit once."},
+ mini_sudoku:{label:"Mini Sudoku",rules:"6x6, digits 1-6 once per row, column and 2x3 box (LinkedIn Mini Sudoku rules). Held-out generated puzzle with a unique answer."},
+ tango:{label:"Tango",rules:"Suns and moons: three of each per row and column, never three alike in a line; = joins equal cells, × joins different cells."},
+ queens:{label:"Queens",rules:"One queen per row, column and colour region; queens may not touch, even diagonally."},
+ zip:{label:"Zip",rules:"Draw one path through every cell, visiting the numbers in order. Thick bars are walls."},
+ patches:{label:"Patches",rules:"Cut the grid into rectangles, one clue each. The number is the area; ■ square, ▬ wide, ▮ tall, ✱ any."},
+ wend:{label:"Wend",rules:"Split the letters into hidden words. Words bend through tiles that touch up/down/left/right, every tile used once; dark tiles are walls."},
+ chess:{label:"Chess puzzles",rules:"Real Lichess puzzle from games never used in training. Find the winning line; any mating move is accepted."},
+ checkers:{label:"Checkers",rules:"American checkers. Watch the trained network (black, bottom) play an engine. Captures are compulsory."},
+ pinpoint:{label:"Pinpoint",rules:"Five clue words share a category. The word-vector model (trained from scratch on Wikipedia text) guesses after each clue."}
+};
+let kind="sudoku",row=null,busy=false,timer=null;
+const $=id=>document.getElementById(id);
+const tabs=$("tabs");
+for(const k in KINDS){const b=document.createElement("button");b.textContent=KINDS[k].label;b.dataset.k=k;b.onclick=()=>select(k);tabs.appendChild(b)}
+async function api(path,body){const r=await fetch(path,body?{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)}:{});const j=await r.json();if(!r.ok)throw new Error(j.error||r.status);return j}
+function status(html){$("status").innerHTML=html}
+function stop(){if(timer){clearInterval(timer);timer=null}}
+async function select(k){stop();kind=k;for(const b of tabs.children)b.classList.toggle("on",b.dataset.k===k);$("rules").textContent=KINDS[k].rules;buttons();await newPuzzle()}
+function buttons(){
+ const B=$("buttons");B.innerHTML="";
+ const add=(t,f,p)=>{const b=document.createElement("button");b.textContent=t;b.onclick=f;if(p)b.className="primary";B.appendChild(b)};
+ if(kind!=="pinpoint")uploader(B);
+ if(kind==="checkers"){add("Play: network vs material engine",()=>game("material"),1);add("Play: network vs random mover",()=>game("random"));return}
+ if(kind==="pinpoint"){add("New example",()=>newPuzzle());add("Reveal clues and guess",()=>pinpoint(false),1);
+   const box=document.createElement("div");box.innerHTML='<div class="meta">Or type your own clues:</div>'+[1,2,3,4,5].map(i=>`<input class="pin" id="pin${i}" placeholder="clue ${i}">`).join("")+'';B.appendChild(box);add("Guess my clues",()=>pinpoint(true));return}
+ add("New held-out puzzle",()=>newPuzzle());
+ if(kind==="chess"){add("Lichess daily puzzle",()=>newPuzzle("chess_daily"));add("Solve: network only (no search)",()=>chessSolve("neural"),1);add("Solve: network + search",()=>chessSolve("search"));add("Classical search, no network",()=>chessSolve("classic"));return}
+ add("Solve: network only (no backtracking)",()=>solve("neural"),1);add("Solve: network + backtracking",()=>solve("search"));add("Classical solver, no network",()=>solve("exact"));
+}
+function uploader(B){
+ const d=el("div","upload");
+ const side=kind==="chess"?'<select id="tomove"><option value="w">White to move</option><option value="b">Black to move</option></select>':kind==="checkers"?'<select id="tomove"><option value="dark">Dark to move</option><option value="light">Light to move</option></select>':"";
+ d.innerHTML=`<label class="drop">📷 Solve from a screenshot<input type="file" id="imgfile" accept="image/*"></label>${side}<div class="meta">…or paste an image (Ctrl+V)</div>`;
+ B.appendChild(d);d.querySelector("#imgfile").onchange=e=>{if(e.target.files[0])fromImage(e.target.files[0])};
+}
+document.addEventListener("paste",e=>{for(const it of e.clipboardData.items)if(it.type.startsWith("image/")){fromImage(it.getAsFile());break}});
+function dataURL(file){return new Promise((ok,bad)=>{const r=new FileReader();r.onload=()=>ok(r.result);r.onerror=bad;r.readAsDataURL(file)})}
+async function fromImage(file){if(busy||kind==="pinpoint")return;stop();status("Reading the image…");
+ try{const tm=$("tomove")?$("tomove").value:undefined;
+  const r=await api("/api/read",{kind,image:await dataURL(file),to_move:tm});
+  const warn=r.low_confidence?' <span class="bad">(low confidence: check the grid)</span>':"";
+  const info=`Read from image: ${r.n}×${r.n} grid, lowest cell confidence ${(100*r.confidence).toFixed(0)}%${warn}`;
+  if(kind==="chess"){row={FEN:r.fen,_start:r.fen,Moves:""};drawChess(fenBoard(r.fen));status(info+"<br>Thinking…");
+   const b=await api("/api/chess/best",{fen:r.fen});const after=applyMove(fenBoard(r.fen),b.uci);
+   drawChess(after,[sq(b.uci.slice(0,2)),sq(b.uci.slice(2,4))]);status(`${info}<br>Best move (network + search): <b>${b.san}</b><br><span class="meta">${r.fen}</span>`);return}
+  if(kind==="checkers"){drawCheckers(r.board);status(info+"<br>Thinking…");
+   const b=await api("/api/checkers/best",{board:r.board,to_move:tm});
+   if(!b.move){status(`${info}<br>${b.message}`);return}
+   const names=b.move.map(([a,c])=>"abcdefgh"[c]+(8-a));
+   setTimeout(()=>drawCheckers(b.after),900);status(`${info}<br>Best move (network, 4-ply search): <b>${names.join(b.captures?"x":"-")}</b>`);return}
+  row=r.puzzle;row._src="image";draw(row,null,0);$("meta").innerHTML=info;
+  await solve("search");$("status").innerHTML=info+"<br>"+$("status").innerHTML;
+ }catch(e){status(`<span class="bad">Could not read this image: ${e.message}</span>`)}}
+async function newPuzzle(src){stop();status("Loading…");$("meta").textContent="";
+ const j=await api(`/api/example?kind=${src||kind}`);row=j.row;row._src=src||kind;
+ if(kind==="chess"){drawChess(fenBoard(startFen(row)),null);status(`Lichess puzzle ${row.PuzzleId}, rating ${row.Rating}${row.DailyDate?` · daily puzzle ${row.DailyDate}`:""}. ${turnOf(startFen(row))} to move.`)}
+ else if(kind==="pinpoint"){drawPin(row.clues.map(c=>({c,g:[]})),row.answer,0);status("Example puzzle. Press “Reveal clues and guess”.")}
+ else if(kind==="checkers"){drawCheckers(null)}
+ else {draw(row,null,0);status(`Held-out ${KINDS[kind].label} puzzle #${j.index}.`)}
+ const m=await api("/api/models");const key=kind==="chess"?"chess":kind;if(m[key])$("meta").textContent=meta(m[key]);
+}
+function meta(m){const p=m.parameters?`${(m.parameters/1e6).toFixed(2)}M parameters`:"";return [p,m.trained_steps?`${m.trained_steps} training steps`:m.steps?`${m.steps} steps`:"",m.train_puzzles?`${m.train_puzzles.toLocaleString()} training puzzles`:"",m.train_positions?`${m.train_positions.toLocaleString()} training positions`:"",m.generations?`${m.generations} self-play generations`:"",m.corpus_words?`${(m.corpus_words/1e6).toFixed(0)}M words of training text`:"","random initialisation"].filter(Boolean).join(" · ")}
+async function solve(mode){if(busy)return;busy=true;stop();status("Solving…");
+ try{const r=await api("/api/solve",{puzzle:row,mode});
+  const label={neural:"Network only",search:"Network + backtracking",exact:"Classical solver"}[mode];
+  status(`${label}: ${r.solved?'<span class="ok">✓ solved, verified</span>':'<span class="bad">✗ not solved</span>'}<br>${r.expanded_states} states · ${r.ms} ms${r.words?`<br>words: ${r.words.join(", ")}`:""}`);
+  animate(r);
+ }catch(e){status(`<span class="bad">${e.message}</span>`)}busy=false}
+function animate(r){
+ if(!r.answer){draw(row,null,0);return}
+ const total=steps(r);let i=0;stop();
+ timer=setInterval(()=>{i++;draw(row,r,i);if(i>=total){stop();draw(row,r,1e9)}},Math.max(25,Math.min(140,2600/total)));
+}
+function steps(r){if(kind==="zip")return r.answer.length;if(kind==="wend"||kind==="patches"||kind==="queens")return r.answer.length;return Math.max(1,r.trail.length)}
+const S=()=>Math.min(56,Math.floor((Math.min(window.innerWidth,780)-80)/n()));
+function n(){return row.n||(row.regions?row.regions.length:row.rows?row.rows.length:9)}
+function el(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e}
+function grid(N,size){const g=el("div","board");g.style.gridTemplateColumns=`repeat(${N},${size}px)`;g.style.gridAutoRows=`${size}px`;return g}
+function svgOver(w,h){const s=document.createElementNS("http://www.w3.org/2000/svg","svg");s.setAttribute("class","over");s.setAttribute("viewBox",`0 0 ${w} ${h}`);s.setAttribute("width",w);s.setAttribute("height",h);return s}
+function line(s,x1,y1,x2,y2,c,w){const l=document.createElementNS(s.namespaceURI,"line");Object.entries({x1,y1,x2,y2,stroke:c,"stroke-width":w,"stroke-linecap":"round"}).forEach(([k,v])=>l.setAttribute(k,v));s.appendChild(l)}
+const PAL=["#f4c7a1","#b9d7f2","#c9e7b6","#f1b6c8","#e4d3f5","#fbe7a1","#a8e0dc","#f5c2b0","#cfd8e3","#d9c5a8","#c4e3f0","#efd0e8"];
+function draw(row,r,k){
+ const st=$("stage");st.innerHTML="";const N=n(),z=S(),g=grid(N,z);const W=N*z+(N-1),pos=i=>i*(z+1)+z/2;
+ const cells=[];for(let i=0;i<N*N;i++){const c=el("div","cell");c.style.fontSize=`${z*.5}px`;cells.push(c);g.appendChild(c)}
+ const at=(r_,c_)=>cells[r_*N+c_];const ov=svgOver(W,W);
+ if(kind==="sudoku"||kind==="mini_sudoku"){
+  const box=kind==="sudoku"?[3,3]:[2,3];const vals=row.grid.slice();
+  if(r){for(const [[rr,cc],v] of r.trail.slice(0,k))vals[rr*N+cc]=v;if(k>=1e9&&r.answer)r.answer.forEach((v,i)=>vals[i]=v)}
+  vals.forEach((v,i)=>{const c=cells[i];c.textContent=v||"";c.classList.add(row.grid[i]?"given":"filled");const rr=Math.floor(i/N),cc=i%N;if(cc%box[1]===0&&cc)c.style.borderLeft="2px solid var(--ink)";if(rr%box[0]===0&&rr)c.style.borderTop="2px solid var(--ink)"});
+ }else if(kind==="tango"){
+  const v=Array.from({length:N},()=>Array(N).fill(-1));row.givens.forEach(([a,b,x])=>v[a][b]=x);
+  if(r){for(const [[a,b],x] of r.trail.slice(0,k))v[a][b]=x;if(k>=1e9)r.answer.forEach((rw,a)=>rw.forEach((x,b)=>v[a][b]=x))}
+  const given=new Set(row.givens.map(([a,b])=>a*N+b));
+  for(let a=0;a<N;a++)for(let b=0;b<N;b++){const c=at(a,b);if(v[a][b]>=0){c.textContent=v[a][b]?"☾":"☀";c.style.color=v[a][b]?"#3d6fd8":"#e8962e";if(given.has(a*N+b))c.style.background="var(--bg)"}}
+  row.edges.forEach(([a,b,a2,b2,s])=>{const t=document.createElementNS(ov.namespaceURI,"text");t.setAttribute("x",(pos(b)+pos(b2))/2);t.setAttribute("y",(pos(a)+pos(a2))/2+5);t.setAttribute("text-anchor","middle");t.setAttribute("font-size",z*.32);t.setAttribute("font-weight","700");t.setAttribute("fill","currentColor");t.textContent=s==="="?"=":"×";ov.appendChild(t)});
+ }else if(kind==="queens"){
+  row.regions.forEach((rw,a)=>rw.forEach((g_,b)=>{at(a,b).style.background=PAL[g_%PAL.length];if(b+1<N&&rw[b+1]!==g_)at(a,b).style.borderRight="2px solid #333";if(a+1<N&&row.regions[a+1][b]!==g_)at(a,b).style.borderBottom="2px solid #333"}));
+  if(r&&r.answer){const order=r.trail.length?r.trail.map(([a,b])=>[a,b]):r.answer.map((c,a)=>[a,c]);order.slice(0,k>=1e9?N:k).forEach(([a,b])=>{const c=at(a,b);c.textContent="♛";c.style.color="#222"})}
+ }else if(kind==="zip"){
+  const nums={};row.numbers.forEach(([a,b,x])=>nums[a*N+b]=x);
+  for(const i in nums){const c=cells[i];const d=el("div","",nums[i]);Object.assign(d.style,{background:"#1d1f23",color:"#fff",borderRadius:"50%",width:`${z*.62}px`,height:`${z*.62}px`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:`${z*.32}px`,zIndex:2});c.appendChild(d)}
+  (row.walls||[]).forEach(([a,b,a2,b2])=>{if(a===a2)line(ov,pos(b)+z/2+.5,a*(z+1),pos(b)+z/2+.5,a*(z+1)+z,"#111",5);else line(ov,b*(z+1),pos(a)+z/2+.5,b*(z+1)+z,pos(a)+z/2+.5,"#111",5)});
+  if(r&&r.answer){const p=r.answer.slice(0,Math.min(k,r.answer.length));for(let i=1;i<p.length;i++)line(ov,pos(p[i-1][1]),pos(p[i-1][0]),pos(p[i][1]),pos(p[i][0]),"#e8762e",z*.36)}
+ }else if(kind==="patches"){
+  const sh={square:"■",wide:"▬",tall:"▮",any:"✱"};
+  if(r&&r.answer)r.answer.slice(0,k).forEach(([r0,c0,h,w],i)=>{for(let a=r0;a<r0+h;a++)for(let b=c0;b<c0+w;b++){const c=at(a,b);c.style.background=PAL[i%PAL.length];if(b===c0+w-1&&b+1<N)c.style.borderRight="2px solid #333";if(a===r0+h-1&&a+1<N)c.style.borderBottom="2px solid #333"}});
+  row.clues.forEach(([a,b,area,shape])=>{const c=at(a,b);c.innerHTML=`<span style="font-size:${z*.42}px">${area??""}</span><span style="font-size:${z*.26}px;margin-left:2px">${sh[shape]}</span>`;c.style.color=r&&r.answer?"#222":"var(--ink)"});
+ }else if(kind==="wend"){
+  row.rows.forEach((rw,a)=>[...rw].forEach((ch,b)=>{const c=at(a,b);if(ch==="#"){c.style.background="#3a3e45"}else c.textContent=ch.toUpperCase()}));
+  if(r&&r.answer)r.answer.slice(0,k).forEach((p,i)=>{p.forEach(([a,b])=>at(a,b).style.background=PAL[i%PAL.length]);for(let j=1;j<p.length;j++)line(ov,pos(p[j-1][1]),pos(p[j-1][0]),pos(p[j][1]),pos(p[j][0]),"rgba(0,0,0,.35)",4)});
+  const info=el("div","rules",`Word lengths: ${row.lengths.join(", ")}`);st.appendChild(info);
+ }
+ g.appendChild(ov);st.prepend(g);
+}
+// ---------------------------------------------------------------- chess
+function startFen(row){return row._start||row.FEN}
+function turnOf(fen){return fen.split(" ")[1]==="w"?"White":"Black"}
+function fenBoard(fen){const b=[];for(const r of fen.split(" ")[0].split("/")){const rw=[];for(const ch of r){if(/\d/.test(ch))for(let i=0;i<+ch;i++)rw.push(null);else rw.push(ch)}b.push(rw)}return b}
+function sq(s){return[8-+s[1],s.charCodeAt(0)-97]}
+function applyMove(b,u){b=b.map(r=>r.slice());const[f1,f0]=sq(u.slice(0,2)),[t1,t0]=sq(u.slice(2,4));let p=b[f1][f0];
+ if((p==="K"||p==="k")&&Math.abs(t0-f0)===2){const rf=t0>f0?7:0,rt=t0>f0?5:3;b[t1][rt]=b[t1][rf];b[t1][rf]=null}
+ if((p==="P"||p==="p")&&f0!==t0&&!b[t1][t0])b[f1][t0]=null;
+ if(u.length>4)p=p===p.toUpperCase()?u[4].toUpperCase():u[4];b[t1][t0]=p;b[f1][f0]=null;return b}
+const GLYPH={K:"♔",Q:"♕",R:"♖",B:"♗",N:"♘",P:"♙",k:"♚",q:"♛",r:"♜",b:"♝",n:"♞",p:"♟"};
+function drawChess(b,hl,flip){const st=$("stage");st.innerHTML="";const z=Math.min(58,Math.floor((Math.min(window.innerWidth,780)-60)/8));const g=grid(8,z);g.style.gap="0";
+ const black=row&&turnOf(startFen(row))==="Black";
+ for(let i=0;i<64;i++){let r=Math.floor(i/8),c=i%8;if(black){r=7-r;c=7-c}const d=el("div","cell");d.style.background=(r+c)%2?"#b58863":"#f0d9b5";d.style.fontSize=`${z*.78}px`;d.style.color="#111";const p=b[r][c];if(p){d.textContent=GLYPH[p];d.style.color=p===p.toUpperCase()?"#fff":"#111";d.style.textShadow=p===p.toUpperCase()?"0 0 2px #000,0 0 1px #000":"none"}
+  if(hl&&hl.some(([a,bb])=>a===r&&bb===c))d.style.boxShadow="inset 0 0 0 4px rgba(47,111,222,.85)";g.appendChild(d)}st.appendChild(g)}
+async function chessSolve(mode){if(busy)return;busy=true;stop();status("Thinking…");
+ try{const r=await api("/api/chess/solve",{puzzle:row,mode});row._start=r.start_fen;
+  let b=fenBoard(r.start_fen);
+  // rebuild alternating line: solver move, then the puzzle's reply
+  const line=[];let si=0;for(let i=0;i<r.solution.length;i++){if(i%2===0){const u=r.played[si++];if(!u)break;line.push(u);if(u!==r.solution[i])break}else line.push(r.solution[i])}
+  let i=0;drawChess(b);timer=setInterval(()=>{if(i>=line.length){stop();return}const u=line[i++];b=applyMove(b,u);drawChess(b,[sq(u.slice(0,2)),sq(u.slice(2,4))])},900);
+  const label={neural:"Network only",search:"Network + search",classic:"Classical search, no network"}[mode];
+  status(`${label}: ${r.solved?'<span class="ok">✓ solved</span>':'<span class="bad">✗ missed</span>'}<br>played ${r.played.join(" ")}<br>solution ${r.solution.filter((_,i)=>i%2===0).join(" ")}`);
+ }catch(e){status(`<span class="bad">${e.message}</span>`)}busy=false}
+// ---------------------------------------------------------------- checkers
+function drawCheckers(f){const st=$("stage");st.innerHTML="";const z=Math.min(54,Math.floor((Math.min(window.innerWidth,780)-60)/8));const g=grid(8,z);g.style.gap="0";
+ for(let i=0;i<64;i++){const r=Math.floor(i/8),c=i%8;const d=el("div","cell");d.style.background=(r+c)%2?"#6d8a5a":"#ece6d3";if(f&&f[r][c]){const v=f[r][c];const p=el("div");Object.assign(p.style,{width:`${z*.74}px`,height:`${z*.74}px`,borderRadius:"50%",background:v>0?"#1d1f23":"#c8312b",border:"2px solid rgba(255,255,255,.5)",display:"flex",alignItems:"center",justifyContent:"center",color:"#f5d76e",fontSize:`${z*.4}px`});if(Math.abs(v)===2)p.textContent="♛";d.appendChild(p)}g.appendChild(d)}st.appendChild(g);if(!f)status("Press play to watch a full game.")}
+async function game(opp){if(busy)return;busy=true;stop();status("Playing a full game…");
+ try{const r=await api("/api/checkers/game",{opponent:opp,seed:Math.floor(Math.random()*1e6)});let i=0;
+  timer=setInterval(()=>{drawCheckers(r.frames[i]);i++;if(i>=r.frames.length){stop();status(`${r.black} vs ${r.white}: <b>${r.result===1?'<span class="ok">network wins</span>':r.result===-1?'<span class="bad">network loses</span>':"draw"}</b> after ${r.plies} plies.`)}},180);
+  status(`Black: ${r.black}. Red: ${r.white}.`);
+ }catch(e){status(`<span class="bad">${e.message}</span>`)}busy=false}
+// ---------------------------------------------------------------- pinpoint
+function drawPin(items,answer,shown){const st=$("stage");st.innerHTML="";const box=el("div","pp");
+ items.forEach((it,i)=>{const d=el("div","clue");const b=el("b","",i<shown||!answer?it.c:"?");d.appendChild(b);if(it.g&&it.g.length){const s=el("span","g");s.innerHTML="guesses: "+it.g.map(([w])=>answer&&(w===answer||(row.accept||[]).includes(w))?`<span class="hit">${w}</span>`:w).join(", ");d.appendChild(s)}box.appendChild(d)});
+ if(answer)box.appendChild(el("div","rules",`Answer: ${shown>=items.length?answer:"hidden until all clues are shown"}`));st.appendChild(box)}
+async function pinpoint(custom){if(busy)return;busy=true;stop();
+ try{const clues=custom?[1,2,3,4,5].map(i=>$("pin"+i).value.trim()).filter(Boolean):row.clues;if(!clues.length)throw new Error("type at least one clue");
+  const r=await api("/api/pinpoint",{clues});const ans=custom?null:row.answer;let k=0;
+  const items=clues.map(c=>({c,g:[]}));
+  timer=setInterval(()=>{items[k].g=r.after[k];k++;drawPin(items,ans,k);if(k>=clues.length){stop();if(ans){const first=r.after.findIndex(g=>g[0]&&(g[0][0]===ans||(row.accept||[]).includes(g[0][0])));status(first>=0?`<span class="ok">✓ top guess correct after ${first+1} clue${first?"s":""}</span>`:`<span class="bad">✗ not the top guess</span>`)}else status(r.unknown.length?`Unknown words: ${r.unknown.join(", ")}`:"Done.")}},800);
+ }catch(e){status(`<span class="bad">${e.message}</span>`)}busy=false}
+select(new URLSearchParams(location.search).get("kind")||"sudoku");
+</script>
+</body>
+</html>

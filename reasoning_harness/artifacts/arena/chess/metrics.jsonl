@@ -1,0 +1,40 @@
+{"step": 100, "loss": 4.8342, "elapsed_s": 57.7}
+{"step": 200, "loss": 4.0909, "elapsed_s": 116.1}
+{"step": 300, "loss": 3.3539, "elapsed_s": 265.3}
+{"step": 400, "loss": 3.2293, "elapsed_s": 495.7}
+{"step": 500, "loss": 2.9766, "elapsed_s": 677.0, "val_loss": 3.0412, "val_top1": 0.3052}
+{"step": 600, "loss": 2.691, "elapsed_s": 167.4}
+{"step": 700, "loss": 2.6634, "elapsed_s": 382.4}
+{"step": 800, "loss": 2.4486, "elapsed_s": 570.8}
+{"step": 900, "loss": 2.3304, "elapsed_s": 686.6}
+{"step": 1000, "loss": 2.4368, "elapsed_s": 759.7, "val_loss": 2.3356, "val_top1": 0.4404}
+{"step": 1100, "loss": 2.0401, "elapsed_s": 852.1}
+{"step": 1200, "loss": 2.2186, "elapsed_s": 930.1}
+{"step": 1300, "loss": 2.0616, "elapsed_s": 1007.9}
+{"step": 1400, "loss": 2.1022, "elapsed_s": 1088.1}
+{"step": 1500, "loss": 1.7266, "elapsed_s": 1163.9, "val_loss": 2.0083, "val_top1": 0.5098}
+{"step": 1600, "loss": 1.717, "elapsed_s": 1275.0}
+{"step": 1700, "loss": 1.9849, "elapsed_s": 1397.9}
+{"step": 1800, "loss": 1.6221, "elapsed_s": 1521.2}
+{"step": 1900, "loss": 1.5751, "elapsed_s": 1646.0}
+{"step": 2000, "loss": 1.7049, "elapsed_s": 1764.4, "val_loss": 1.7715, "val_top1": 0.5535}
+{"step": 2100, "loss": 1.6877, "elapsed_s": 1923.8}
+{"step": 2200, "loss": 1.6313, "elapsed_s": 2045.5}
+{"step": 2300, "loss": 1.6917, "elapsed_s": 2167.3}
+{"step": 2400, "loss": 1.7112, "elapsed_s": 2292.5}
+{"step": 2500, "loss": 1.6173, "elapsed_s": 2457.5, "val_loss": 1.6135, "val_top1": 0.5774}
+{"step": 2600, "loss": 1.5388, "elapsed_s": 2614.9}
+{"step": 2700, "loss": 1.5314, "elapsed_s": 2731.9}
+{"step": 2800, "loss": 1.5905, "elapsed_s": 2849.1}
+{"step": 2900, "loss": 1.3892, "elapsed_s": 2967.2}
+{"step": 3000, "loss": 1.5988, "elapsed_s": 3086.2, "val_loss": 1.4746, "val_top1": 0.6108}
+{"step": 3100, "loss": 1.4903, "elapsed_s": 3238.9}
+{"step": 3200, "loss": 1.4492, "elapsed_s": 3357.9}
+{"step": 3300, "loss": 1.435, "elapsed_s": 3466.5}
+{"step": 3400, "loss": 1.2737, "elapsed_s": 3584.3}
+{"step": 3500, "loss": 1.308, "elapsed_s": 3666.9, "val_loss": 1.4123, "val_top1": 0.623}
+{"step": 3600, "loss": 1.343, "elapsed_s": 3763.7}
+{"step": 3700, "loss": 1.4046, "elapsed_s": 3840.2}
+{"step": 3800, "loss": 1.5137, "elapsed_s": 3917.8}
+{"step": 3900, "loss": 1.5181, "elapsed_s": 3997.3}
+{"step": 4000, "loss": 1.263, "elapsed_s": 4077.8, "val_loss": 1.4, "val_top1": 0.6235}

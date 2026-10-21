@@ -1,0 +1,39 @@
+{
+  "kind": "checkers",
+  "train_samples": 15000,
+  "epochs": 6,
+  "parameters": 1101235,
+  "history": [
+    {
+      "epoch": 1,
+      "loss": 0.2797,
+      "synthetic_val_acc": 0.9613
+    },
+    {
+      "epoch": 2,
+      "loss": 0.2316,
+      "synthetic_val_acc": 0.9603
+    },
+    {
+      "epoch": 3,
+      "loss": 0.2122,
+      "synthetic_val_acc": 0.979
+    },
+    {
+      "epoch": 4,
+      "loss": 0.1843,
+      "synthetic_val_acc": 0.9833
+    },
+    {
+      "epoch": 5,
+      "loss": 0.1771,
+      "synthetic_val_acc": 0.9873
+    },
+    {
+      "epoch": 6,
+      "loss": 0.1771,
+      "synthetic_val_acc": 0.9883
+    }
+  ],
+  "train_seconds": 271.9
+}

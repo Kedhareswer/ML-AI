@@ -1,0 +1,39 @@
+{
+  "kind": "tango_sign",
+  "train_samples": 15000,
+  "epochs": 6,
+  "parameters": 1101235,
+  "history": [
+    {
+      "epoch": 1,
+      "loss": 0.3064,
+      "synthetic_val_acc": 0.8963
+    },
+    {
+      "epoch": 2,
+      "loss": 0.3464,
+      "synthetic_val_acc": 0.9617
+    },
+    {
+      "epoch": 3,
+      "loss": 0.2701,
+      "synthetic_val_acc": 0.968
+    },
+    {
+      "epoch": 4,
+      "loss": 0.2318,
+      "synthetic_val_acc": 0.9803
+    },
+    {
+      "epoch": 5,
+      "loss": 0.1792,
+      "synthetic_val_acc": 0.9803
+    },
+    {
+      "epoch": 6,
+      "loss": 0.1761,
+      "synthetic_val_acc": 0.9817
+    }
+  ],
+  "train_seconds": 259.9
+}

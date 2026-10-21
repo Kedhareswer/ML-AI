@@ -1,0 +1,499 @@
+{
+  "budget_nodes_per_move": 3000,
+  "sets": {
+    "test": {
+      "neural": {
+        "description": "Trained network only (top move, no search)",
+        "solved": 132,
+        "total": 300,
+        "rate": 44.0,
+        "wilson95": [
+          38.49,
+          49.66
+        ],
+        "by_rating": {
+          "0-1200": {
+            "solved": 84,
+            "total": 106,
+            "rate": 79.25,
+            "wilson95": [
+              70.57,
+              85.88
+            ]
+          },
+          "1200-1600": {
+            "solved": 32,
+            "total": 69,
+            "rate": 46.38,
+            "wilson95": [
+              35.11,
+              58.02
+            ]
+          },
+          "1600-2000": {
+            "solved": 12,
+            "total": 54,
+            "rate": 22.22,
+            "wilson95": [
+              13.2,
+              34.94
+            ]
+          },
+          "2000-4000": {
+            "solved": 4,
+            "total": 71,
+            "rate": 5.63,
+            "wilson95": [
+              2.21,
+              13.61
+            ]
+          }
+        },
+        "p50_ms": 6.9
+      },
+      "neural_untrained": {
+        "description": "Random-initialised network (control)",
+        "solved": 1,
+        "total": 300,
+        "rate": 0.33,
+        "wilson95": [
+          0.06,
+          1.86
+        ],
+        "by_rating": {
+          "0-1200": {
+            "solved": 0,
+            "total": 106,
+            "rate": 0.0,
+            "wilson95": [
+              0,
+              3.5
+            ]
+          },
+          "1200-1600": {
+            "solved": 1,
+            "total": 69,
+            "rate": 1.45,
+            "wilson95": [
+              0.26,
+              7.76
+            ]
+          },
+          "1600-2000": {
+            "solved": 0,
+            "total": 54,
+            "rate": 0.0,
+            "wilson95": [
+              0.0,
+              6.64
+            ]
+          },
+          "2000-4000": {
+            "solved": 0,
+            "total": 71,
+            "rate": 0.0,
+            "wilson95": [
+              0,
+              5.13
+            ]
+          }
+        },
+        "p50_ms": 3.9
+      },
+      "search": {
+        "description": "Trained network + alpha-beta search",
+        "solved": 176,
+        "total": 300,
+        "rate": 58.67,
+        "wilson95": [
+          53.02,
+          64.1
+        ],
+        "by_rating": {
+          "0-1200": {
+            "solved": 100,
+            "total": 106,
+            "rate": 94.34,
+            "wilson95": [
+              88.2,
+              97.38
+            ]
+          },
+          "1200-1600": {
+            "solved": 48,
+            "total": 69,
+            "rate": 69.57,
+            "wilson95": [
+              57.92,
+              79.15
+            ]
+          },
+          "1600-2000": {
+            "solved": 24,
+            "total": 54,
+            "rate": 44.44,
+            "wilson95": [
+              32.0,
+              57.62
+            ]
+          },
+          "2000-4000": {
+            "solved": 4,
+            "total": 71,
+            "rate": 5.63,
+            "wilson95": [
+              2.21,
+              13.61
+            ]
+          }
+        },
+        "p50_ms": 475.04999999999995
+      },
+      "classic": {
+        "description": "Alpha-beta search, no network (baseline)",
+        "solved": 157,
+        "total": 300,
+        "rate": 52.33,
+        "wilson95": [
+          46.69,
+          57.92
+        ],
+        "by_rating": {
+          "0-1200": {
+            "solved": 92,
+            "total": 106,
+            "rate": 86.79,
+            "wilson95": [
+              79.04,
+              91.97
+            ]
+          },
+          "1200-1600": {
+            "solved": 40,
+            "total": 69,
+            "rate": 57.97,
+            "wilson95": [
+              46.21,
+              68.89
+            ]
+          },
+          "1600-2000": {
+            "solved": 18,
+            "total": 54,
+            "rate": 33.33,
+            "wilson95": [
+              22.24,
+              46.64
+            ]
+          },
+          "2000-4000": {
+            "solved": 7,
+            "total": 71,
+            "rate": 9.86,
+            "wilson95": [
+              4.86,
+              18.98
+            ]
+          }
+        },
+        "p50_ms": 329.65
+      },
+      "random": {
+        "description": "Random legal move (control)",
+        "solved": 2,
+        "total": 300,
+        "rate": 0.67,
+        "wilson95": [
+          0.18,
+          2.4
+        ],
+        "by_rating": {
+          "0-1200": {
+            "solved": 1,
+            "total": 106,
+            "rate": 0.94,
+            "wilson95": [
+              0.17,
+              5.15
+            ]
+          },
+          "1200-1600": {
+            "solved": 1,
+            "total": 69,
+            "rate": 1.45,
+            "wilson95": [
+              0.26,
+              7.76
+            ]
+          },
+          "1600-2000": {
+            "solved": 0,
+            "total": 54,
+            "rate": 0.0,
+            "wilson95": [
+              0.0,
+              6.64
+            ]
+          },
+          "2000-4000": {
+            "solved": 0,
+            "total": 71,
+            "rate": 0.0,
+            "wilson95": [
+              0,
+              5.13
+            ]
+          }
+        },
+        "p50_ms": 0.2
+      }
+    },
+    "daily": {
+      "neural": {
+        "description": "Trained network only (top move, no search)",
+        "solved": 54,
+        "total": 297,
+        "rate": 18.18,
+        "wilson95": [
+          14.21,
+          22.97
+        ],
+        "by_rating": {
+          "0-1200": {
+            "solved": 3,
+            "total": 5,
+            "rate": 60.0,
+            "wilson95": [
+              23.07,
+              88.24
+            ]
+          },
+          "1200-1600": {
+            "solved": 6,
+            "total": 11,
+            "rate": 54.55,
+            "wilson95": [
+              28.01,
+              78.73
+            ]
+          },
+          "1600-2000": {
+            "solved": 32,
+            "total": 169,
+            "rate": 18.93,
+            "wilson95": [
+              13.74,
+              25.51
+            ]
+          },
+          "2000-4000": {
+            "solved": 13,
+            "total": 112,
+            "rate": 11.61,
+            "wilson95": [
+              6.91,
+              18.85
+            ]
+          }
+        },
+        "p50_ms": 5.5
+      },
+      "neural_untrained": {
+        "description": "Random-initialised network (control)",
+        "solved": 0,
+        "total": 297,
+        "rate": 0.0,
+        "wilson95": [
+          0,
+          1.28
+        ],
+        "by_rating": {
+          "0-1200": {
+            "solved": 0,
+            "total": 5,
+            "rate": 0.0,
+            "wilson95": [
+              0,
+              43.45
+            ]
+          },
+          "1200-1600": {
+            "solved": 0,
+            "total": 11,
+            "rate": 0.0,
+            "wilson95": [
+              0.0,
+              25.88
+            ]
+          },
+          "1600-2000": {
+            "solved": 0,
+            "total": 169,
+            "rate": 0.0,
+            "wilson95": [
+              0,
+              2.22
+            ]
+          },
+          "2000-4000": {
+            "solved": 0,
+            "total": 112,
+            "rate": 0.0,
+            "wilson95": [
+              0,
+              3.32
+            ]
+          }
+        },
+        "p50_ms": 4.0
+      },
+      "search": {
+        "description": "Trained network + alpha-beta search",
+        "solved": 89,
+        "total": 297,
+        "rate": 29.97,
+        "wilson95": [
+          25.04,
+          35.41
+        ],
+        "by_rating": {
+          "0-1200": {
+            "solved": 3,
+            "total": 5,
+            "rate": 60.0,
+            "wilson95": [
+              23.07,
+              88.24
+            ]
+          },
+          "1200-1600": {
+            "solved": 9,
+            "total": 11,
+            "rate": 81.82,
+            "wilson95": [
+              52.3,
+              94.86
+            ]
+          },
+          "1600-2000": {
+            "solved": 57,
+            "total": 169,
+            "rate": 33.73,
+            "wilson95": [
+              27.03,
+              41.15
+            ]
+          },
+          "2000-4000": {
+            "solved": 20,
+            "total": 112,
+            "rate": 17.86,
+            "wilson95": [
+              11.87,
+              25.98
+            ]
+          }
+        },
+        "p50_ms": 540.9
+      },
+      "classic": {
+        "description": "Alpha-beta search, no network (baseline)",
+        "solved": 67,
+        "total": 297,
+        "rate": 22.56,
+        "wilson95": [
+          18.17,
+          27.65
+        ],
+        "by_rating": {
+          "0-1200": {
+            "solved": 3,
+            "total": 5,
+            "rate": 60.0,
+            "wilson95": [
+              23.07,
+              88.24
+            ]
+          },
+          "1200-1600": {
+            "solved": 6,
+            "total": 11,
+            "rate": 54.55,
+            "wilson95": [
+              28.01,
+              78.73
+            ]
+          },
+          "1600-2000": {
+            "solved": 38,
+            "total": 169,
+            "rate": 22.49,
+            "wilson95": [
+              16.84,
+              29.35
+            ]
+          },
+          "2000-4000": {
+            "solved": 20,
+            "total": 112,
+            "rate": 17.86,
+            "wilson95": [
+              11.87,
+              25.98
+            ]
+          }
+        },
+        "p50_ms": 375.0
+      },
+      "random": {
+        "description": "Random legal move (control)",
+        "solved": 1,
+        "total": 297,
+        "rate": 0.34,
+        "wilson95": [
+          0.06,
+          1.88
+        ],
+        "by_rating": {
+          "0-1200": {
+            "solved": 0,
+            "total": 5,
+            "rate": 0.0,
+            "wilson95": [
+              0,
+              43.45
+            ]
+          },
+          "1200-1600": {
+            "solved": 0,
+            "total": 11,
+            "rate": 0.0,
+            "wilson95": [
+              0.0,
+              25.88
+            ]
+          },
+          "1600-2000": {
+            "solved": 1,
+            "total": 169,
+            "rate": 0.59,
+            "wilson95": [
+              0.1,
+              3.28
+            ]
+          },
+          "2000-4000": {
+            "solved": 0,
+            "total": 112,
+            "rate": 0.0,
+            "wilson95": [
+              0,
+              3.32
+            ]
+          }
+        },
+        "p50_ms": 0.2
+      }
+    }
+  }
+}

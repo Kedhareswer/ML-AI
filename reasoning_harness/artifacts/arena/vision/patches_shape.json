@@ -1,0 +1,39 @@
+{
+  "kind": "patches_shape",
+  "train_samples": 20000,
+  "epochs": 6,
+  "parameters": 1101749,
+  "history": [
+    {
+      "epoch": 1,
+      "loss": 0.6284,
+      "synthetic_val_acc": 0.8143
+    },
+    {
+      "epoch": 2,
+      "loss": 0.5397,
+      "synthetic_val_acc": 0.872
+    },
+    {
+      "epoch": 3,
+      "loss": 0.4232,
+      "synthetic_val_acc": 0.8887
+    },
+    {
+      "epoch": 4,
+      "loss": 0.3965,
+      "synthetic_val_acc": 0.918
+    },
+    {
+      "epoch": 5,
+      "loss": 0.3557,
+      "synthetic_val_acc": 0.9527
+    },
+    {
+      "epoch": 6,
+      "loss": 0.3514,
+      "synthetic_val_acc": 0.9543
+    }
+  ],
+  "train_seconds": 349.4
+}

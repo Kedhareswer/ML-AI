@@ -1,0 +1,13 @@
+{
+  "kind": "checkers_value",
+  "version": 2,
+  "generations": 20,
+  "games_per_generation": 250,
+  "self_play_games": 5000,
+  "parameters": 637697,
+  "self_play": "1-ply search, softmax move sampling (temperature 0.05), 3% random moves",
+  "target": "TD(lambda=0.7) returns for the side to move",
+  "initialisation": "random (torch.manual_seed 1)",
+  "train_seconds": 4493.6,
+  "previous_attempt": "v1 used Monte Carlo targets with 15% random moves and lost to a random mover at depth 2; replaced"
+}

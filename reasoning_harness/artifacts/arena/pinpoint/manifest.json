@@ -1,0 +1,16 @@
+{
+  "kind": "pinpoint_word2vec",
+  "dim": 200,
+  "epochs": 3,
+  "corpus": "WikiText-103 raw train (CC BY-SA 3.0)",
+  "corpus_words": 82921831,
+  "kept_vocab": 40000,
+  "algorithm": "skip-gram, negative sampling",
+  "initialisation": "random (seed 0)",
+  "category_head": {
+    "training_groups": 1451,
+    "steps": 4000,
+    "excluded_test_answers": 639,
+    "source": "WordNet noun hierarchy (category -> kinds)"
+  }
+}

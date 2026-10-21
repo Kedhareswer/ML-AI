@@ -1,0 +1,11 @@
+{
+  "kind": "chess_policy",
+  "steps": 4000,
+  "batch_size": 256,
+  "train_positions": 1180000,
+  "parameters": 1020832,
+  "seed": 0,
+  "train_seconds": 4094.8,
+  "initialisation": "random (torch.manual_seed)",
+  "data": "Lichess puzzle database (CC0), split by source game"
+}

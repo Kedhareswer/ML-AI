@@ -1,0 +1,16 @@
+{
+  "kind": "tango",
+  "steps": 2000,
+  "batch_size": 64,
+  "lr": 0.001,
+  "seed": 0,
+  "train_puzzles": 2858,
+  "bf16_autocast": true,
+  "trained_steps": 2000,
+  "parameters": 426626,
+  "weights_bytes": 1730866,
+  "train_seconds": 844.2,
+  "torch": "2.6.0+cpu",
+  "device": "cpu",
+  "initialisation": "random (torch.manual_seed)"
+}

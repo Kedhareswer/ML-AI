@@ -1,0 +1,108 @@
+{
+  "handwritten": {
+    "vectors_plus_category_head": {
+      "cases": 40,
+      "top1_after_k_clues": [
+        2.5,
+        2.5,
+        2.5,
+        5.0,
+        5.0
+      ],
+      "top5_after_k_clues": [
+        12.5,
+        17.5,
+        25.0,
+        32.5,
+        32.5
+      ]
+    },
+    "vectors_only": {
+      "cases": 40,
+      "top1_after_k_clues": [
+        0.0,
+        0.0,
+        2.5,
+        5.0,
+        5.0
+      ],
+      "top5_after_k_clues": [
+        12.5,
+        20.0,
+        20.0,
+        30.0,
+        37.5
+      ]
+    },
+    "random_guess_control": {
+      "cases": 40,
+      "top1_after_k_clues": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "top5_after_k_clues": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "wordnet": {
+    "vectors_plus_category_head": {
+      "cases": 300,
+      "top1_after_k_clues": [
+        0.0,
+        1.0,
+        1.7,
+        2.0,
+        2.7
+      ],
+      "top5_after_k_clues": [
+        3.3,
+        5.3,
+        8.0,
+        12.7,
+        10.0
+      ]
+    },
+    "vectors_only": {
+      "cases": 300,
+      "top1_after_k_clues": [
+        1.0,
+        2.7,
+        4.0,
+        5.0,
+        5.0
+      ],
+      "top5_after_k_clues": [
+        3.0,
+        5.7,
+        12.3,
+        13.7,
+        14.3
+      ]
+    },
+    "random_guess_control": {
+      "cases": 300,
+      "top1_after_k_clues": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "top5_after_k_clues": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  }
+}
