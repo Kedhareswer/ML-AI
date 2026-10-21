@@ -1,0 +1,248 @@
+{
+  "sudoku": {
+    "cases": 40,
+    "read_exact": 38,
+    "solved": 37,
+    "low_conf_flagged": 2,
+    "by_scheme": {
+      "light": {
+        "cases": 20,
+        "read_exact": 19,
+        "solved": 18
+      },
+      "dark": {
+        "cases": 20,
+        "read_exact": 19,
+        "solved": 19
+      }
+    },
+    "read_exact_wilson95": [
+      83.5,
+      98.62
+    ],
+    "solved_wilson95": [
+      80.14,
+      97.42
+    ]
+  },
+  "mini_sudoku": {
+    "cases": 40,
+    "read_exact": 40,
+    "solved": 40,
+    "low_conf_flagged": 0,
+    "by_scheme": {
+      "light": {
+        "cases": 20,
+        "read_exact": 20,
+        "solved": 20
+      },
+      "dark": {
+        "cases": 20,
+        "read_exact": 20,
+        "solved": 20
+      }
+    },
+    "read_exact_wilson95": [
+      91.24,
+      100
+    ],
+    "solved_wilson95": [
+      91.24,
+      100
+    ]
+  },
+  "tango": {
+    "cases": 40,
+    "read_exact": 40,
+    "solved": 40,
+    "low_conf_flagged": 0,
+    "by_scheme": {
+      "light": {
+        "cases": 20,
+        "read_exact": 20,
+        "solved": 20
+      },
+      "dark": {
+        "cases": 20,
+        "read_exact": 20,
+        "solved": 20
+      }
+    },
+    "read_exact_wilson95": [
+      91.24,
+      100
+    ],
+    "solved_wilson95": [
+      91.24,
+      100
+    ]
+  },
+  "queens": {
+    "cases": 40,
+    "read_exact": 39,
+    "solved": 39,
+    "low_conf_flagged": 0,
+    "by_scheme": {
+      "light": {
+        "cases": 20,
+        "read_exact": 19,
+        "solved": 19
+      },
+      "dark": {
+        "cases": 20,
+        "read_exact": 20,
+        "solved": 20
+      }
+    },
+    "read_exact_wilson95": [
+      87.12,
+      99.56
+    ],
+    "solved_wilson95": [
+      87.12,
+      99.56
+    ]
+  },
+  "zip": {
+    "cases": 40,
+    "read_exact": 36,
+    "solved": 38,
+    "low_conf_flagged": 0,
+    "by_scheme": {
+      "light": {
+        "cases": 20,
+        "read_exact": 20,
+        "solved": 20
+      },
+      "dark": {
+        "cases": 20,
+        "read_exact": 16,
+        "solved": 18
+      }
+    },
+    "read_exact_wilson95": [
+      76.95,
+      96.04
+    ],
+    "solved_wilson95": [
+      83.5,
+      98.62
+    ]
+  },
+  "patches": {
+    "cases": 40,
+    "read_exact": 35,
+    "solved": 35,
+    "low_conf_flagged": 36,
+    "by_scheme": {
+      "light": {
+        "cases": 20,
+        "read_exact": 18,
+        "solved": 18
+      },
+      "dark": {
+        "cases": 20,
+        "read_exact": 17,
+        "solved": 17
+      }
+    },
+    "read_exact_wilson95": [
+      73.89,
+      94.54
+    ],
+    "solved_wilson95": [
+      73.89,
+      94.54
+    ]
+  },
+  "wend": {
+    "cases": 40,
+    "read_exact": 35,
+    "solved": 36,
+    "low_conf_flagged": 29,
+    "by_scheme": {
+      "light": {
+        "cases": 20,
+        "read_exact": 15,
+        "solved": 16
+      },
+      "dark": {
+        "cases": 20,
+        "read_exact": 20,
+        "solved": 20
+      }
+    },
+    "read_exact_wilson95": [
+      73.89,
+      94.54
+    ],
+    "solved_wilson95": [
+      76.95,
+      96.04
+    ]
+  },
+  "chess": {
+    "browser-light": {
+      "cases": 20,
+      "read_exact": 20,
+      "first_move_correct": 13,
+      "read_exact_wilson95": [
+        83.89,
+        100
+      ]
+    },
+    "browser-dark": {
+      "cases": 20,
+      "read_exact": 20,
+      "first_move_correct": 15,
+      "read_exact_wilson95": [
+        83.89,
+        100
+      ]
+    },
+    "lichess-merida (unseen)": {
+      "cases": 20,
+      "read_exact": 20,
+      "first_move_correct": 10,
+      "read_exact_wilson95": [
+        83.89,
+        100
+      ]
+    },
+    "lichess-california (unseen)": {
+      "cases": 20,
+      "read_exact": 18,
+      "first_move_correct": 13,
+      "read_exact_wilson95": [
+        69.9,
+        97.21
+      ]
+    },
+    "lichess-alpha (unseen)": {
+      "cases": 20,
+      "read_exact": 20,
+      "first_move_correct": 16,
+      "read_exact_wilson95": [
+        83.89,
+        100
+      ]
+    },
+    "lichess-cburnett (training set)": {
+      "cases": 20,
+      "read_exact": 20,
+      "first_move_correct": 13,
+      "read_exact_wilson95": [
+        83.89,
+        100
+      ]
+    }
+  },
+  "checkers": {
+    "cases": 40,
+    "read_exact": 40,
+    "read_exact_wilson95": [
+      91.24,
+      100
+    ]
+  }
+}

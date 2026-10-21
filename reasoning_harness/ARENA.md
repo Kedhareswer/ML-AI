@@ -10,7 +10,8 @@ is checked by an independent rule verifier.
 
 Screenshots of every game and a 2-minute screen recording of the real UI
 ([arena-demo.mp4](evidence/arena/arena-demo.mp4)) are in
-[evidence/arena](evidence/arena/README.md).
+[evidence/arena](evidence/arena/README.md). Solving from uploaded screenshots is
+recorded in [evidence/arena/vision](evidence/arena/vision/README.md).
 
 ## What "real" means here
 
@@ -75,6 +76,71 @@ What this shows:
 - **Classical solvers are faster** for every grid puzzle here (milliseconds).
   The networks are a learning result, not a speed improvement.
 
+## Solving from a screenshot
+
+Upload or paste a screenshot in the UI ("📷 Solve from a screenshot"), or call
+`arena.vision.read.read(kind, image_bytes)`. The reader:
+
+1. finds the square board in the image (edge contours, snapped to the board's
+   border lines when a label touches the board);
+2. finds the grid size from *line coverage*, meaning how far each edge runs
+   across the board (grid lines span it; letters and icons do not), scored at
+   several edge thresholds. Queens also checks that every cell is one solid
+   colour;
+3. reads every cell with small CNNs trained **from scratch** on synthetic
+   cells (9 classifiers, about 1.1M parameters each, 15k–74k drawn samples). Queens
+   regions are found by clustering cell colours, with no learning;
+4. checks the reading against the game's rules. If the puzzle is not valid
+   and solvable (or, for chess, not a legal position), it tries the runner-up
+   readings of the least confident cells, then the next most likely grid size,
+   and reports any correction it made.
+
+Chess and checkers screenshots return the best move from the trained
+networks (search depth 3 for chess, 4 for checkers). Pinpoint has no image
+reader: its guesser is too weak (above) for reading clues to help.
+
+**Held-out image test** (`scripts/bench_vision.py`). The test images use
+styles the classifiers never saw:
+
+- **Browser screenshots.** Held-out puzzles drawn by the arena UI in
+  Chromium, half light and half dark mode, at four window sizes. Each is then
+  rescaled 0.6–1.3× and JPEG-compressed (quality 55–92) like a phone
+  screenshot. Digits and letters use **Inter**, which is excluded from
+  training. Symbols (☀ ☾ ■ chess glyphs) come from DejaVu, a training font
+  family.
+- **Lichess board images** from Lichess's own image service for held-out
+  chess puzzles, including three piece sets excluded from training.
+
+| Game | Images | Read exactly right | Solved (answer valid for the true puzzle) |
+|---|---:|---:|---:|
+| Sudoku | 40 | 38 (95%) | 37 |
+| Mini Sudoku | 40 | 40 (100%) | 40 |
+| Tango | 40 | 40 (100%) | 40 |
+| Queens | 40 | 39 (98%) | 39 |
+| Zip | 40 | 36 (90%) | 38 |
+| Patches | 40 | 35 (88%) | 35 |
+| Wend | 40 | 35 (88%) | 36 |
+| **All grid puzzles** | **280** | **263 (94%)** | **265 (95%)** |
+| Chess: arena UI screenshots | 40 | 40 (100%) | — |
+| Chess: Lichess, merida / california / alpha pieces (unseen) | 60 | 58 (97%) | — |
+| Chess: Lichess, cburnett pieces (a training set) | 20 | 20 (100%) | — |
+| Checkers: arena UI screenshots | 40 | 40 (100%) | — |
+
+"Solved" can exceed "read exactly right": a misread blank cell or wall
+sometimes still leaves a puzzle whose answer is valid for the true one. Wend
+images show no word lengths, so any split of the true grid into dictionary
+words counts. Light and dark mode results are in the
+[report](benchmarks/arena/results/vision/report.json); dark-mode Zip (16/20)
+is the weakest case.
+
+**Limits.** These are our own UI and Lichess renderings. LinkedIn's apps
+draw boards in their own style, which the training data imitates only
+loosely (sun/moon icons, shape markers for Patches, circled Zip numbers).
+Real LinkedIn screenshots may need more training styles. The reader warns
+("low confidence: check the grid") when a cell is uncertain or no small
+correction makes the puzzle valid. The board finder and grid-size rules were
+tuned on 12 screenshots that are not part of the test above.
+
 ## Chess and checkers games
 
 | Match | Win | Draw | Loss |
@@ -130,7 +196,7 @@ test answer excluded) did not reliably help.
 
 ```bash
 python -m pip install -e '.[games]'
-python -m unittest discover -s tests -v                      # 27 tests: rules, verifiers, generators, solvers, games
+python -m unittest discover -s tests -v                      # 31 tests: rules, verifiers, generators, solvers, games, image reading
 arena ui --artifacts artifacts/arena --port 7861             # browser UI for every game
 arena solve --run artifacts/arena/queens --mode neural \
   --puzzle "$(head -n1 benchmarks/arena/queens/test.jsonl)"
@@ -147,6 +213,8 @@ python -m arena.games.train_chess --data chess-data/train.npz --run runs/chess -
 arena bench --run artifacts/arena/tango --test benchmarks/arena/tango/test.jsonl --output runs/bench-tango
 python scripts/bench_games.py chess-puzzles | chess-games | checkers | pinpoint
 python scripts/arena_summary.py                              # rebuilds the chart above
+python scripts/train_vision.py artifacts/arena/vision        # cell classifiers (synthetic data, ~1 h on CPU)
+python scripts/bench_vision.py                               # image test (needs `arena ui` running)
 ```
 
 Training resumes with `--resume`. Raw per-puzzle records (every answer, state
@@ -160,6 +228,7 @@ arena/search.py  backtracking, greedy network play, one-shot mode
 arena/nets.py    GridNet: convolution plus row/column/region mixing
 arena/train.py   resumable training (bf16 autocast on CPU)
 arena/games/     chess (policy net + alpha-beta), checkers (self-play value net), pinpoint
+arena/vision/    screenshot reading: board finder, synthetic cell renderer, cell CNNs, per-game readers
 arena/ui.py      local web UI (standard library HTTP server)
 artifacts/arena/ trained weights, manifests and training curves for every game
 benchmarks/arena/ held-out test sets and results
