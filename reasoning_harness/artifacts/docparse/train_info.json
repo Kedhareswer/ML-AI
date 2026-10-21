@@ -1,0 +1,77 @@
+{
+  "parameters": 1484357,
+  "rounds": 4,
+  "lines_per_round": 120000,
+  "batch_size": 48,
+  "seed": 0,
+  "history": [
+    {
+      "round": 1,
+      "train_loss": 0.0498,
+      "val_train_fonts": {
+        "lines": 3000,
+        "cer": 0.01403,
+        "wer": 0.06834,
+        "line_exact": 0.8077
+      },
+      "test_heldout_fonts": {
+        "lines": 3000,
+        "cer": 0.02851,
+        "wer": 0.13867,
+        "line_exact": 0.6483
+      },
+      "elapsed_s": 1325.6
+    },
+    {
+      "round": 2,
+      "train_loss": 0.028,
+      "val_train_fonts": {
+        "lines": 3000,
+        "cer": 0.0051,
+        "wer": 0.02588,
+        "line_exact": 0.916
+      },
+      "test_heldout_fonts": {
+        "lines": 3000,
+        "cer": 0.01489,
+        "wer": 0.08693,
+        "line_exact": 0.779
+      },
+      "elapsed_s": 2781.7
+    },
+    {
+      "round": 3,
+      "train_loss": 0.0135,
+      "val_train_fonts": {
+        "lines": 3000,
+        "cer": 0.00235,
+        "wer": 0.01228,
+        "line_exact": 0.958
+      },
+      "test_heldout_fonts": {
+        "lines": 3000,
+        "cer": 0.00977,
+        "wer": 0.06076,
+        "line_exact": 0.834
+      },
+      "elapsed_s": 3805.6
+    },
+    {
+      "round": 4,
+      "train_loss": 0.009,
+      "val_train_fonts": {
+        "lines": 3000,
+        "cer": 0.00168,
+        "wer": 0.00907,
+        "line_exact": 0.9683
+      },
+      "test_heldout_fonts": {
+        "lines": 3000,
+        "cer": 0.00848,
+        "wer": 0.05398,
+        "line_exact": 0.8533
+      },
+      "elapsed_s": 4829.3
+    }
+  ]
+}

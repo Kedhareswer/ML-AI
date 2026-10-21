@@ -1,6 +1,8 @@
 # Tiny System 2
 
-> **New: [Puzzle Arena](ARENA.md)**: networks trained from scratch for Sudoku (real Sudoku-Extreme), Mini Sudoku, Tango, Queens, Zip, Patches, Wend, chess (real Lichess puzzles), checkers and a Pinpoint experiment, with held-out benchmarks, screenshots and a screen recording.
+> **New: [docparse](DOCPARSE.md)**: a 6 MB OCR model trained from scratch plus exact parsers, extracting text, tables and structure from PDF, images, Word and Excel files.
+>
+> **[Puzzle Arena](ARENA.md)**: networks trained from scratch for Sudoku (real Sudoku-Extreme), Mini Sudoku, Tango, Queens, Zip, Patches, Wend, chess (real Lichess puzzles), checkers and a Pinpoint experiment, with held-out benchmarks, screenshots and a screen recording.
 
 A **32.10 MB model trained from scratch**, with Python, CLI, a browser UI, a Colab notebook, resumable training and reproducible benchmarks. The current application solves small maze-planning problems. It is not a general chatbot or a multimodal training platform.
 

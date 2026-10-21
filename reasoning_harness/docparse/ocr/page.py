@@ -120,8 +120,12 @@ def binarize(g):
     Specks of scan noise (components of a few pixels) are removed."""
     r = max(7, min(g.shape) // 60)
     local = _box_mean(g, r)
+    gs, k = g, 12.0
+    if 1.4826 * float(np.median(np.abs(g - local))) > 6:  # grainy scan: noise level measured robustly (MAD)
+        gs = _box_mean(g, 1)  # 3x3 smoothing: grain averages out, strokes do not
+        k = max(12.0, 3.0 * 1.4826 * float(np.median(np.abs(gs - local))))
     dark_bg = _box_mean((g < 150).astype(np.float32), r) > 0.55  # mostly dark surroundings (outside edges stay < 0.5)
-    ink = np.where(dark_bg, (g > local + 18) & (g > 120), (g < local - 12) & (g < 215))
+    ink = np.where(dark_bg, (gs > local + max(18.0, k)) & (gs > 120), (gs < local - k) & (gs < 215))
     return drop_components(ink, lambda h, w, px: px <= 4)
 
 

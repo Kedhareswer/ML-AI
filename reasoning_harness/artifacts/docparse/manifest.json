@@ -1,0 +1,14 @@
+{
+  "model": "LineOCR (CRNN: 6 conv layers + 2-layer BiLSTM, CTC)",
+  "parameters": 1484357,
+  "weights_bytes": 5958917,
+  "sha256": "ed073bd91ee8d12727b335ee08154e98c2fcc35c54e3083b7c25dd49cff1da8d",
+  "input": "grayscale text line, height 32, any width",
+  "charset": "printable ASCII + \u2022 \u20ac \u00a3 \u00b0 \u00a9",
+  "training_data": "480,000 synthetic lines (4 rounds x 120,000, fresh seeds each round), 27 training fonts",
+  "held_out": "Carlito and Caladea font families (metric clones of Calibri/Cambria) and a separate text corpus",
+  "train_seconds": 4829.3,
+  "device": "cpu (4 cores)",
+  "torch": "2.6.0+cpu",
+  "initialisation": "random (torch.manual_seed 0); no pretrained weights"
+}
