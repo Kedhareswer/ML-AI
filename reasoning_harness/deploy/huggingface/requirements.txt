@@ -1,0 +1,5 @@
+torch==2.8.0
+numpy>=1.26,<3
+chess>=1.10,<2
+opencv-python-headless>=4.9,<5
+pillow>=10,<12
