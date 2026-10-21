@@ -63,8 +63,29 @@ def _decode(slots, build, check, max_tries=80):
 def read(kind, image, root="artifacts/arena/vision", n=None, to_move="w", repair=True):
     rgb = B.load(image)
     sizes = [n] if n else SIZES[kind]
-    board, quad, n = B.find_board(rgb, sizes)
-    out = {"kind": kind, "n": n, "quad": np.asarray(quad).round(1).tolist()}
+    board, quad, n0 = B.find_board(rgb, sizes)
+    # Grid sizes in order of how well they explain the board's lines. If the best one
+    # does not give a valid, solvable puzzle, try the next plausible size.
+    scores = {m: B.gridness(board, m) for m in sizes}
+    ranked = [n0] + [m for m in sorted(scores, key=scores.get, reverse=True)
+                     if m != n0 and scores[m] >= scores[n0] - 0.35][:2]
+    if kind == "queens" and len(sizes) > 1:
+        # at the true size every cell is one solid region colour; at a wrong size many cells straddle two
+        plausible = [m for m in sizes if scores[m] >= max(scores.values()) - 0.5]
+        ranked = sorted(plausible, key=lambda m: (_mixed_cells(board, m), -scores[m]))
+    first = None
+    for m in ranked:
+        out = _read_at(kind, board, m, root, to_move, repair)
+        out["quad"] = np.asarray(quad).round(1).tolist()
+        if first is None:
+            first = out
+        if out["consistent"] or not repair:
+            return out
+    return first
+
+
+def _read_at(kind, board, n, root, to_move, repair):
+    out = {"kind": kind, "n": n}
     C = lambda name: clf(str(root), name)  # noqa: E731
     cell_names = [f"r{i // n + 1}c{i % n + 1}" for i in range(n * n)]
 
@@ -188,6 +209,19 @@ def read(kind, image, root="artifacts/arena/vision", n=None, to_move="w", repair
     out["consistent"] = fixes is not None  # False: no small correction made the reading valid
     out["low_confidence"] = out["confidence"] < 0.6 or fixes is None
     return out
+
+
+def _mixed_cells(board, n):
+    """Fraction of cells whose centre area mixes clearly different colours."""
+    lab = cv2.cvtColor(board, cv2.COLOR_RGB2LAB).astype(np.float32)
+    s = board.shape[0] / n
+    mixed = 0
+    for r in range(n):
+        for c in range(n):
+            patch = lab[int((r + .2) * s):int((r + .8) * s), int((c + .2) * s):int((c + .8) * s)].reshape(-1, 3)
+            lo, hi = np.percentile(patch, 10, axis=0), np.percentile(patch, 90, axis=0)
+            mixed += np.linalg.norm(hi - lo) > 25
+    return mixed / (n * n)
 
 
 def _piece_luma(board, n, r, c):

@@ -109,7 +109,10 @@ def find_board(rgb, sizes):
         scored.append((sc[n] * squareness, side, q, n, b))
     # strongly grid-like and large: a sub-block of the board scores lower on size,
     # the whole screenshot scores lower on grid alignment
-    pick = max(scored, key=lambda s: max(s[0], 0) * np.sqrt(s[1]) + 1e-6 * s[1])
+    # the largest candidate that is still clearly grid-like: a sub-block of the board is a grid too,
+    # so prefer the bigger square; non-square regions (whole screenshots) are already penalised
+    best = max(s[0] for s in scored)
+    pick = max((s for s in scored if s[0] >= 0.5 * best), key=lambda s: s[1]) if best > 0 else max(scored, key=lambda s: s[0])
     board, q, n = pick[4], pick[2], pick[3]
     return _trim(board, n), q, n
 

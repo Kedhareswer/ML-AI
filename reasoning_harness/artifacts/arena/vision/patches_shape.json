@@ -6,34 +6,34 @@
   "history": [
     {
       "epoch": 1,
-      "loss": 0.6412,
-      "synthetic_val_acc": 0.7977
+      "loss": 0.6284,
+      "synthetic_val_acc": 0.8143
     },
     {
       "epoch": 2,
-      "loss": 0.4985,
-      "synthetic_val_acc": 0.9107
+      "loss": 0.5397,
+      "synthetic_val_acc": 0.872
     },
     {
       "epoch": 3,
-      "loss": 0.3934,
-      "synthetic_val_acc": 0.9177
+      "loss": 0.4232,
+      "synthetic_val_acc": 0.8887
     },
     {
       "epoch": 4,
-      "loss": 0.3391,
-      "synthetic_val_acc": 0.9473
+      "loss": 0.3965,
+      "synthetic_val_acc": 0.918
     },
     {
       "epoch": 5,
-      "loss": 0.3242,
-      "synthetic_val_acc": 0.966
+      "loss": 0.3557,
+      "synthetic_val_acc": 0.9527
     },
     {
       "epoch": 6,
-      "loss": 0.2949,
-      "synthetic_val_acc": 0.9733
+      "loss": 0.3514,
+      "synthetic_val_acc": 0.9543
     }
   ],
-  "train_seconds": 355.8
+  "train_seconds": 349.4
 }
