@@ -169,7 +169,9 @@ class WendDictionaryTests(unittest.TestCase):
         self.assertFalse(solve(from_json(row), None, "exact", budget=4000)["solved"])
         r = handle(None, "/api/solve", {"puzzle": row, "mode": "exact"})
         self.assertTrue(r["solved"] and r["extended_dictionary"])
-        self.assertIn("compile", r["words"])
+        # four splits are valid without word lengths; the most natural one is the intended answer
+        self.assertEqual(r["valid_splits"], 4)
+        self.assertEqual(r["words"], ["compile", "dry", "proposal", "defend"])
 
 
 @unittest.skipUnless(__import__("pathlib").Path("artifacts/arena/pinpoint/bigrams.npz").exists(), "needs Pinpoint link counts")

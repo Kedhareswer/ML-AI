@@ -106,7 +106,8 @@ function dataURL(file){return new Promise((ok,bad)=>{const r=new FileReader();r.
 async function fromImage(file){if(busy||kind==="pinpoint")return;stop();mark(null);status("Reading the image…");
  try{const tm=$("tomove")?$("tomove").value:undefined;
   const r=await api("/api/read",{kind,image:await dataURL(file),to_move:tm});
-  const warn=r.low_confidence?' <span class="bad">low: check the board below against your image</span>':"";
+  // red only when no small correction made the reading valid; otherwise a gentle prompt to check
+  const warn=!r.consistent?' <span class="bad">the reading is not a valid puzzle: check the board below against your image</span>':r.low_confidence?' · some cells were uncertain, so compare the board with your image':"";
   const src=`your screenshot (${r.n}×${r.n}, lowest cell confidence ${(100*r.confidence).toFixed(0)}%)${warn}`;
   const fixed=r.corrections&&r.corrections.length?`${r.corrections.length} unsure cell${r.corrections.length>1?"s":""} changed so the puzzle has a solution: ${r.corrections.map(c=>c.cell).join(", ")}`:"";
   if(kind==="chess"){row={FEN:r.fen,_start:r.fen,Moves:"",_src:src};drawChess(fenBoard(r.fen));report([["Puzzle",src],["Solver",CHESS_MODES.search],["Result","thinking…"]]);
@@ -136,7 +137,8 @@ async function solve(mode){if(busy||!row)return;busy=true;stop();mark(mode);load
  const base=[["Puzzle",row._src],["Read fix",row._fixed],["Solver",MODES[mode]]];report([...base,["Result","solving…"]]);
  try{const r=await api("/api/solve",{puzzle:row,mode});
   report([...base,["Result",r.solved?'<span class="ok">✓ solved</span> · the answer obeys every rule (independent checker)':'<span class="bad">✗ not solved</span>'+(row._fixed!==undefined&&r.expanded_states===0?" · the board as read has no solution, so part of the reading is wrong; compare it with your image":mode==="neural"?" · one pass without backtracking often fails; try “Network + backtracking”":"")],
-   ["Work",`${r.expanded_states} states · ${r.ms} ms`],["Words",r.words?r.words.join(", "):""],
+   ["Work",`${r.expanded_states} states · ${r.ms} ms`],["Words",r.words?`<b>${r.words.join(", ")}</b>`:""],
+   ["Split",r.valid_splits>1?`${r.valid_splits} splits are valid without word lengths; showing the one with the fewest, most common words (the solver's own: ${r.solver_words.join(", ")})`:""],
    ["Dictionary",r.extended_dictionary?"no split in the 12,000 common words, so it retried with 20,261 words":""]]);
   animate(r);
  }catch(e){status(`<span class="bad">${e.message}</span>`)}busy=false}
@@ -181,7 +183,7 @@ function draw(row,r,k){
   row.clues.forEach(([a,b,area,shape])=>{const c=at(a,b);c.innerHTML=`<span style="font-size:${z*.42}px">${area??""}</span><span style="font-size:${z*.26}px;margin-left:2px">${sh[shape]}</span>`;c.style.color=r&&r.answer?"#222":"var(--ink)"});
  }else if(kind==="wend"){
   row.rows.forEach((rw,a)=>[...rw].forEach((ch,b)=>{const c=at(a,b);if(ch==="#"){c.style.background="#3a3e45"}else c.textContent=ch.toUpperCase()}));
-  if(r&&r.answer)r.answer.slice(0,k).forEach((p,i)=>{p.forEach(([a,b])=>at(a,b).style.background=PAL[i%PAL.length]);for(let j=1;j<p.length;j++)line(ov,pos(p[j-1][1]),pos(p[j-1][0]),pos(p[j][1]),pos(p[j][0]),"rgba(0,0,0,.35)",4)});
+  if(r&&r.answer)r.answer.slice(0,k).forEach((p,i)=>{p.forEach(([a,b])=>{at(a,b).style.background=PAL[i%PAL.length];at(a,b).style.color="#1d1f23"});for(let j=1;j<p.length;j++)line(ov,pos(p[j-1][1]),pos(p[j-1][0]),pos(p[j][1]),pos(p[j][0]),"rgba(0,0,0,.35)",4)});
   const info=el("div","rules",row.lengths?`Word lengths: ${row.lengths.join(", ")}`:"Word lengths: not shown in a screenshot, so any split into dictionary words counts");st.appendChild(info);
  }
  g.appendChild(ov);st.prepend(g);

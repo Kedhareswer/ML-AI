@@ -171,8 +171,15 @@ assumed. A reported Wend board (answer: compile, dry, proposal, defend) had no
 solution because "compile" is not in the 12,000-word dictionary. When a board
 has no split in those words, the app now retries once with 8,261 more words
 (ENABLE words of 3–8 letters seen at least 50 times in WikiText-103) and says
-so. That board now solves. Without word lengths several splits can be valid,
-and the app may show a different one (here "end, fed" instead of "defend").
+so. Without word lengths several splits can be valid: that board has 4
+("defend" or "end + fed", "proposal" or "prop + sola"). The solver's first
+valid split was often not the intended one. The app now lists every valid split
+and shows the one with the **fewest, most common words**, and says how many
+there were. On the 300 held-out Wend puzzles with their lengths hidden, 173
+have more than one valid split. This ranking recovers the intended answer on
+**279 / 300 (93%)**, against 217 / 300 (72%) for the solver's first split. The
+reported board now shows compile · dry · proposal · defend. Network-only still
+fails on it (one pass without backtracking solves 22% of Wend puzzles).
 Generated puzzles and all benchmarks still use the 12,000-word list. When a reading has no solution at all, the app now says the reading
 is wrong instead of only "not solved".
 

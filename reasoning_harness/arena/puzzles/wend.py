@@ -132,6 +132,32 @@ class Wend(GridPuzzle):
             return None
         return out
 
+    def natural_splits(self, limit=20000):
+        """Every valid split (up to `limit`), most natural first: fewest words, then most common words.
+
+        For screenshots, where word lengths are unknown and several splits can be valid.
+        """
+        words, _ = lexicon(self.extended)
+        rank = {w: i for i, w in enumerate(words)}  # lists are ordered by frequency
+        cells = sorted(self.open)
+        found = []
+
+        def cover(covered, chosen):
+            if len(found) >= limit:
+                return
+            first = next((c for c in cells if c not in covered), None)
+            if first is None:
+                found.append(tuple(chosen))
+                return
+            for i in self.by_cell[first]:
+                p = self.paths[i]
+                if not any(c in covered for c in p):
+                    cover(covered | set(p), chosen + [i])
+
+        cover(frozenset(), [])
+        cost = lambda s: (len(s), sum(np.log1p(rank[self.word(self.paths[i])]) for i in s))  # noqa: E731
+        return [self.answer(s) for s in sorted(found, key=cost)], len(found)
+
     def verify(self, answer):
         words, _ = lexicon(self.extended)
         vocab = set(words)

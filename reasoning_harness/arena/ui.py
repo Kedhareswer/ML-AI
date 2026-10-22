@@ -64,6 +64,11 @@ def handle(models, path, payload):
             # no split in the 12,000 common words: retry once with the larger dictionary ("compile")
             puzzle = from_json({**row, "extended": True})
             result = {**solve(puzzle, net, mode, budget=4000), "extended_dictionary": True}
+        if row["kind"] == "wend" and result["solved"] and puzzle.lengths is None:
+            # no word lengths (screenshot): several splits can be valid; show the most natural one
+            splits, count = puzzle.natural_splits()
+            result["solver_words"] = [puzzle.word([tuple(c) for c in p]) for p in result["answer"]]
+            result["answer"], result["valid_splits"] = splits[0], count
         if row["kind"] == "wend" and result["answer"]:
             result["words"] = [puzzle.word([tuple(c) for c in p]) for p in result["answer"]]
         return result
