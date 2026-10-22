@@ -32,6 +32,8 @@ def _solvable(d, budget=30_000):
     except (ValueError, KeyError, IndexError):
         return False
     found, _, exhausted = search(puzzle, None, budget, count_limit=1)
+    if not found and d.get("kind") == "wend" and not d.get("extended"):
+        return _solvable({**d, "extended": True}, budget)  # same fallback dictionary as the solver
     return bool(found)
 
 

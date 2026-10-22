@@ -180,7 +180,11 @@ have more than one valid split. This ranking recovers the intended answer on
 **279 / 300 (93%)**, against 217 / 300 (72%) for the solver's first split. The
 reported board now shows compile · dry · proposal · defend. Network-only still
 fails on it (one pass without backtracking solves 22% of Wend puzzles).
-Generated puzzles and all benchmarks still use the 12,000-word list. When a reading has no solution at all, the app now says the reading
+The screenshot reader's validity check uses the same fallback, so such a board
+is no longer flagged as "not a valid puzzle". The red warning now appears only
+when no small correction makes the reading valid; uncertain cells get a gentle
+"compare with your image" note instead. Generated puzzles and all benchmarks
+still use the 12,000-word list. When a reading has no solution at all, the app now says the reading
 is wrong instead of only "not solved".
 
 ### Pinpoint
