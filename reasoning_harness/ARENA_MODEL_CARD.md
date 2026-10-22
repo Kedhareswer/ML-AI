@@ -8,6 +8,7 @@ solver are used. Every answer the app calls "solved" is checked by an
 independent rule verifier.
 
 - **Try it:** [huggingface.co/spaces/Kedhareswer/puzzle-arena](https://huggingface.co/spaces/Kedhareswer/puzzle-arena)
+- **Weights:** [huggingface.co/Kedhareswer/puzzle-arena](https://huggingface.co/Kedhareswer/puzzle-arena) (every model, plus the `arena` code that loads them)
 - **Source:** [github.com/Kedhareswer/ML-AI](https://github.com/Kedhareswer/ML-AI/tree/main/reasoning_harness) (`reasoning_harness/`)
 - **Full results and method notes:** [ARENA.md](https://github.com/Kedhareswer/ML-AI/blob/main/reasoning_harness/ARENA.md)
 
@@ -198,6 +199,41 @@ It runs on Hugging Face's free ZeroGPU hardware, but all inference is on CPU.
 ZeroGPU will not start without one. Most answers take under 2 seconds; the
 hardest Sudoku-Extreme puzzles take 10–30 seconds, and a full chess game up to
 about a minute.
+
+## Use the weights
+
+The model repo holds `artifacts/arena/<game>/weights.pt` (plus a `manifest.json`
+and training log per model) and the `arena` package that loads them. It needs
+PyTorch, NumPy, `chess` and (for screenshots) OpenCV and Pillow.
+
+```bash
+hf download Kedhareswer/puzzle-arena --local-dir puzzle-arena
+cd puzzle-arena
+pip install torch numpy chess opencv-python-headless pillow
+```
+
+```python
+from arena.nets import load_net
+from arena.registry import from_json
+from arena.search import solve
+
+net, _ = load_net("artifacts/arena/sudoku/weights.pt")
+grid = [int(c) for c in
+        "000000034530090600700000000000005080907001000650900100009300000000600002160009300"]
+puzzle = from_json({"kind": "sudoku", "grid": grid})
+result = solve(puzzle, net, "search", budget=4000)  # or "neural" (network only), "exact" (no network)
+print(result["solved"], result["answer"])
+
+# chess: best move for a position
+import chess
+from arena.games.chess_engine import load, Searcher
+best = Searcher(load("artifacts/arena/chess/weights.pt"), 8000, 3).choose(chess.Board())
+print(best.uci())
+```
+
+Run the whole app locally with
+`python -m arena.cli ui --artifacts artifacts/arena` (the held-out example
+puzzles are only in the source repository).
 
 ## Reproduce
 

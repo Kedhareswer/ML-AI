@@ -10,4 +10,6 @@ app_file: app.py
 pinned: false
 license: mit
 short_description: Scratch-trained solvers for Sudoku, Queens, Zip, chess
+models:
+- Kedhareswer/puzzle-arena
 ---
