@@ -1,5 +1,9 @@
 # docparse: a very small document parser
 
+- **Try it:** [huggingface.co/spaces/Kedhareswer/docparse](https://huggingface.co/spaces/Kedhareswer/docparse) (drop a PDF, image, Word, Excel, CSV or PowerPoint file)
+- **Weights and code:** [huggingface.co/Kedhareswer/docparse](https://huggingface.co/Kedhareswer/docparse): `artifacts/docparse/ocr.pt` (6.0 MB), the `docparse` package, benchmark reports and tests
+- **Source:** [github.com/Kedhareswer/ML-AI](https://github.com/Kedhareswer/ML-AI) (`reasoning_harness/`)
+
 `docparse` extracts **everything** from a document (text, headings, paragraphs,
 lists, tables, sheets, formulas, headers/footers, metadata and figure positions)
 and returns it as JSON, Markdown or plain text, with reading order preserved.
@@ -238,6 +242,19 @@ Each block has a `type` (`heading`, `paragraph`, `list_item`, `table`,
 `ocr`), and where meaningful a `page`, `bbox`, `level`, `sheet`, `range` and
 an OCR `confidence`. Excel sheets also list formulas, merged ranges, charts and
 images under `sheets`.
+
+## Online demo
+
+The [Space](https://huggingface.co/spaces/Kedhareswer/docparse) runs the same
+`docparse ui` server and weights. Files up to 40 MB, one at a time. LibreOffice
+is installed there, so `.doc`, `.rtf`, `.odt`, `.xls`, `.ods`, `.ppt`, `.pptx`
+and `.odp` work too. It runs on Hugging Face's free ZeroGPU hardware with all
+inference on CPU (the app registers an unused `@spaces.GPU` function because
+ZeroGPU will not start without one). Measured there: Word, Excel and CSV files
+about 1 s, an 11-page text-layer PDF 3.5 s, a 14-page slide PDF 13 s, a page
+image read by OCR 2.5 s. Uploaded files are written to a temporary folder for
+the extraction and deleted right after. The Space build is
+`scripts/make_hf_docparse.sh`.
 
 ## Train or fine-tune your own
 
