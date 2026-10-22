@@ -23,7 +23,8 @@ def serve(port=7862, host="127.0.0.1", model=None):
             self.wfile.write(data)
 
         def do_GET(self):
-            if self.path in ("/", "/index.html"):
+            # ignore the query string: Hugging Face embeds the page as /?__theme=dark etc.
+            if self.path.split("?", 1)[0] in ("/", "/index.html"):
                 self._send(200, PAGE.read_bytes(), "text/html; charset=utf-8")
             else:
                 self._send(404, json.dumps({"error": "not found"}))
