@@ -12,5 +12,12 @@
     "steps": 4000,
     "excluded_test_answers": 639,
     "source": "WordNet noun hierarchy (category -> kinds)"
+  },
+  "link_counts": {
+    "lines": 859532,
+    "bigram_pairs": 2226786,
+    "hearst_pairs": 46392,
+    "corpus_word_types": 161515,
+    "source": "WikiText-103 raw train (CC BY-SA 3.0)"
   }
 }

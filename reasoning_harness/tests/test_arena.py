@@ -161,5 +161,25 @@ class GameTests(unittest.TestCase):
         self.assertTrue(board.is_checkmate())
 
 
+@unittest.skipUnless(__import__("pathlib").Path("artifacts/arena/pinpoint/bigrams.npz").exists(), "needs Pinpoint link counts")
+class PinpointTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        from arena.games.pinpoint import Guesser, LinkGuesser
+        root = "artifacts/arena/pinpoint"
+        cls.g = LinkGuesser(root, Guesser(root, open(root + "/candidates.txt").read().split()))
+
+    def test_phrase_compound_and_category_links(self):
+        self.assertEqual(self.g.rank(["baby", "poker"])[0][0], "face")
+        self.assertEqual(self.g.rank(["butter", "dragon", "fire", "house", "horse"])[0][0], "fly")
+        self.assertEqual(self.g.rank(["mercury", "venus", "mars", "jupiter", "saturn"])[0][0], "planet")
+        self.assertIn("poker face", self.g.explain(["baby", "poker"], "face")[1])
+
+    def test_guesses_are_distinct_and_never_a_clue(self):
+        out = [w for w, _ in self.g.rank(["storm", "snow", "thunder"], 5)]
+        self.assertEqual(len(out), len(set(out)))
+        self.assertFalse({"storm", "snow", "thunder"} & set(out))
+
+
 if __name__ == "__main__":
     unittest.main()

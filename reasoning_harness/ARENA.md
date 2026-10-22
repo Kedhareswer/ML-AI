@@ -166,16 +166,20 @@ loses to one that searches twice as deep.
 
 ## Pinpoint
 
-| Test set | Answer is the top guess after 5 clues | Answer in the top 5 | Random guess |
-|---|---:|---:|---:|
-| 40 handwritten Pinpoint-style puzzles | 5% | 33–38% | 0% |
-| 300 WordNet categories | 3–5% | 10–14% | 0% |
+The guesser looks for a word that links to every clue: a two-word phrase
+("poker face"), a compound ("butterfly") or a category pattern ("planets such as
+mars"). All three are counted in WikiText-103 by `scripts/build_pinpoint_links.py`,
+with word-vector similarity as the fallback. Details and the tuning history are in
+[ARENA_MODEL_CARD.md](ARENA_MODEL_CARD.md#pinpoint).
 
-This is **weak**. Word vectors trained here put "guitar" near "piano", but they
-rarely name the category ("instrument"). Real Pinpoint needs the broad world
+| Test set | Top guess (after 4 / 5 clues) | In the top 5 (5 clues) | Earlier word-vector guesser, top 1 / top 5 | Random guess |
+|---|---:|---:|---:|---:|
+| 40 handwritten Pinpoint-style puzzles | 35.0% / 30.0% | 57.5% | 5% / 33–38% | 0% |
+| 300 WordNet categories | 4.7% / 3.7% | 15.0% | 3–5% / 10–14% | 0% |
+
+Still **weak** on abstract categories. Full Pinpoint skill needs the broad world
 knowledge of a large pretrained language model, which cannot be trained from
-scratch on this machine. A small category head trained on WordNet (with every
-test answer excluded) did not reliably help.
+scratch on this machine.
 
 ## Honest notes
 

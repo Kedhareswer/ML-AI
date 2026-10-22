@@ -34,9 +34,9 @@ class Models:
                     from .games.checkers import load
                     self.cache[kind] = load(self.root / "checkers" / "weights.pt")
                 elif kind == "pinpoint":
-                    from .games.pinpoint import Guesser
+                    from .games.pinpoint import Guesser, LinkGuesser
                     cands = (self.root / "pinpoint" / "candidates.txt").read_text().split()
-                    self.cache[kind] = Guesser(self.root / "pinpoint", cands)
+                    self.cache[kind] = LinkGuesser(self.root / "pinpoint", Guesser(self.root / "pinpoint", cands))
             return self.cache[kind]
 
     def example(self, kind, index=None):
@@ -147,8 +147,10 @@ def handle(models, path, payload):
     if path == "/api/pinpoint":
         clues = [c for c in payload["clues"] if isinstance(c, str) and c.strip()][:5]
         guesser = models.get("pinpoint")
-        return {"clues": clues, "after": [guesser.rank(clues[:k], 5) for k in range(1, len(clues) + 1)],
-                "unknown": [c for c in clues if not guesser.known(c)]}
+        after = [guesser.rank(clues[:k], 5) for k in range(1, len(clues) + 1)]
+        best = after[-1][0][0] if after and after[-1] else None
+        return {"clues": clues, "after": after, "best": best, "why": guesser.explain(clues, best) if best else [],
+                "unknown": [c for c in clues if not guesser.g.known(c)]}
     raise KeyError(path)
 
 

@@ -1,5 +1,92 @@
 {
+  "dev": {
+    "links_plus_vectors": {
+      "cases": 18,
+      "top1_after_k_clues": [
+        27.8,
+        55.6,
+        61.1,
+        77.8,
+        66.7
+      ],
+      "top5_after_k_clues": [
+        61.1,
+        72.2,
+        66.7,
+        83.3,
+        77.8
+      ]
+    },
+    "vectors_plus_category_head": {
+      "cases": 18,
+      "top1_after_k_clues": [
+        16.7,
+        22.2,
+        22.2,
+        22.2,
+        27.8
+      ],
+      "top5_after_k_clues": [
+        22.2,
+        22.2,
+        22.2,
+        27.8,
+        27.8
+      ]
+    },
+    "vectors_only": {
+      "cases": 18,
+      "top1_after_k_clues": [
+        5.6,
+        0.0,
+        0.0,
+        5.6,
+        11.1
+      ],
+      "top5_after_k_clues": [
+        11.1,
+        16.7,
+        16.7,
+        22.2,
+        27.8
+      ]
+    },
+    "random_guess_control": {
+      "cases": 18,
+      "top1_after_k_clues": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "top5_after_k_clues": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
   "handwritten": {
+    "links_plus_vectors": {
+      "cases": 40,
+      "top1_after_k_clues": [
+        10.0,
+        32.5,
+        25.0,
+        35.0,
+        30.0
+      ],
+      "top5_after_k_clues": [
+        25.0,
+        37.5,
+        37.5,
+        42.5,
+        57.5
+      ]
+    },
     "vectors_plus_category_head": {
       "cases": 40,
       "top1_after_k_clues": [
@@ -53,6 +140,23 @@
     }
   },
   "wordnet": {
+    "links_plus_vectors": {
+      "cases": 300,
+      "top1_after_k_clues": [
+        0.3,
+        2.3,
+        5.3,
+        4.7,
+        3.7
+      ],
+      "top5_after_k_clues": [
+        2.7,
+        8.3,
+        13.0,
+        14.3,
+        15.0
+      ]
+    },
     "vectors_plus_category_head": {
       "cases": 300,
       "top1_after_k_clues": [
@@ -98,7 +202,7 @@
       ],
       "top5_after_k_clues": [
         0.0,
-        0.0,
+        0.3,
         0.0,
         0.0,
         0.0

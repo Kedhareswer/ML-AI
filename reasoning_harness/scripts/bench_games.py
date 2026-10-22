@@ -128,19 +128,22 @@ def checkers_games(args):
 
 
 def pinpoint(args):
-    from arena.games.pinpoint import Guesser, evaluate, random_guesser, wordnet_puzzles
+    from arena.games.pinpoint import Guesser, LinkGuesser, evaluate, random_guesser, wordnet_puzzles
     root = Path(args.artifacts) / "pinpoint"
     cands = (root / "candidates.txt").read_text().split()
     g = Guesser(root, cands)
-    hand = [json.loads(l) for l in open(Path(args.tests) / "pinpoint" / "handwritten.jsonl")]
-    wn = [json.loads(l) for l in open(Path(args.tests) / "pinpoint" / "wordnet.jsonl")]
+    links = LinkGuesser(root, g)
+    load = lambda f: [json.loads(l) for l in open(Path(args.tests) / "pinpoint" / f)]  # noqa: E731
     rng = random.Random(3)
     out = {}
-    for name, puzzles in (("handwritten", hand), ("wordnet", wn)):
-        res, recs = evaluate(g.rank, puzzles)
+    # dev: 18 puzzles written for tuning the link guesser; handwritten and wordnet are the test sets
+    for name, puzzles in (("dev", load("dev.jsonl")), ("handwritten", load("handwritten.jsonl")), ("wordnet", load("wordnet.jsonl"))):
+        res, recs = evaluate(links.rank, puzzles)
+        head, _ = evaluate(g.rank, puzzles)
         plain, _ = evaluate(lambda c, k=5: g.rank(c, k, use_head=False), puzzles)
         ctrl, _ = evaluate(random_guesser(cands, rng), puzzles)
-        out[name] = {"vectors_plus_category_head": res, "vectors_only": plain, "random_guess_control": ctrl}
+        out[name] = {"links_plus_vectors": res, "vectors_plus_category_head": head, "vectors_only": plain,
+                     "random_guess_control": ctrl}
         p = Path(args.output) / "pinpoint"
         p.mkdir(parents=True, exist_ok=True)
         with open(p / f"{name}-records.jsonl", "w") as f:

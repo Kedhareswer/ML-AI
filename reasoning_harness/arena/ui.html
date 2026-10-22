@@ -67,7 +67,7 @@ const KINDS={
  wend:{label:"Wend",rules:"Split the letters into hidden words. Words bend through tiles that touch up/down/left/right, every tile used once; dark tiles are walls."},
  chess:{label:"Chess puzzles",rules:"Real Lichess puzzle from games never used in training. Find the winning line; any mating move is accepted."},
  checkers:{label:"Checkers",rules:"American checkers. The trained network plays Black (bottom, dark pieces) against an engine playing Red (top). Captures are compulsory."},
- pinpoint:{label:"Pinpoint",rules:"Five clue words share a category. Experimental and weak: word vectors trained from scratch on Wikipedia text name the category as their top guess only about 5% of the time (answer in the top 5 about a third of the time). Real Pinpoint needs a large pretrained language model, which this project deliberately does not use."}
+ pinpoint:{label:"Pinpoint",rules:"Five clues share one linking word: a category (mercury, venus → planet), a phrase (poker, baby → face: poker face, baby face) or a compound (butter, dragon → fly: butterfly). After each clue the model guesses that word, using links counted in Wikipedia text, and shows why it fits each clue. Measured: right about a third of the time on handwritten puzzles, much less on abstract categories."}
 };
 const MODES={neural:"Network only (one pass, no backtracking)",search:"Network + backtracking search",exact:"Classical solver (no network)"};
 const CHESS_MODES={neural:"Network only (policy, no search)",search:"Network + alpha-beta search",classic:"Classical alpha-beta search (no network)"};
@@ -135,7 +135,7 @@ function meta(m){const p=m.parameters?`${(m.parameters/1e6).toFixed(2)}M paramet
 async function solve(mode){if(busy||!row)return;busy=true;stop();mark(mode);loads++;
  const base=[["Puzzle",row._src],["Read fix",row._fixed],["Solver",MODES[mode]]];report([...base,["Result","solving…"]]);
  try{const r=await api("/api/solve",{puzzle:row,mode});
-  report([...base,["Result",r.solved?'<span class="ok">✓ solved</span> · the answer obeys every rule (independent checker)':'<span class="bad">✗ not solved</span>'+(mode==="neural"?" · one pass without backtracking often fails; try “Network + backtracking”":"")],
+  report([...base,["Result",r.solved?'<span class="ok">✓ solved</span> · the answer obeys every rule (independent checker)':'<span class="bad">✗ not solved</span>'+(row._fixed!==undefined&&r.expanded_states===0?" · the board as read has no solution, so part of the reading is wrong; compare it with your image":mode==="neural"?" · one pass without backtracking often fails; try “Network + backtracking”":"")],
    ["Work",`${r.expanded_states} states · ${r.ms} ms`],["Words",r.words?r.words.join(", "):""]]);
   animate(r);
  }catch(e){status(`<span class="bad">${e.message}</span>`)}busy=false}
@@ -181,7 +181,7 @@ function draw(row,r,k){
  }else if(kind==="wend"){
   row.rows.forEach((rw,a)=>[...rw].forEach((ch,b)=>{const c=at(a,b);if(ch==="#"){c.style.background="#3a3e45"}else c.textContent=ch.toUpperCase()}));
   if(r&&r.answer)r.answer.slice(0,k).forEach((p,i)=>{p.forEach(([a,b])=>at(a,b).style.background=PAL[i%PAL.length]);for(let j=1;j<p.length;j++)line(ov,pos(p[j-1][1]),pos(p[j-1][0]),pos(p[j][1]),pos(p[j][0]),"rgba(0,0,0,.35)",4)});
-  const info=el("div","rules",`Word lengths: ${row.lengths.join(", ")}`);st.appendChild(info);
+  const info=el("div","rules",row.lengths?`Word lengths: ${row.lengths.join(", ")}`:"Word lengths: not shown in a screenshot, so any split into dictionary words counts");st.appendChild(info);
  }
  g.appendChild(ov);st.prepend(g);
 }
@@ -232,17 +232,22 @@ async function game(opp){if(busy)return;busy=true;stop();mark("g-"+opp);
    report([...who,["Move",`${i-1} of ${r.plies}`],["Result",done?`<b>${end}</b> after ${r.plies} moves`:"replaying…"]]);if(done)stop()},180);
  }catch(e){status(`<span class="bad">${e.message}</span>`)}busy=false}
 // ---------------------------------------------------------------- pinpoint
-function drawPin(items,answer,shown){const st=$("stage");st.innerHTML="";const box=el("div","pp");
- items.forEach((it,i)=>{const d=el("div","clue");const b=el("b","",i<shown||!answer?it.c:"?");d.appendChild(b);if(it.g&&it.g.length){const s=el("span","g");s.innerHTML="guesses: "+it.g.map(([w])=>answer&&(w===answer||(row.accept||[]).includes(w))?`<span class="hit">${w}</span>`:w).join(", ");d.appendChild(s)}box.appendChild(d)});
- if(answer)box.appendChild(el("div","rules",`Answer: ${shown>=items.length?answer:"hidden until all clues are shown"}`));st.appendChild(box)}
+// each row: a clue, then the model's category guess after seeing the clues up to that row
+function drawPin(items,answer,shown,res){const st=$("stage");st.innerHTML="";const box=el("div","pp");
+ const hit=w=>answer&&(w===answer||(row.accept||[]).includes(w));const mark_=w=>hit(w)?`<span class="hit">${w}</span>`:w;
+ items.forEach((it,i)=>{const d=el("div","clue");d.appendChild(el("b","",i<shown||!answer?`${i+1}. ${it.c}`:`${i+1}. ?`));
+  if(it.g&&it.g.length){const s=el("span","g");s.innerHTML=`category guess after ${i+1} clue${i?"s":""}: <b>${mark_(it.g[0][0])}</b> · also ${it.g.slice(1).map(([w])=>mark_(w)).join(", ")}`;d.appendChild(s)}box.appendChild(d)});
+ if(res&&res.best){const f=el("div","clue");f.style.display="block";
+  f.innerHTML=`<div>Model's answer: <b style="font-size:17px">${mark_(res.best)}</b></div><div class="g">${res.clues.map((c,i)=>`${c}: ${res.why[i]||"no link found"}`).join("<br>")}</div>`;box.appendChild(f)}
+ if(answer)box.appendChild(el("div","rules",`Correct answer: ${shown>=items.length?answer:"hidden until all clues are shown"}`));st.appendChild(box)}
 async function pinpoint(custom){if(busy)return;busy=true;stop();mark(custom?"pp-own":"pp");
  try{const clues=custom?[1,2,3,4,5].map(i=>$("pin"+i).value.trim()).filter(Boolean):row.clues;if(!clues.length)throw new Error("type at least one clue");
   const r=await api("/api/pinpoint",{clues});const ans=custom?null:row.answer;let k=0;
   const items=clues.map(c=>({c,g:[]}));
-  timer=setInterval(()=>{items[k].g=r.after[k];k++;drawPin(items,ans,k);if(k>=clues.length){stop();const solver=["Model","word vectors trained from scratch (experimental, weak)"];
+  timer=setInterval(()=>{items[k].g=r.after[k];k++;drawPin(items,ans,k,k>=clues.length?r:null);if(k>=clues.length){stop();const solver=["Model","word links and word vectors counted from Wikipedia text, trained from scratch"];
    if(ans){const hit=w=>w===ans||(row.accept||[]).includes(w);const first=r.after.findIndex(g=>g[0]&&hit(g[0][0]));const top5=r.after.findIndex(g=>g.some(([w])=>hit(w)));
     report([["Puzzle","example puzzle"],solver,["Result",first>=0?`<span class="ok">✓ top guess correct after ${first+1} clue${first?"s":""}</span>`:top5>=0?`<span class="bad">✗ not the top guess</span> · the answer “${ans}” was in its top 5 after ${top5+1} clue${top5?"s":""}`:`<span class="bad">✗ missed</span> · the answer “${ans}” never reached its top 5`]])}
-   else report([["Puzzle","your clues"],solver,["Result",r.unknown.length?`words it never saw in training: ${r.unknown.join(", ")}`:"top guesses shown next to each clue"]])}},800);
+   else report([["Puzzle","your clues"],solver,["Answer",r.best?`<b>${r.best}</b> (why: see the board)`:"no guess"],["Unknown",r.unknown.length?`never seen in training: ${r.unknown.join(", ")}`:""]])}},800);
  }catch(e){status(`<span class="bad">${e.message}</span>`)}busy=false}
 select(new URLSearchParams(location.search).get("kind")||"sudoku");
 </script>

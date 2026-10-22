@@ -27,7 +27,7 @@ independent rule verifier.
 | Wend | splits letters into words | GridNet, width 64, 6 blocks | 0.44M | 15,000 generated puzzles | 22.0% · 100% |
 | Chess | picks the next move | ResNet policy, width 96, 6 blocks | 1.02M | 1.18M Lichess puzzle positions | 44.0% · 58.7% of held-out Lichess puzzles |
 | Checkers | scores positions | conv value net, width 64 | 0.64M | 5,000 self-play games | 60% score vs equal-depth engine |
-| Pinpoint | guesses a category | skip-gram word vectors, 200-dim | 8.0M | 83M words of WikiText-103 | 5% top guess · 33–38% top 5 (**weak**) |
+| Pinpoint | guesses the linking word | corpus link counts + skip-gram word vectors (200-dim) | 8.0M vectors + 2.2M word-pair counts | 83M words of WikiText-103 | 30–35% top guess · 57.5% top 5 on handwritten puzzles; ~4% on abstract WordNet categories (**still weak**) |
 | Screenshot readers | read one cell each | small CNN, 9 classifiers | ~1.1M each | 15k–74k synthetic cells each | 94% of 280 held-out screenshots read exactly |
 
 "Network only" means the network makes every choice; the rules only block
@@ -84,10 +84,25 @@ network handles several board sizes.
 
 ### Pinpoint ([arena/games/pinpoint.py](https://github.com/Kedhareswer/ML-AI/blob/main/reasoning_harness/arena/games/pinpoint.py))
 
-- Skip-gram word vectors with negative sampling, 200 dimensions, 3 epochs over
-  WikiText-103 (83M words, 40,000-word vocabulary), plus a small category head
-  trained on 1,451 WordNet category groups with all 639 test answers excluded.
-- After each clue it ranks candidate category words by similarity to the clues.
+Real Pinpoint answers are often not a "category" in the dictionary sense. "Poker,
+baby, clock" → **face** (poker face, baby face, clock face); "butter, dragon,
+fire" → **fly** (butterfly, dragonfly, firefly). The guesser
+([`LinkGuesser`](https://github.com/Kedhareswer/ML-AI/blob/main/reasoning_harness/arena/games/pinpoint.py)) therefore looks for a word that **links to
+every clue**, using counts taken from the same Wikipedia text
+([scripts/build_pinpoint_links.py](https://github.com/Kedhareswer/ML-AI/blob/main/reasoning_harness/scripts/build_pinpoint_links.py), about 2 minutes on CPU):
+
+| Link | Example | Counted from |
+|---|---|---|
+| two-word phrase | "poker **face**", "**face** value" | 2.2M adjacent word pairs (seen ≥3 times), scored by PMI |
+| compound word | "butter" + "**fly**" = butterfly | 161,515 corpus words seen ≥5 times |
+| category pattern | "**planets** such as Mars", "Mars and other **planets**", "Paris is a **city** in…" | 46,392 category/member pairs from five text patterns |
+| similar meaning (fallback) | guitar ~ piano | skip-gram word vectors, 200 dims, 3 epochs, 40,000 words |
+
+A linked answer must connect to every clue (3 of 4 when there are 3–5 clues);
+otherwise the guess falls back on word-vector similarity. The app shows the
+reason for each clue, e.g. `poker: "poker face"`. No pretrained model and no list
+of answers is used. A small WordNet "category head" from an earlier version is
+still in the repo but no longer used by the app.
 
 ### Screenshot reading ([arena/vision](https://github.com/Kedhareswer/ML-AI/tree/main/reasoning_harness/arena/vision))
 
@@ -147,6 +162,32 @@ given cells of that screenshot correctly, and gives the same reading as before
 on the three Tango screenshots kept in the repository. The 280-image browser
 benchmark above was **not** re-run after this change.
 
+**Patches and Wend readers (October 2026).** Patches readings that put a
+square shape on an area no square can have (3, 5, 6…), or a wide/tall shape on
+area 1, made the puzzle unsolvable. Those shapes are now ruled out before
+decoding. Wend screenshots carry no word lengths, and the app crashed drawing
+them; any split into dictionary words now counts, as the benchmark always
+assumed. When a reading has no solution at all, the app now says the reading
+is wrong instead of only "not solved".
+
+### Pinpoint
+
+Answer is the top guess / in the top 5, after 1–5 clues
+([report](https://github.com/Kedhareswer/ML-AI/blob/main/reasoning_harness/benchmarks/arena/results/pinpoint/report.json)):
+
+| Test set | Link guesser, top 1 (after 4 / 5 clues) | Link guesser, top 5 (5 clues) | Earlier word-vector guesser, top 1 / top 5 | Random |
+|---|---:|---:|---:|---:|
+| 40 handwritten Pinpoint-style puzzles | 35.0% / 30.0% | 57.5% | 5.0% / 37.5% | 0% |
+| 300 WordNet categories | 4.7% / 3.7% | 15.0% | 5.0% / 14.3% | 0% |
+| 18 dev puzzles (used for tuning, not a test) | 77.8% / 66.7% | 77.8% | 11.1% / 27.8% | 0% |
+
+**How this was tuned, honestly.** 18 dev puzzles were written for tuning, with
+no answer shared with either test set. A first test run hurt the WordNet set
+(top 1 fell to 2%), and the "link to every clue" rule was then added, so that change was
+made **after seeing test results**. Links help a lot on puzzles built from
+phrases and compounds. On WordNet's abstract categories (stripe, bar, band,
+plaque, streak → "marking") they make no real difference.
+
 ## What this does well, and what it does not
 
 - **Training clearly works.** Untrained networks solve 0–2% alone; trained
@@ -159,9 +200,11 @@ benchmark above was **not** re-run after this change.
   without search, and the network does not make search cheaper.
 - **The chess network is a puzzle solver, not a strong player.** In normal
   games against a material engine it draws or loses.
-- **Pinpoint is weak.** Word vectors put "guitar" near "piano" but rarely name
-  the category ("instrument"). Real Pinpoint needs the world knowledge of a
-  large pretrained language model, which this project deliberately does not use.
+- **Pinpoint is still weak.** Corpus links solve phrase and compound puzzles
+  (face, fly, board, light) and many plain categories (planet, country,
+  disease). They miss abstract or rare categories and anything Wikipedia text
+  rarely says. Full Pinpoint skill needs the world knowledge of a large
+  pretrained language model, which this project deliberately does not use.
 - **LinkedIn puzzles are imitated, not copied.** LinkedIn's daily puzzles are
   not public, so the six LinkedIn-style games are generated from the official
   rules, each with exactly one solution. Real LinkedIn screenshots can still
@@ -174,7 +217,7 @@ benchmark above was **not** re-run after this change.
 | [Sudoku-Extreme](https://huggingface.co/datasets/sapientinc/sudoku-extreme) | Sudoku training (train split) and test (test split) | see dataset card |
 | [Lichess puzzle database](https://database.lichess.org/#puzzles) | chess training and test, split by source game | CC0 |
 | Generated by this code | Mini Sudoku, Tango, Queens, Zip, Patches, Wend | — |
-| WikiText-103 | Pinpoint word vectors | CC BY-SA 3.0 |
+| WikiText-103 | Pinpoint word vectors and link counts | CC BY-SA 3.0 |
 | WordNet | Pinpoint category head and test set | WordNet licence |
 | ENABLE + FrequencyWords | Wend dictionary (12,000 common words) | public domain / MIT |
 
@@ -203,7 +246,9 @@ about a minute.
 ## Use the weights
 
 The model repo holds `artifacts/arena/<game>/weights.pt` (plus a `manifest.json`
-and training log per model) and the `arena` package that loads them. It needs
+and training log per model), the Pinpoint vectors and link counts, the `arena`
+package that loads them, and a root `config.json` listing every model and its
+files. The Hub counts a download each time `config.json` is fetched. It needs
 PyTorch, NumPy, `chess` and (for screenshots) OpenCV and Pillow.
 
 ```bash
