@@ -136,7 +136,8 @@ async function solve(mode){if(busy||!row)return;busy=true;stop();mark(mode);load
  const base=[["Puzzle",row._src],["Read fix",row._fixed],["Solver",MODES[mode]]];report([...base,["Result","solving…"]]);
  try{const r=await api("/api/solve",{puzzle:row,mode});
   report([...base,["Result",r.solved?'<span class="ok">✓ solved</span> · the answer obeys every rule (independent checker)':'<span class="bad">✗ not solved</span>'+(row._fixed!==undefined&&r.expanded_states===0?" · the board as read has no solution, so part of the reading is wrong; compare it with your image":mode==="neural"?" · one pass without backtracking often fails; try “Network + backtracking”":"")],
-   ["Work",`${r.expanded_states} states · ${r.ms} ms`],["Words",r.words?r.words.join(", "):""]]);
+   ["Work",`${r.expanded_states} states · ${r.ms} ms`],["Words",r.words?r.words.join(", "):""],
+   ["Dictionary",r.extended_dictionary?"no split in the 12,000 common words, so it retried with 20,261 words":""]]);
   animate(r);
  }catch(e){status(`<span class="bad">${e.message}</span>`)}busy=false}
 function animate(r){

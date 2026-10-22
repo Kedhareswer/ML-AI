@@ -60,6 +60,10 @@ def handle(models, path, payload):
         puzzle = from_json(row)
         net = None if mode == "exact" else models.get(row["kind"])
         result = solve(puzzle, net, mode, budget=4000)
+        if row["kind"] == "wend" and not result["solved"] and not row.get("extended"):
+            # no split in the 12,000 common words: retry once with the larger dictionary ("compile")
+            puzzle = from_json({**row, "extended": True})
+            result = {**solve(puzzle, net, mode, budget=4000), "extended_dictionary": True}
         if row["kind"] == "wend" and result["answer"]:
             result["words"] = [puzzle.word([tuple(c) for c in p]) for p in result["answer"]]
         return result
