@@ -98,6 +98,82 @@ PDF's own order differs from top-to-bottom reading. Text inside charts (axis
 labels, tick numbers) is also read as text. The weakest notebook pages are
 mostly plots with a few short labels.
 
+## ParseBench (LlamaIndex)
+
+[ParseBench](https://huggingface.co/datasets/llamaindex/ParseBench)
+([paper](https://arxiv.org/abs/2604.08538), [code](https://github.com/run-llama/ParseBench))
+is LlamaIndex's public benchmark for document parsers: **2,078 real enterprise
+pages** (insurance filings, financial reports, government documents, papers),
+1,211 documents and 169,011 human-verified test rules in five dimensions.
+Scoring is deterministic rule matching, with no LLM judge.
+
+docparse was run on the **full** dataset with the official harness
+(parse-bench 1.0.4) on a 4-core CPU: all 2,078 pages, 0 failures, median
+0.5 s per page. The comparison rows are the "Open Source - Local" entries of
+ParseBench's published leaderboard.
+
+| Parser | Overall | Tables | Charts | Content faithfulness | Semantic formatting | Visual grounding |
+|---|---:|---:|---:|---:|---:|---:|
+| PyMuPDF4LLM | 53.5 | 72.0 | 2.2 | 79.3 | 52.0 | 61.9 |
+| Warp Ingest | 40.2 | 57.5 | 7.0 | 70.8 | 45.8 | 19.8 |
+| LiteParse (no OCR) | 36.9 | 42.4 | 1.8 | 70.0 | 38.5 | 31.8 |
+| **docparse** | **36.2** | **42.1** | **1.0** | **72.5** | **35.5** | **30.0** |
+| OpenDataLoader | 29.4 | 35.2 | 0.9 | 66.1 | 34.1 | 10.8 |
+| pdf-inspector | 26.6 | 26.6 | 5.3 | 56.1 | 35.1 | 9.9 |
+| MarkItDown | 18.6 | 15.8 | 2.0 | 64.5 | 0.9 | 9.9 |
+| PyMuPDF (text) | 16.0 | 0.0 | 0.0 | 68.3 | 1.0 | 10.9 |
+| pypdf | 14.9 | 0.0 | 0.0 | 62.5 | 0.9 | 10.9 |
+
+Overall is the mean of the five dimensions, as on the official leaderboard.
+For scale: the top of the full leaderboard (cloud services and multi-billion
+parameter vision-language models) reaches 75–90.
+
+**What this says honestly**
+
+- docparse is mid-table among local open-source parsers: ahead of pypdf,
+  PyMuPDF, MarkItDown, pdf-inspector and OpenDataLoader; just behind LiteParse
+  (36.9); behind Warp Ingest and clearly behind PyMuPDF4LLM.
+- Its **content faithfulness (72.5)** is second among local parsers. It is
+  strongest on simple (89.0) and multi-column (76.5) pages, and weakest on
+  handwriting (27.4), scans (56.1) and non-English text (58.8). That matches the
+  OCR model's limits: printed Latin text only.
+- **Charts (1.0):** ParseBench wants each chart's data points as a table.
+  docparse finds charts and keeps their labels but does not convert them to
+  data. No local parser scores above 7.
+- **Tables (42.1)** are limited by pdfplumber's ruled-grid detection on
+  borderless financial tables; 32.3 on "hard" tables.
+- **Formatting (35.5):** bold 29%, italic 23%, superscript 59%, subscript 57%
+  of rules pass. Underline, strikeout, highlight, LaTeX and code blocks are not
+  produced (0%).
+- **Visual grounding (30.0):** paragraph boxes and reading order are decent;
+  figure regions and box granularity often differ from the annotation.
+
+**What the benchmark changed in docparse.** The first full run scored 33.66; the final run scored 36.2.
+Its failures led to fixes that are now part of docparse itself:
+
+| Change | Effect |
+|---|---|
+| Bold/italic from PDF font names, `<sup>`/`<sub>` from glyph size and baseline | Semantic formatting 24.0 → 35.5 |
+| Running header/footer and printed page-number detection | Header rules 0 → 9.9%, footer rules 0 → 12.2%; content faithfulness 71.8 → 72.5 |
+| Rotated margin text (e.g. arXiv stamps) kept out of the reading flow | It no longer turns body text into a fake table |
+| Vector charts and diagrams detected as figures, their labels attached | Visual grounding 28.9 → 30.0 |
+| Rows stacked in one cell of rule-less tables split into records | Correct rows in insurance rate tables |
+| A malformed PDF link annotation no longer fails the whole page | 9 failing pages → 0 |
+
+Reproduce (parse-bench needs Python 3.12+):
+
+```bash
+pip install "parse-bench[fast]"
+python scripts/parsebench_docparse.py download          # ~600 MB
+python scripts/parsebench_docparse.py run docparse --max_concurrent 3
+python scripts/parsebench_summary.py output/docparse leaderboard.csv
+```
+
+`docparse/parsebench.py` registers the pipeline through ParseBench's public
+extension API. Each page is sent as Markdown with HTML tables, page
+header/footer fields, and layout boxes in ParseBench's canonical classes.
+Aggregate results are in `benchmarks/parsebench/report.json`.
+
 **Structure parsers** (PDF text layer, DOCX, XLSX, CSV) are tested for exact
 output in `tests/test_docparse.py`.
 
@@ -160,6 +236,5 @@ after every round.
   very low resolution (text under about 10 px high) are not handled well.
 - Born-digital PDFs are only as good as their text layer: some PDFs embed
   fonts without a Unicode mapping. Use `--ocr always` for those.
-- The benchmarks are synthetic pages and three real PDFs from this
-  repository. They are not a standard OCR benchmark, and no comparison with
-  Tesseract or commercial OCR was run here.
+- Besides ParseBench, the benchmarks are synthetic pages and three real PDFs from
+  this repository. No direct comparison with Tesseract was run here.

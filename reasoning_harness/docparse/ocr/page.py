@@ -547,7 +547,7 @@ def group(blocks, th):
         i += 1
     for o in others:
         if o["kind"] == "figure":
-            o = {"type": "figure", "box": o["box"]}
+            o = {"type": "figure", "box": o["box"], **({"text": o["text"]} if o.get("text") else {})}
         else:
             o = {"type": "table", "rows": o["rows"], "box": o["box"], "confidence": o["confidence"]}
         k = next((n for n, b in enumerate(out) if b["box"][0] > o["box"][0] and b["box"][2] < o["box"][3]), len(out))

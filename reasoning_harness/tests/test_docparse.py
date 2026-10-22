@@ -123,6 +123,36 @@ class StructureTests(unittest.TestCase):
         self.assertTrue(all(b["source"] == "text-layer" for b in doc["blocks"]))
 
 
+class PdfDetailTests(unittest.TestCase):
+    def test_inline_bold_italic_and_superscript(self):
+        from docparse.extract import _styled_text, plain
+
+        def w(text, x0, x1, font="Times-Roman", size=10, bottom=100):
+            return {"text": text, "x0": x0, "x1": x1, "top": bottom - size, "bottom": bottom, "size": size,
+                    "fontname": font}
+        ws = [w("Water", 0, 30), w("is", 33, 40, "Times-Bold"), w("H", 43, 50), w("2", 50.2, 54, size=6, bottom=102),
+              w("O", 54.3, 61), w("ref", 64, 80, "Times-Italic"), w("1", 80.2, 83, size=6, bottom=96)]
+        out = _styled_text(ws, 10)
+        self.assertEqual(out, "Water **is** H<sub>2</sub>O *ref*<sup>1</sup>")
+        self.assertEqual(plain(out), "Water is H2O ref1")
+
+    def test_page_furniture(self):
+        from docparse.extract import mark_page_furniture
+        blocks = [{"type": "paragraph", "text": "Annual Report 2024", "bbox": [50, 20, 300, 35]},
+                  {"type": "heading", "text": "Title", "bbox": [50, 40, 300, 60], "level": 1},
+                  {"type": "paragraph", "text": "Body", "bbox": [50, 300, 300, 320]},
+                  {"type": "paragraph", "text": "Page 3 of 10", "bbox": [250, 770, 330, 785]}]
+        mark_page_furniture(blocks, 792)
+        self.assertEqual([b["type"] for b in blocks], ["header", "heading", "paragraph", "footer"])
+        self.assertTrue(blocks[3].get("page_number"))
+
+    def test_stacked_table_rows_are_split(self):
+        from docparse.extract import _split_stacked_rows
+        rows = [["Class", "Rate"], ["8833\n8837", "1.08\n0.87"], ["Total", "2"]]
+        self.assertEqual(_split_stacked_rows(rows), [["Class", "Rate"], ["8833", "1.08"], ["8837", "0.87"],
+                                                     ["Total", "2"]])
+
+
 class LayoutTests(unittest.TestCase):
     def test_synthetic_page_layout_with_stub_reader(self):
         img, truth = make_page(3, "test")

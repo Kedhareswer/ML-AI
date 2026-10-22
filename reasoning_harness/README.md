@@ -1,6 +1,6 @@
 # Tiny System 2
 
-> **New: [docparse](DOCPARSE.md)**: a 6 MB OCR model trained from scratch plus exact parsers, extracting text, tables and structure from PDF, images, Word and Excel files.
+> **New: [docparse](DOCPARSE.md)**: a 6 MB OCR model trained from scratch plus exact parsers, extracting text, tables and structure from PDF, images, Word and Excel files. Scored 36.2 on LlamaIndex's ParseBench (full 2,078 pages).
 >
 > **[Puzzle Arena](ARENA.md)**: networks trained from scratch for Sudoku (real Sudoku-Extreme), Mini Sudoku, Tango, Queens, Zip, Patches, Wend, chess (real Lichess puzzles), checkers and a Pinpoint experiment, with held-out benchmarks, screenshots and a screen recording.
 
