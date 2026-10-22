@@ -10,7 +10,7 @@ used with two parse stages:
     pypdf_extract_<model>     plain pypdf text, the simplest local baseline
 
 The model is served by any OpenAI-compatible endpoint (e.g. llama.cpp's server on a CPU):
-    python -m llama_cpp.server --model qwen2.5-3b-instruct-q4_k_m.gguf --n_ctx 16384 --port 8088
+    python -m llama_cpp.server --model qwen2.5-3b-instruct-q4_k_m.gguf --n_ctx 12288 --port 8088
     DOCPARSE_LLM_URL=http://127.0.0.1:8088 python scripts/extractbench_docparse.py run docparse_extract_local --test
 """
 import json
@@ -116,5 +116,5 @@ for parser in PARSERS:
     register_pipeline(PipelineSpec(
         pipeline_name=f"{parser}_extract_local", provider_name="parsed_text_local_llm",
         product_type=ProductType.EXTRACT,
-        config={"parser": parser, "endpoint_env_var": "DOCPARSE_LLM_URL", "model": "qwen2.5-3b", "n_ctx": 16384,
+        config={"parser": parser, "endpoint_env_var": "DOCPARSE_LLM_URL", "model": "qwen2.5-3b", "n_ctx": 12288,
                 "max_tokens": 4096, "structured_output": False, "temperature": 0.0, "timeout_s": 3600}))

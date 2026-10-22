@@ -174,6 +174,39 @@ extension API. Each page is sent as Markdown with HTML tables, page
 header/footer fields, and layout boxes in ParseBench's canonical classes.
 Aggregate results are in `benchmarks/parsebench/report.json`.
 
+## ExtractBench (LlamaIndex): small local check
+
+[ExtractBench](https://github.com/run-llama/ExtractBench) scores **schema-guided
+extraction**: a document plus a JSON Schema in, schema-valid JSON plus evidence
+boxes out. A parser cannot do this alone; an LLM fills the schema. So docparse
+was tested as the **parse stage** of a two-stage pipeline (as ExtractBench's own
+parse → LLM baselines are), against plain pypdf text, with everything else fixed:
+the same model (Qwen2.5-3B-Instruct, 4-bit, llama.cpp on 4 CPU cores), the same
+prompt and 12,288-token context budget, and the official scorer.
+
+| Parse stage (6-document test set) | Value F1 | Precision | Recall |
+|---|---:|---:|---:|
+| **docparse** | **35.8** | 63.8 | 32.5 |
+| pypdf | 32.9 | 66.3 | 29.8 |
+
+docparse helped most on a scanned document (Value F1 19.6 vs 8.0, from OCR) and
+an earnings deck with tables (35.0 vs 25.0). It lost on the 66-page document
+(1.4 vs 5.2), where both arms could send only the first few pages.
+
+**Read this carefully.** This is 6 documents, so a 2.9-point gap is not
+statistically meaningful. Absolute scores are far below the leaderboard (top
+systems score ~96), because a 3B model with a 12k context must cut long documents
+(up to 55 of 66 pages dropped) and sometimes even shorten the schema. Grounding is
+0 for both arms because this pipeline does not return evidence boxes yet. A real
+ExtractBench number needs a strong model over all 370 documents (ExtractBench
+estimates $10 to $1,677 per full run, depending on the model). Per-document
+details are in `benchmarks/extractbench/report.json`.
+
+Reproduce: start an OpenAI-compatible server (`python -m llama_cpp.server --model
+qwen2.5-3b-instruct-q4_k_m.gguf --n_ctx 12288 --port 8088`), then
+`DOCPARSE_LLM_URL=http://127.0.0.1:8088 python scripts/extractbench_docparse.py run
+docparse_extract_local --test` (and `pypdf_extract_local`).
+
 **Structure parsers** (PDF text layer, DOCX, XLSX, CSV) are tested for exact
 output in `tests/test_docparse.py`.
 

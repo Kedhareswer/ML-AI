@@ -67,6 +67,34 @@ Every milestone also keeps: v1's unit tests green, the internal OCR benchmarks u
 a latency budget (median ≤ 1 s/page CPU), and a written report with all numbers, including
 regressions.
 
+## Lessons from NVIDIA Nemotron 3.5 (Parse, Embed, Rerank)
+
+Source: [NVIDIA's Hugging Face post](https://huggingface.co/blog/nvidia/nemotron-retriever-world-class-agentic-retrieval).
+Nemotron 3.5 Parse is a **631M-parameter** document-to-structure model that scores
+**75.2 on the same ParseBench** (Tables 84.7, Charts 64.4, Content 88.0, Formatting 68.3,
+Visual grounding 70.7; leaderboard row). It is ~100× docparse's size and runs on GPUs, so we
+cannot copy it, but several of its techniques transfer to a small CPU parser.
+
+| Nemotron technique (as described in the post) | Why it works | What docparse v2 takes from it |
+|---|---|---|
+| **Multi-pass parsing**: pass 1 parses every page; pass 2 re-parses only tables and charts; pass 3 adds detection to find more regions. ParseBench 72.7 → 74.9 → 75.2, throughput 16.1 → 10.5 pages/s | Spend compute only on the hard regions | **Cascade.** Cheap pass on every page (v1 today); only regions flagged as table / chart / low OCR confidence go to heavier steps: table-structure model (A2), OCR re-run at higher DPI on the crop, figure-to-data later. Keeps median latency low. |
+| **Synthetic data engine** plus automatic and human labels | Exact labels for structure that is hard to annotate | Render synthetic **table and layout pages with exact ground truth** (HTML tables in many styles, spans, multi-row headers, borderless financial layouts, scan noise), the same way v1's OCR was trained. This is the main data source for A1–A3 and B1–B2, with no license limits. |
+| **GRPO post-training with structural rewards** (correct structure; penalties for repetition loops and unclosed blocks) | Optimises what the metric rewards, not only token likelihood | docparse's models are not generative, so no GRPO. The useful idea is **verifier-shaped objectives**: score table outputs with a record-level checker (like TableRecordMatch) on *our own* synthetic and validation data, and use it for model selection and threshold tuning. Never on ParseBench. |
+| **Distillation**: Embed 1B learned from the 8B teacher and keeps **95.4%** of its score | A large model's outputs are cheap labels at scale | **Teacher → tiny student.** Run a strong open parser once (on a rented GPU) over a large unlabeled corpus of public PDFs. Use its layout boxes, table HTML and reading order as pseudo-labels for docparse's small CPU models. Candidate teachers: Nemotron 3.5 Parse (license appears to be OpenMDW-1.1; **verify on its model card**), Docling or PaddleOCR-VL (check licenses). The fastest route to v2 targets. |
+| **Evidence linked back to page positions** | Agents and extraction need citations | docparse already has block boxes. v2 adds **word-level boxes** to the output and an API that returns the source boxes for any text span. This is what ExtractBench's grounding score needs; our ExtractBench run scored 0 grounding because this does not exist yet. |
+| **Embed + rerank inside an agentic search loop**; reranking cut agent tokens ~13–14% | Read only the relevant parts of a long corpus | **Retrieve before extracting.** Our ExtractBench check failed on long files because the model saw only the first pages (up to 55 of 66 dropped). Split docparse output into layout-aware chunks (sections, whole tables), rank chunks against each schema field (BM25 on CPU, optionally a small embedder), and send only the best chunks. This attacks the long-document failure directly. |
+| **Checkpoint ensembling** (final weights averaged over checkpoints) | Free accuracy and stability | Average the last few OCR checkpoints (SWA-style) when training v2 models. A few lines in `docparse/ocr/train.py`. |
+| **NVFP4 quantization**: +27% throughput, 99.85% accuracy kept | Lower precision costs almost nothing | **INT8 dynamic quantization** of the OCR CRNN and v2 models on CPU: ~4× smaller weights and faster inference; accept if accuracy drop < 0.1 CER point. |
+| Domain fine-tuning with **synthetic queries and hard negatives** (+18% nDCG@10 for the 1B embedder on charts) | Adapts a general model to a domain cheaply | Relevant if docparse feeds a RAG system: generate questions from parsed chunks and fine-tune a small embedder per domain. Lower priority than A–C. |
+
+What does **not** transfer: an end-to-end vision-language decoder at 0.6B parameters (needs GPUs
+to train and run at our latency budget), and the NIM/GPU serving optimisations.
+
+Updated milestone order: v2.0 adds the **synthetic table/layout engine**, **INT8 quantization**
+and **checkpoint averaging** (cheap, low risk). v2.1 adds **teacher distillation** for A2/B1/B2/C1
+and the **cascade**. **Word-level evidence** and **retrieve-before-extract** form a separate
+ExtractBench track, measured with the two-stage harness in `docparse/extractbench.py`.
+
 ## Risks
 
 - **Domain gap.** DocLayNet and PubTables are mostly papers, reports and manuals; ParseBench
