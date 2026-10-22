@@ -1,0 +1,152 @@
+{
+ "dataset": "llamaindex/ExtractBench --test subset (6 documents: 3 short, 2 medium, 1 long)",
+ "setup": "two-stage: parse stage -> Qwen2.5-3B-Instruct Q4_K_M via llama.cpp on 4 CPU cores, 12,288-token context, same prompt/budget/scorer for both arms; harness llama-extract-bench",
+ "arms": {
+  "docparse_extract_local": {
+   "mean_value_f1": 35.8,
+   "mean_value_precision": 63.8,
+   "mean_value_recall": 32.5,
+   "documents": [
+    {
+     "document": "short/W14-Atascosa SWD Well No. 4 - W-14 (Updated 01.22.2025)",
+     "value_f1": 0.6457,
+     "value_precision": 0.7152,
+     "value_recall": 0.5885,
+     "grounded_f1": 0.0,
+     "text_chars_sent": 157,
+     "pages_truncated": 0,
+     "schema_prune_rounds": 4,
+     "finish_reason": "stop"
+    },
+    {
+     "document": "short/bianco-2024",
+     "value_f1": 0.8456,
+     "value_precision": 0.8693,
+     "value_recall": 0.8231,
+     "grounded_f1": 0.0,
+     "text_chars_sent": 6344,
+     "pages_truncated": 9,
+     "schema_prune_rounds": 2,
+     "finish_reason": "stop"
+    },
+    {
+     "document": "short/real_wyo_Goshen_2024",
+     "value_f1": 0.1958,
+     "value_precision": 0.4277,
+     "value_recall": 0.1269,
+     "grounded_f1": 0.0,
+     "text_chars_sent": 8711,
+     "pages_truncated": 0,
+     "schema_prune_rounds": 0,
+     "finish_reason": "stop"
+    },
+    {
+     "document": "medium/veralto_earnings_deck_q4fy25",
+     "value_f1": 0.35,
+     "value_precision": 0.35,
+     "value_recall": 0.35,
+     "grounded_f1": 0.0,
+     "text_chars_sent": 8991,
+     "pages_truncated": 34,
+     "schema_prune_rounds": 0,
+     "finish_reason": "stop"
+    },
+    {
+     "document": "medium/real_pueblo_oct_2025",
+     "value_f1": 0.0984,
+     "value_precision": 0.7679,
+     "value_recall": 0.0526,
+     "grounded_f1": 0.0,
+     "text_chars_sent": 9464,
+     "pages_truncated": 9,
+     "schema_prune_rounds": 0,
+     "finish_reason": "length"
+    },
+    {
+     "document": "long/real_sm0801_eco_full",
+     "value_f1": 0.0139,
+     "value_precision": 0.6977,
+     "value_recall": 0.007,
+     "grounded_f1": 0.0,
+     "text_chars_sent": 19243,
+     "pages_truncated": 55,
+     "schema_prune_rounds": 0,
+     "finish_reason": "length"
+    }
+   ]
+  },
+  "pypdf_extract_local": {
+   "mean_value_f1": 32.9,
+   "mean_value_precision": 66.3,
+   "mean_value_recall": 29.8,
+   "documents": [
+    {
+     "document": "short/W14-Atascosa SWD Well No. 4 - W-14 (Updated 01.22.2025)",
+     "value_f1": 0.6457,
+     "value_precision": 0.7152,
+     "value_recall": 0.5885,
+     "grounded_f1": 0.0,
+     "text_chars_sent": 122,
+     "pages_truncated": 0,
+     "schema_prune_rounds": 4,
+     "finish_reason": "stop"
+    },
+    {
+     "document": "short/real_wyo_Goshen_2024",
+     "value_f1": 0.0801,
+     "value_precision": 0.6098,
+     "value_recall": 0.0429,
+     "grounded_f1": 0.0,
+     "text_chars_sent": 4925,
+     "pages_truncated": 0,
+     "schema_prune_rounds": 0,
+     "finish_reason": "stop"
+    },
+    {
+     "document": "short/bianco-2024",
+     "value_f1": 0.8518,
+     "value_precision": 0.8796,
+     "value_recall": 0.8256,
+     "grounded_f1": 0.0,
+     "text_chars_sent": 181,
+     "pages_truncated": 0,
+     "schema_prune_rounds": 2,
+     "finish_reason": "stop"
+    },
+    {
+     "document": "medium/veralto_earnings_deck_q4fy25",
+     "value_f1": 0.25,
+     "value_precision": 0.25,
+     "value_recall": 0.25,
+     "grounded_f1": 0.0,
+     "text_chars_sent": 8991,
+     "pages_truncated": 30,
+     "schema_prune_rounds": 0,
+     "finish_reason": "stop"
+    },
+    {
+     "document": "medium/real_pueblo_oct_2025",
+     "value_f1": 0.0965,
+     "value_precision": 0.7342,
+     "value_recall": 0.0516,
+     "grounded_f1": 0.0,
+     "text_chars_sent": 9464,
+     "pages_truncated": 8,
+     "schema_prune_rounds": 0,
+     "finish_reason": "length"
+    },
+    {
+     "document": "long/real_sm0801_eco_full",
+     "value_f1": 0.0519,
+     "value_precision": 0.7877,
+     "value_recall": 0.0269,
+     "grounded_f1": 0.0,
+     "text_chars_sent": 9662,
+     "pages_truncated": 53,
+     "schema_prune_rounds": 0,
+     "finish_reason": "length"
+    }
+   ]
+  }
+ }
+}

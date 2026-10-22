@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>docparse</title>
+<style>
+  :root { --bg:#f6f5f2; --panel:#fff; --ink:#1d1d1f; --muted:#6b6b70; --line:#dedcd6; --accent:#2457c5; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#151517; --panel:#1f1f22; --ink:#ececee; --muted:#9a9aa2; --line:#33333a; --accent:#7ea2ff; } }
+  * { box-sizing: border-box; }
+  body { margin:0; font:15px/1.5 system-ui, sans-serif; background:var(--bg); color:var(--ink); }
+  main { max-width:1100px; margin:0 auto; padding:24px 16px 48px; }
+  h1 { font-size:22px; margin:0 0 4px; }
+  p.sub { color:var(--muted); margin:0 0 20px; }
+  #drop { display:block; border:2px dashed var(--line); border-radius:12px; padding:28px; text-align:center; background:var(--panel); cursor:pointer; }
+  #drop.over { border-color:var(--accent); }
+  .opts { display:flex; gap:16px; flex-wrap:wrap; margin:12px 0; color:var(--muted); font-size:14px; }
+  .tabs { display:flex; gap:4px; margin-top:20px; border-bottom:1px solid var(--line); }
+  .tabs button { background:none; border:0; padding:8px 14px; color:var(--muted); font:inherit; cursor:pointer; border-bottom:2px solid transparent; }
+  .tabs button.on { color:var(--ink); border-color:var(--accent); }
+  pre { background:var(--panel); border:1px solid var(--line); border-top:0; margin:0; padding:16px; white-space:pre-wrap; word-break:break-word; max-height:70vh; overflow:auto; font-size:13px; }
+  #status { margin-top:12px; color:var(--muted); min-height:1.5em; }
+  table { border-collapse:collapse; width:100%; background:var(--panel); font-size:13px; }
+  td, th { border:1px solid var(--line); padding:6px 8px; text-align:left; vertical-align:top; }
+  #blocks { max-height:70vh; overflow:auto; }
+</style>
+</head>
+<body>
+<main>
+  <h1>docparse</h1>
+  <p class="sub">Drop a PDF, image, Word, Excel, CSV or PowerPoint file. Born-digital files are parsed exactly; images and scanned pages are read by the small OCR network.</p>
+  <label id="drop">Drop a file here or click to choose<input id="file" type="file" hidden></label>
+  <div class="opts">
+    <label>OCR <select id="ocr"><option value="auto">auto (scanned pages only)</option><option value="always">always</option><option value="never">never</option></select></label>
+    <label><input id="ocrimg" type="checkbox"> read text inside embedded pictures</label>
+  </div>
+  <div id="status"></div>
+  <div class="tabs"><button data-t="md" class="on">Markdown</button><button data-t="blocks">Blocks</button><button data-t="json">JSON</button></div>
+  <pre id="md"></pre><div id="blocks" hidden></div><pre id="json" hidden></pre>
+</main>
+<script>
+const $ = s => document.querySelector(s);
+const drop = $('#drop'), input = $('#file');
+drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('over'); });
+drop.addEventListener('dragleave', () => drop.classList.remove('over'));
+drop.addEventListener('drop', e => { e.preventDefault(); drop.classList.remove('over'); if (e.dataTransfer.files[0]) send(e.dataTransfer.files[0]); });
+input.addEventListener('change', () => input.files[0] && send(input.files[0]));
+document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x === b));
+  ['md', 'blocks', 'json'].forEach(id => $('#' + id).hidden = id !== b.dataset.t);
+});
+function esc(s) { return String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+async function send(file) {
+  $('#status').textContent = `Reading ${file.name} ...`;
+  const t0 = performance.now();
+  const r = await fetch('/api/extract', { method: 'POST', body: file, headers: {
+    'X-Filename': file.name, 'X-OCR': $('#ocr').value, 'X-OCR-Images': $('#ocrimg').checked ? '1' : '0' } });
+  const data = await r.json();
+  if (!r.ok) { $('#status').textContent = data.error; return; }
+  const d = data.document;
+  $('#status').textContent = `${d.blocks.length} blocks, ${d.pages} page(s)/sheet(s) in ${((performance.now() - t0) / 1000).toFixed(1)} s` +
+    (d.warnings.length ? ' · ' + d.warnings.join('; ') : '');
+  $('#md').textContent = data.markdown;
+  $('#json').textContent = JSON.stringify(d, null, 2);
+  const rows = d.blocks.map(b => `<tr><td>${b.page ?? b.sheet ?? ''}</td><td>${b.type}${b.level ? ' ' + b.level : ''}</td><td>${b.source ?? ''}</td>` +
+    `<td>${b.confidence ?? ''}</td><td>${b.type === 'table' ? esc(b.rows.map(r => r.join(' | ')).join('\n')).replace(/\n/g, '<br>') : esc(b.text ?? '')}</td></tr>`);
+  $('#blocks').innerHTML = `<table><tr><th>page</th><th>type</th><th>source</th><th>conf.</th><th>content</th></tr>${rows.join('')}</table>`;
+}
+</script>
+</body>
+</html>

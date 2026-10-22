@@ -1,0 +1,44 @@
+round 1 step 0/2500 loss 12.8047 lr 8.00e-05 elapsed 100s
+round 1 step 250/2500 loss 5.2012 lr 5.11e-04 elapsed 219s
+round 1 step 500/2500 loss 3.2770 lr 1.41e-03 elapsed 357s
+round 1 step 750/2500 loss 0.8169 lr 1.98e-03 elapsed 536s
+round 1 step 1000/2500 loss 0.2078 lr 2.00e-03 elapsed 657s
+round 1 step 1250/2500 loss 0.0972 lr 1.99e-03 elapsed 782s
+round 1 step 1500/2500 loss 0.0859 lr 1.97e-03 elapsed 892s
+round 1 step 1750/2500 loss 0.0785 lr 1.95e-03 elapsed 1010s
+round 1 step 2000/2500 loss 0.0683 lr 1.92e-03 elapsed 1112s
+round 1 step 2250/2500 loss 0.0497 lr 1.88e-03 elapsed 1211s
+{"round": 1, "train_loss": 0.0498, "val_train_fonts": {"lines": 3000, "cer": 0.01403, "wer": 0.06834, "line_exact": 0.8077}, "test_heldout_fonts": {"lines": 3000, "cer": 0.02851, "wer": 0.13867, "line_exact": 0.6483}, "elapsed_s": 1325.6}
+round 2 step 0/2500 loss 0.0188 lr 1.84e-03 elapsed 1463s
+round 2 step 250/2500 loss 0.0467 lr 1.79e-03 elapsed 1687s
+round 2 step 500/2500 loss 0.0386 lr 1.73e-03 elapsed 1922s
+round 2 step 750/2500 loss 0.0529 lr 1.67e-03 elapsed 2126s
+round 2 step 1000/2500 loss 0.0415 lr 1.60e-03 elapsed 2214s
+round 2 step 1250/2500 loss 0.0349 lr 1.53e-03 elapsed 2311s
+round 2 step 1500/2500 loss 0.0321 lr 1.46e-03 elapsed 2396s
+round 2 step 1750/2500 loss 0.0271 lr 1.38e-03 elapsed 2494s
+round 2 step 2000/2500 loss 0.0233 lr 1.30e-03 elapsed 2587s
+round 2 step 2250/2500 loss 0.0313 lr 1.22e-03 elapsed 2679s
+{"round": 2, "train_loss": 0.028, "val_train_fonts": {"lines": 3000, "cer": 0.0051, "wer": 0.02588, "line_exact": 0.916}, "test_heldout_fonts": {"lines": 3000, "cer": 0.01489, "wer": 0.08693, "line_exact": 0.779}, "elapsed_s": 2781.7}
+round 3 step 0/2500 loss 0.0044 lr 1.14e-03 elapsed 2882s
+round 3 step 250/2500 loss 0.0210 lr 1.05e-03 elapsed 2970s
+round 3 step 500/2500 loss 0.0229 lr 9.65e-04 elapsed 3064s
+round 3 step 750/2500 loss 0.0220 lr 8.80e-04 elapsed 3154s
+round 3 step 1000/2500 loss 0.0232 lr 7.96e-04 elapsed 3246s
+round 3 step 1250/2500 loss 0.0204 lr 7.13e-04 elapsed 3338s
+round 3 step 1500/2500 loss 0.0172 lr 6.33e-04 elapsed 3433s
+round 3 step 1750/2500 loss 0.0147 lr 5.55e-04 elapsed 3523s
+round 3 step 2000/2500 loss 0.0155 lr 4.80e-04 elapsed 3613s
+round 3 step 2250/2500 loss 0.0136 lr 4.09e-04 elapsed 3695s
+{"round": 3, "train_loss": 0.0135, "val_train_fonts": {"lines": 3000, "cer": 0.00235, "wer": 0.01228, "line_exact": 0.958}, "test_heldout_fonts": {"lines": 3000, "cer": 0.00977, "wer": 0.06076, "line_exact": 0.834}, "elapsed_s": 3805.6}
+round 4 step 0/2500 loss 0.0053 lr 3.42e-04 elapsed 3904s
+round 4 step 250/2500 loss 0.0118 lr 2.80e-04 elapsed 3994s
+round 4 step 500/2500 loss 0.0119 lr 2.24e-04 elapsed 4084s
+round 4 step 750/2500 loss 0.0112 lr 1.73e-04 elapsed 4172s
+round 4 step 1000/2500 loss 0.0106 lr 1.28e-04 elapsed 4261s
+round 4 step 1250/2500 loss 0.0099 lr 8.94e-05 elapsed 4353s
+round 4 step 1500/2500 loss 0.0120 lr 5.75e-05 elapsed 4436s
+round 4 step 1750/2500 loss 0.0094 lr 3.25e-05 elapsed 4529s
+round 4 step 2000/2500 loss 0.0099 lr 1.44e-05 elapsed 4627s
+round 4 step 2250/2500 loss 0.0097 lr 3.59e-06 elapsed 4717s
+{"round": 4, "train_loss": 0.009, "val_train_fonts": {"lines": 3000, "cer": 0.00168, "wer": 0.00907, "line_exact": 0.9683}, "test_heldout_fonts": {"lines": 3000, "cer": 0.00848, "wer": 0.05398, "line_exact": 0.8533}, "elapsed_s": 4829.3}
