@@ -34,9 +34,9 @@ class Models:
                     from .games.checkers import load
                     self.cache[kind] = load(self.root / "checkers" / "weights.pt")
                 elif kind == "pinpoint":
-                    from .games.pinpoint import Guesser
+                    from .games.pinpoint import Guesser, LinkGuesser
                     cands = (self.root / "pinpoint" / "candidates.txt").read_text().split()
-                    self.cache[kind] = Guesser(self.root / "pinpoint", cands)
+                    self.cache[kind] = LinkGuesser(self.root / "pinpoint", Guesser(self.root / "pinpoint", cands))
             return self.cache[kind]
 
     def example(self, kind, index=None):
@@ -76,6 +76,30 @@ def handle(models, path, payload):
         line = row["Moves"].split()
         board.push_uci(line[0])
         return {"solved": ok, "played": played, "solution": line[1:], "start_fen": board.fen(), "mode": mode}
+    if path == "/api/chess/game":
+        import chess
+        from .games.chess_engine import make_player, play_game
+        rng = random.Random(payload.get("seed", 0))
+        opp = payload.get("opponent", "classic")
+        if opp not in ("classic", "random"):
+            raise ValueError("unknown opponent")
+        board, opening = chess.Board(), []
+        for _ in range(2):  # two random opening plies so games differ
+            m = rng.choice(list(board.legal_moves))
+            opening.append(m.uci())
+            board.push(m)
+        # small budgets keep a full game near a minute on two CPUs
+        white = make_player("search", models.get("chess"), budget=600, depth=2)
+        black = make_player(opp, None, budget=600, depth=2, rng=rng)
+        result, end, how = play_game(white, black, max_plies=120, opening=opening)
+        replay, fens, sans = chess.Board(), [chess.STARTING_FEN], []
+        for m in end.move_stack:
+            sans.append(replay.san(m))
+            replay.push(m)
+            fens.append(replay.fen())
+        return {"result": result, "termination": how, "fens": fens, "sans": sans,
+                "moves": [m.uci() for m in end.move_stack],
+                "white": "trained network + search", "black": "classical search (no network)" if opp == "classic" else "random mover"}
     if path == "/api/checkers/game":
         from .games import checkers as ck
         rng = random.Random(payload.get("seed", 0))
@@ -123,8 +147,10 @@ def handle(models, path, payload):
     if path == "/api/pinpoint":
         clues = [c for c in payload["clues"] if isinstance(c, str) and c.strip()][:5]
         guesser = models.get("pinpoint")
-        return {"clues": clues, "after": [guesser.rank(clues[:k], 5) for k in range(1, len(clues) + 1)],
-                "unknown": [c for c in clues if not guesser.known(c)]}
+        after = [guesser.rank(clues[:k], 5) for k in range(1, len(clues) + 1)]
+        best = after[-1][0][0] if after and after[-1] else None
+        return {"clues": clues, "after": after, "best": best, "why": guesser.explain(clues, best) if best else [],
+                "unknown": [c for c in clues if not guesser.g.known(c)]}
     raise KeyError(path)
 
 

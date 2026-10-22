@@ -147,8 +147,19 @@ def _read_at(kind, board, n, root, to_move, repair):
         puzzle, fixes = _decode(slots, build, check)
     elif kind == "patches":
         crops = B.cells(board, n, inset=0.04)
-        slots = slots_for("patches_num", crops, [f"{c} number" for c in cell_names]) + \
-            slots_for("patches_shape", crops, [f"{c} shape" for c in cell_names])
+        nums = slots_for("patches_num", crops, [f"{c} number" for c in cell_names])
+        shapes = slots_for("patches_shape", crops, [f"{c} shape" for c in cell_names])
+        for (pn, ln, _), (ps, ls, _) in zip(nums, shapes):
+            # rule out shapes no rectangle of the read area can have: a square needs a square area,
+            # a wide or tall rectangle needs area >= 2
+            num = ln[int(pn.argmax())]
+            if num != "none":
+                area = int(num)
+                for j, s in enumerate(ls):
+                    if (s == "square" and int(area ** 0.5) ** 2 != area) or (s in ("wide", "tall") and area < 2):
+                        ps[j] = 0.0
+                ps /= max(ps.sum(), 1e-9)
+        slots = nums + shapes
 
         def build(ls):
             nums, shapes = ls[:n * n], ls[n * n:]

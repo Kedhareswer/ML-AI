@@ -1,39 +1,39 @@
 {
   "kind": "tango",
-  "train_samples": 15000,
+  "train_samples": 30000,
   "epochs": 6,
   "parameters": 1101235,
   "history": [
     {
       "epoch": 1,
-      "loss": 0.1863,
-      "synthetic_val_acc": 0.9917
+      "loss": 0.2022,
+      "synthetic_val_acc": 0.9897
     },
     {
       "epoch": 2,
-      "loss": 0.1937,
-      "synthetic_val_acc": 0.9987
+      "loss": 0.1931,
+      "synthetic_val_acc": 0.995
     },
     {
       "epoch": 3,
-      "loss": 0.1772,
-      "synthetic_val_acc": 0.9993
+      "loss": 0.1741,
+      "synthetic_val_acc": 0.9973
     },
     {
       "epoch": 4,
-      "loss": 0.1751,
-      "synthetic_val_acc": 1.0
+      "loss": 0.1716,
+      "synthetic_val_acc": 0.999
     },
     {
       "epoch": 5,
-      "loss": 0.173,
-      "synthetic_val_acc": 1.0
+      "loss": 0.1711,
+      "synthetic_val_acc": 0.9987
     },
     {
       "epoch": 6,
-      "loss": 0.1727,
-      "synthetic_val_acc": 1.0
+      "loss": 0.1707,
+      "synthetic_val_acc": 0.999
     }
   ],
-  "train_seconds": 254.4
+  "train_seconds": 221.0
 }

@@ -219,3 +219,150 @@ def train_category_head(guesser, exclude, nltk_dir=None, steps=4000, seed=0, log
             log(json.dumps({"step": step, "loss": round(loss.item(), 4)}))
     head.net.eval()
     return head, len(groups)
+
+
+class LinkGuesser:
+    """Pinpoint guesser that also uses three kinds of links counted in the same corpus.
+
+    For a candidate answer W and each clue c it looks for:
+      * a category pattern: "planets such as mars", "mars and other planets"  (W is a category of c)
+      * a two-word phrase: "poker face", "face value"                          (c W or W c)
+      * a compound word: "butter" + "fly" = "butterfly"                        (cW or Wc)
+    and falls back on word-vector similarity ("guitar" near "piano"). The answer must
+    link to every clue, so the score is the mean link strength over the clues.
+    Every count comes from WikiText-103; there is no pretrained model or answer list.
+    """
+
+    def __init__(self, model_dir, base):
+        model_dir = Path(model_dir)
+        self.g = base
+        self.freq = {}
+        for line in (model_dir / "words.txt").read_text().splitlines():
+            w, n = line.split()
+            self.freq[w] = int(n)
+        self.total = sum(self.freq.values())
+        bg = np.load(model_dir / "bigrams.npz")
+        a, b, n = bg["a"], bg["b"], bg["n"].astype(np.float64)
+        order = np.argsort(a, kind="stable")
+        self.ra, self.rb, self.rn = a[order], b[order], n[order]        # right neighbours: c W
+        order = np.argsort(b, kind="stable")
+        self.la, self.lb, self.ln = b[order], a[order], n[order]        # left neighbours: W c
+        h = np.load(model_dir / "hearst.npz")
+        self.cats = {}
+        for c, m, k in zip(h["cat"].tolist(), h["mem"].tolist(), h["n"].tolist()):
+            d = self.cats.setdefault(self.sing(m), {})
+            d[self.sing(c)] = d.get(self.sing(c), 0) + k
+        self.stop = set(base.words[:150])
+        self.vfreq = np.array([self.freq.get(w, 1) for w in base.words], np.float64)
+        # answers are ordinary words: not stopwords, not suffix fragments ("ing"), not rare tokens
+        suffix = {"ing", "ers", "ion", "ness", "less", "ful", "ish", "est", "ism", "ist", "ment"}
+        self.ok = np.array([len(w) >= 3 and w not in self.stop and w not in suffix and w.isalpha()
+                            and self.freq.get(w, 0) >= 300 for w in base.words])
+
+    def sing(self, w):
+        for suf, rep in (("ies", "y"), ("es", ""), ("s", "")):
+            if w.endswith(suf) and len(w) >= len(suf) + 2 and self.freq.get(w[:-len(suf)] + rep, 0) >= 20:
+                return w[:-len(suf)] + rep
+        return w
+
+    def _links(self, clue):
+        """Per-vocabulary-word link strengths in [0, 1] for one clue, and the reason for each."""
+        V = len(self.g.words)
+        strength = np.zeros(V)
+        kind = np.zeros(V, np.int8)  # 1 category, 2 phrase "c W", 3 phrase "W c", 4 compound "cW", 5 compound "Wc"
+        c = self.sing(clue)
+        for form in {clue, c}:
+            i = self.g.index.get(form)
+            if i is None:
+                continue
+            fc = self.vfreq[i]
+            for keys, idx, cnt, k in ((self.ra, self.rb, self.rn, 2), (self.la, self.lb, self.ln, 3)):
+                lo, hi = np.searchsorted(keys, [i, i + 1])
+                w, n = idx[lo:hi], cnt[lo:hi]
+                good = n >= 5
+                w, n = w[good], n[good]
+                pmi = np.log(n * self.total / (fc * self.vfreq[w]))
+                s = np.clip(pmi / 10, 0, 1) * np.clip(np.log(n) / np.log(50), 0, 1)
+                better = s > strength[w]
+                strength[w[better]], kind[w[better]] = s[better], k
+        for cat, n in self.cats.get(c, {}).items():
+            j = self.g.index.get(cat)
+            if j is not None:
+                s = min(1.0, np.log1p(n) / np.log(20)) * 1.2
+                if s > strength[j]:
+                    strength[j], kind[j] = s, 1
+        return strength, kind
+
+    def _compounds(self, clue, cand):
+        out = {}
+        for j in cand:
+            w = self.g.words[j]
+            for word, k in ((clue + w, 4), (w + clue, 5)):
+                n = self.freq.get(word, 0)
+                if n >= 20:
+                    s = min(1.0, np.log1p(n) / np.log(300))
+                    if s > out.get(j, (0, 0))[0]:
+                        out[j] = (s, k)
+        return out
+
+    def score(self, clues):
+        clues = [c.lower() for c in clues if c.strip()]
+        ids = [self.g.index[c] for c in clues if c in self.g.index]
+        V = len(self.g.words)
+        links = [self._links(c) for c in clues]
+        total = np.zeros(V)
+        for s, _ in links:
+            total += s
+        cand = np.flatnonzero(self.ok & (total > 0))
+        cand = cand[np.argsort(-total[cand])][:3000]
+        # compounds: check the best phrase partners plus the 20k most frequent words
+        pool = np.union1d(cand, np.flatnonzero(self.ok[:20000]))
+        reasons = []
+        for c, (s, k) in zip(clues, links):
+            for j, (cs, ck) in self._compounds(c, pool).items():
+                if cs > s[j]:
+                    s[j], k[j] = cs, ck
+            reasons.append(k)
+        strengths = np.array([s for s, _ in links])
+        link = strengths.mean(0)
+        cover = (strengths > 0.1).mean(0)  # share of clues this answer links to
+        sim = np.zeros(V)
+        if ids:
+            per = self.g.vecs @ self.g.vecs[ids].T
+            sim = np.clip(0.5 * per.mean(1) + 0.5 * per.min(1), 0, 1)
+        # a linked answer must connect to (almost) every clue; otherwise fall back on meaning similarity
+        need = 1.0 if len(clues) <= 2 else 0.75
+        return np.where(cover >= need, 1 + link, sim), links, clues
+
+    def rank(self, clues, k=5):
+        total, links, clues = self.score(clues)
+        banned = {c.lower() for c in clues} | {self.sing(c.lower()) for c in clues}
+        out = []
+        for j in np.argsort(-total):
+            w = self.g.words[j]
+            if not self.ok[j] or w in banned or self.sing(w) in banned or any(b in w or w in b for b in banned):
+                continue
+            if self.sing(w) in {x for x, _ in out}:  # "storm" and "storms" are one guess
+                continue
+            out.append((self.sing(w), float(total[j])))
+            if len(out) >= k:
+                break
+        return out
+
+    def explain(self, clues, word):
+        """Why `word` fits each clue, in plain words."""
+        _, links, clues = self.score(clues)
+        j = self.g.index.get(word)
+        if j is None:
+            j = next((i for i, w in enumerate(self.g.words) if self.sing(w) == word), None)
+        out = []
+        for c, (s, k) in zip(clues, links):
+            if j is None or s[j] <= 0:
+                i = self.g.index.get(c)
+                close = j is not None and i is not None and float(self.g.vecs[i] @ self.g.vecs[j]) > 0.3
+                out.append("used in similar contexts (word vectors)" if close else None)
+                continue
+            w = self.g.words[j]
+            out.append({1: f"{c} is a kind of {word}", 2: f"“{c} {w}”", 3: f"“{w} {c}”",
+                        4: f"“{c}{w}”", 5: f"“{w}{c}”"}.get(int(k[j]), f"{c} ~ {word}"))
+        return out
