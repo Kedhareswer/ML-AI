@@ -161,6 +161,19 @@ class GameTests(unittest.TestCase):
         self.assertTrue(board.is_checkmate())
 
 
+class WendDictionaryTests(unittest.TestCase):
+    def test_rare_word_board_solves_with_extended_dictionary(self):
+        from arena.ui import handle
+        # real board whose answer uses "compile", which is not among the 12,000 common words
+        row = {"kind": "wend", "rows": ["##pmoc", "##ilry", "#pred#", "#poed#", "soef##", "alnd##"], "lengths": None}
+        self.assertFalse(solve(from_json(row), None, "exact", budget=4000)["solved"])
+        r = handle(None, "/api/solve", {"puzzle": row, "mode": "exact"})
+        self.assertTrue(r["solved"] and r["extended_dictionary"])
+        # four splits are valid without word lengths; the most natural one is the intended answer
+        self.assertEqual(r["valid_splits"], 4)
+        self.assertEqual(r["words"], ["compile", "dry", "proposal", "defend"])
+
+
 @unittest.skipUnless(__import__("pathlib").Path("artifacts/arena/pinpoint/bigrams.npz").exists(), "needs Pinpoint link counts")
 class PinpointTests(unittest.TestCase):
     @classmethod

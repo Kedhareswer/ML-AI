@@ -14,11 +14,15 @@ from .base import GridPuzzle
 
 DIRS = ((0, 1), (1, 0), (0, -1), (-1, 0))  # R D L U; class 4 = end of word
 WORDS_FILE = Path(__file__).with_name("wend_words.txt")
+# fallback for boards with rarer words ("compile"): ENABLE words seen >= 50 times in WikiText-103
+EXTENDED_FILE = Path(__file__).with_name("wend_words_extended.txt")
 
 
-@lru_cache(maxsize=1)
-def lexicon():
+@lru_cache(maxsize=2)
+def lexicon(extended=False):
     words = [w.strip() for w in WORDS_FILE.read_text().split() if w.strip()]
+    if extended:
+        words += [w.strip() for w in EXTENDED_FILE.read_text().split() if w.strip()]
     trie = {}
     for w in words:
         node = trie
@@ -35,7 +39,8 @@ class Wend(GridPuzzle):
     loss = "cell"
     in_ch, out_ch = 30, 5
 
-    def __init__(self, rows, lengths):
+    def __init__(self, rows, lengths, extended=False):
+        self.extended = extended
         self.rows = [r.lower() for r in rows]
         self.n = len(rows)
         if any(len(r) != self.n for r in self.rows) or not 3 <= self.n <= 7:
@@ -54,14 +59,14 @@ class Wend(GridPuzzle):
                 self.by_cell[cell].append(i)
 
     def to_json(self):
-        return {"kind": self.name, "rows": self.rows, "lengths": self.lengths}
+        return {"kind": self.name, "rows": self.rows, "lengths": self.lengths, "extended": self.extended}
 
     @classmethod
     def from_json(cls, d):
-        return cls(d["rows"], d["lengths"])
+        return cls(d["rows"], d["lengths"], d.get("extended", False))
 
     def _word_paths(self):
-        _, trie = lexicon()
+        _, trie = lexicon(self.extended)
         allowed = set(self.lengths) if self.lengths else set(range(3, 9))
         longest, found = max(allowed), []
 
@@ -127,8 +132,34 @@ class Wend(GridPuzzle):
             return None
         return out
 
+    def natural_splits(self, limit=20000):
+        """Every valid split (up to `limit`), most natural first: fewest words, then most common words.
+
+        For screenshots, where word lengths are unknown and several splits can be valid.
+        """
+        words, _ = lexicon(self.extended)
+        rank = {w: i for i, w in enumerate(words)}  # lists are ordered by frequency
+        cells = sorted(self.open)
+        found = []
+
+        def cover(covered, chosen):
+            if len(found) >= limit:
+                return
+            first = next((c for c in cells if c not in covered), None)
+            if first is None:
+                found.append(tuple(chosen))
+                return
+            for i in self.by_cell[first]:
+                p = self.paths[i]
+                if not any(c in covered for c in p):
+                    cover(covered | set(p), chosen + [i])
+
+        cover(frozenset(), [])
+        cost = lambda s: (len(s), sum(np.log1p(rank[self.word(self.paths[i])]) for i in s))  # noqa: E731
+        return [self.answer(s) for s in sorted(found, key=cost)], len(found)
+
     def verify(self, answer):
-        words, _ = lexicon()
+        words, _ = lexicon(self.extended)
         vocab = set(words)
         seen = []
         for path in answer:
