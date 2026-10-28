@@ -10,6 +10,7 @@ copy_code() {
   mkdir -p "$1/artifacts"
   cp -r docparse "$1/docparse"
   cp -r artifacts/docparse "$1/artifacts/docparse"
+  mkdir -p "$1/evidence" && cp -r evidence/docparse "$1/evidence/docparse"  # charts on the card
   find "$1/docparse" -name __pycache__ -prune -exec rm -rf {} +
 }
 
@@ -18,7 +19,7 @@ rm -rf "$m"
 copy_code "$m"
 mkdir -p "$m/benchmarks" "$m/scripts" "$m/tests"
 cp -r benchmarks/docparse benchmarks/parsebench benchmarks/extractbench "$m/benchmarks/"
-cp scripts/build_doc_corpus.py scripts/parsebench_docparse.py scripts/parsebench_summary.py scripts/extractbench_docparse.py "$m/scripts/"
+cp scripts/build_doc_corpus.py scripts/parsebench_docparse.py scripts/parsebench_summary.py scripts/extractbench_docparse.py scripts/plot_docparse.py "$m/scripts/"
 cp tests/test_docparse.py "$m/tests/"
 cp pyproject.toml "$m/"
 card "$D/MODEL_META.md" > "$m/README.md"

@@ -1,0 +1,29 @@
+{
+ "note": "Sum of weight files (.safetensors/.bin/.pt/.onnx/.pdparams) in each Hugging Face repo, read with huggingface_hub on 2026-10-28.",
+ "models": {
+  "Nemotron-3.5-Parse": {
+   "repo": "nvidia/Nemotron-3.5-Parse",
+   "weights_bytes": 2523266640
+  },
+  "MinerU2.5-Pro-2605-1.2B": {
+   "repo": "opendatalab/MinerU2.5-Pro-2605-1.2B",
+   "weights_bytes": 2312126640
+  },
+  "rakedoc-nano": {
+   "repo": "cloudraker/rakedoc-nano",
+   "weights_bytes": 2312128984
+  },
+  "LightOnOCR-3-1B": {
+   "repo": "lightonai/LightOnOCR-3-1B",
+   "weights_bytes": 2011367464
+  },
+  "PaddleOCR-VL-1.6": {
+   "repo": "PaddlePaddle/PaddleOCR-VL-1.6",
+   "weights_bytes": 1917255968
+  },
+  "Docling-models": {
+   "repo": "docling-project/docling-models",
+   "weights_bytes": 358211664
+  }
+ }
+}

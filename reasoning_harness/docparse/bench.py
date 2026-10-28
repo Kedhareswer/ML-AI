@@ -23,8 +23,8 @@ from .ocr.render import TRAIN_FONTS, available, dataset, render_line, sample_tex
 from .synth_pages import make_page, truth_text
 
 ROOT = Path(__file__).resolve().parents[1]
-REAL_PDFS = ["../Credit Card/Credit Card Fraud Detection.pdf", "../ML/PPT.pdf",
-             "../Customer Analysis/vertopal.com_Customer_Behavior_Analysis.pdf"]
+REAL_PDFS = ["../archive/Credit Card/Credit Card Fraud Detection.pdf", "../archive/ML/PPT.pdf",
+             "../archive/Customer Analysis/vertopal.com_Customer_Behavior_Analysis.pdf"]
 
 
 def _norm(t):
