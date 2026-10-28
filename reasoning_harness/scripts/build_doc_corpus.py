@@ -9,7 +9,7 @@ import random
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[2] / "archive"
 OUT = Path(__file__).resolve().parents[1] / "docparse" / "data"
 sys.path.insert(0, str(OUT.parents[1]))
 from docparse.ocr.charset import normalize  # noqa: E402
