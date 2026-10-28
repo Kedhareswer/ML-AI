@@ -152,8 +152,35 @@ class PdfDetailTests(unittest.TestCase):
         self.assertEqual(_split_stacked_rows(rows), [["Class", "Rate"], ["8833", "1.08"], ["8837", "0.87"],
                                                      ["Total", "2"]])
 
+    def test_block_types_code_dataframe_definition_list(self):
+        try:
+            import reportlab  # noqa: F401
+        except ImportError:
+            self.skipTest("reportlab not installed")
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("bt", Path(__file__).parents[1] / "scripts/docparse_block_types.py")
+        bt = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(bt)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "types.pdf"
+            bt.build(path)
+            doc = extract(path, ocr="never")
+        res = bt.score(doc)
+        self.assertEqual([r["anchor"] for r in res["checks"] if not r["ok"]], [])
+        self.assertEqual(res["tables_found"], res["tables_expected"])
+        md = to_markdown(doc)
+        self.assertIn("```\n# Load, explore and plot data\nimport numpy as np", md)
+
 
 class LayoutTests(unittest.TestCase):
+    def test_line_opening_keeps_rules_at_the_image_edge(self):
+        from docparse.ocr.page import _open_1d
+        m = np.zeros((3, 20), bool)
+        m[1, 12:20] = True  # a rule running into the right edge
+        m[1, 0:3] = True    # too short to be a rule
+        self.assertEqual(np.flatnonzero(_open_1d(m, 5, 1)[1]).tolist(), list(range(12, 20)))
+        self.assertEqual(np.flatnonzero(_open_1d(m.T, 5, 0)[:, 1]).tolist(), list(range(12, 20)))
+
     def test_synthetic_page_layout_with_stub_reader(self):
         img, truth = make_page(3, "test")
         blocks, meta = analyze(img, StubReader())

@@ -7,6 +7,7 @@ Blocks, in reading order, are one of
     paragraph {text}
     list_item {text, level?}
     table     {rows: [[cell, ...], ...]}
+    code      {text}                   (fixed-width code or console output; line breaks and indentation kept)
     figure    {}                       (pictures; their text is read only with ocr_images=True)
     header / footer {text}             (Word page headers and footers)
 Every block can carry page, bbox [x0, y0, x1, y1] (PDF points or image pixels), sheet, source
@@ -150,8 +151,13 @@ def _pdf_text_page(page):
     S = 2.0  # mask pixels per PDF point
     W, H = int(page.width * S) + 2, int(page.height * S) + 2
     tables, candidates = [], []
+    shades = _shaded_rects(page)
     for t in page.find_tables():
         candidates.append(t.bbox)
+        # Shaded code cells and their token backgrounds look like grids; fixed-width text is
+        # handled from its own alignment below (_mono_regions) instead.
+        if _mono_share(page, t.bbox) >= 0.8:
+            continue
         rows = [[_clean_cell(c) for c in row] for row in _split_stacked_rows(t.extract())]
         cells = [c for row in rows for c in row]
         # Boxes drawn around code or text frames also look like grids; real tables are mostly filled.
@@ -185,6 +191,8 @@ def _pdf_text_page(page):
     all_words = [w for w in all_words if in_figure(w) is None]
     words = [w for w in all_words if w["upright"]]
     rotated = [w for w in all_words if not w["upright"]]
+    mono_blocks, used = _mono_regions(words, shades)
+    words = [w for w in words if id(w) not in used]
     mask = np.zeros((H, W), bool)
     boxes = []
     for w in words:
@@ -209,6 +217,9 @@ def _pdf_text_page(page):
     for (x0, y0, x1, y1), rows in tables:
         blocks.append({"kind": "table", "box": (int(y0 * S), int(y1 * S), int(x0 * S), int(x1 * S)), "rows": rows,
                        "confidence": None})
+    for m in mono_blocks:
+        x0, y0, x1, y1 = m.pop("bbox")
+        blocks.append({**m, "box": (int(y0 * S), int(y1 * S), int(x0 * S), int(x1 * S)), "confidence": None})
     for im in page.images:
         x0, y0, x1, y1 = im["x0"], im["top"], im["x1"], im["bottom"]
         if (x1 - x0 >= 10 and y1 - y0 >= 10 and (x1 - x0) * (y1 - y0) > 400
@@ -231,6 +242,149 @@ def _pdf_text_page(page):
         b.pop("confidence", None)
         _pdf_heading_by_font(b, words, body)
     return out
+
+
+MONO_RE = re.compile(r"mono|courier|consol|menlo|typewriter|fixed|code", re.I)
+CODE_RE = re.compile(r"^\s*(import |from \S+ import|def |class |return\b|for .+:|if .+:|#|%|>>>|\$ )|[=;{}]|\w\(.*\)")
+
+
+def _is_mono(w):
+    return bool(MONO_RE.search(w.get("fontname", "")))
+
+
+def _mono_share(page, bbox):
+    chars = [c for c in page.within_bbox(bbox, strict=False).chars if c["text"].strip()]
+    return sum(bool(MONO_RE.search(c.get("fontname", ""))) for c in chars) / len(chars) if chars else 0.0
+
+
+def _shaded_rects(page):
+    """Filled, light, non-white rectangles big enough to sit behind a block (code cells, call-outs).
+    Smaller ones (behind single lines or tokens) are syntax highlighting, not containers."""
+    out = []
+    for r in page.rects:
+        col = r.get("non_stroking_color")
+        vals = col if isinstance(col, (list, tuple)) else [col] if isinstance(col, (int, float)) else []
+        if r.get("fill") and vals and len(vals) in (1, 3) and 0.8 <= min(vals) < 0.995 and r["width"] > 100 and r["height"] >= 18:  # per-line highlight boxes are ~13 pt
+            out.append((r["x0"], r["top"], r["x1"], r["bottom"]))
+    return out
+
+
+def _mono_regions(words, shades):
+    """Fixed-width text -> table blocks (when its blank columns line up) or code blocks (shaded or
+    code-like). Other fixed-width text, e.g. a letter typed in Courier, stays in the normal flow.
+    Returns (blocks with a PDF-point bbox, ids of the words they use)."""
+    mono = sorted((w for w in words if _is_mono(w)), key=lambda w: (round(w["top"]), w["x0"]))
+    lines = []
+    for w in mono:
+        if lines and abs(lines[-1][0]["top"] - w["top"]) < 0.5 * (w["bottom"] - w["top"]):
+            lines[-1].append(w)
+        else:
+            lines.append([w])
+
+    def shade(ln):
+        cy = (ln[0]["top"] + ln[0]["bottom"]) / 2
+        cx = (ln[0]["x0"] + ln[-1]["x1"]) / 2
+        hits = [s for s in shades if s[0] <= cx <= s[2] and s[1] <= cy <= s[3]]
+        return min(hits, key=lambda s: (s[2] - s[0]) * (s[3] - s[1])) if hits else None
+
+    regions = []  # consecutive lines with the same background and line spacing
+    for ln in lines:
+        h = ln[0]["bottom"] - ln[0]["top"]
+        prev = regions[-1][-1] if regions else None
+        if prev and ln[0]["top"] - prev[0]["bottom"] < 1.2 * h and shade(ln) == shade(prev):
+            regions[-1].append(ln)
+        else:
+            regions.append([ln])
+    blocks, used = [], set()
+    for reg in regions:
+        cw = float(np.median([(w["x1"] - w["x0"]) / max(1, len(w["text"])) for ln in reg for w in ln]))
+        x0 = min(w["x0"] for ln in reg for w in ln)
+        shaded = shade(reg[0]) is not None
+        table = _mono_table(reg, x0, cw)
+        if table:
+            lo, hi, rows = table
+            if lo:
+                blocks += _mono_code(reg[:lo], x0, cw, shaded)
+            blocks.append({"kind": "table", "rows": rows, "bbox": _lines_bbox(reg[lo:hi]),
+                           "_words": [w for ln in reg[lo:hi] for w in ln]})
+            if hi < len(reg):
+                blocks += _mono_code(reg[hi:], x0, cw, shaded)
+        else:
+            blocks += _mono_code(reg, x0, cw, shaded)
+    for b in blocks:  # words in an emitted block leave the normal text flow
+        used.update(id(w) for w in b.pop("_words"))
+    return blocks, used
+
+
+def _lines_bbox(lines):
+    ws = [w for ln in lines for w in ln]
+    return (min(w["x0"] for w in ws), min(w["top"] for w in ws), max(w["x1"] for w in ws), max(w["bottom"] for w in ws))
+
+
+def _mono_code(lines, x0, cw, shaded):
+    """Fixed-width lines -> one code block, keeping indentation; [] when they do not look like code."""
+    if not lines:
+        return []
+    text = []
+    for ln in lines:
+        s, col = "", 0
+        for w in ln:
+            start = max(col + (1 if s else 0), round((w["x0"] - x0) / cw))
+            s += " " * (start - col) + w["text"]
+            col = start + len(w["text"])
+        text.append(s)
+    codey = sum(bool(CODE_RE.search(t)) for t in text)
+    if not (shaded or codey >= max(2, 0.5 * len(text))):
+        return []
+    return [{"kind": "code", "text": "\n".join(text), "bbox": _lines_bbox(lines), "_words": [w for ln in lines for w in ln]}]
+
+
+def _mono_table(lines, x0, cw, min_rows=3):
+    """The longest run of lines whose blank character columns line up into 3+ columns, as
+    (first line, end line, rows); None when there is none. A printed dataframe is the usual case."""
+    n = len(lines)
+    # allow up to two stray lines at each end, e.g. a code line above or "[5 rows x 31 columns]" below
+    for lo, hi in sorted(((lo, hi) for lo in range(3) for hi in range(n - 2, n + 1) if hi - lo >= min_rows),
+                         key=lambda p: p[0] - p[1]):
+        rows = _aligned_rows(lines[lo:hi], x0, cw)
+        if rows:
+            return lo, hi, rows
+    return None
+
+
+def _aligned_rows(lines, x0, cw):
+    spans_of = []
+    width = max(round((w["x1"] - x0) / cw) for ln in lines for w in ln) + 1
+    occupied = np.zeros(width, bool)
+    for ln in lines:
+        spans = [(round((w["x0"] - x0) / cw), round((w["x1"] - x0) / cw)) for w in ln]
+        for a, b in spans:
+            occupied[a:max(a + 1, b)] = True
+        spans_of.append(spans)
+    cols, start = [], None
+    for k, v in enumerate(list(occupied) + [False]):
+        if v and start is None:
+            start = k
+        elif not v and start is not None:
+            cols.append((start, k))
+            start = None
+    if len(cols) < 3:
+        return None
+    rows, fill = [], []
+    for ln, spans in zip(lines, spans_of):
+        row = [""] * len(cols)
+        for w, (a, b) in zip(ln, spans):
+            k = next(i for i, (c0, c1) in enumerate(cols) if c0 <= a < c1)
+            row[k] = (row[k] + " " + w["text"]).strip()
+        rows.append(row)
+        fill.append(sum(bool(c) for c in row) / len(cols))
+    # most rows fill most columns, no column is used by only one row, and cells are values, not
+    # prose (wrapped sentences can leave blank columns that line up by chance)
+    cells = [c for r in rows for c in r if c]
+    if (np.mean(fill) < 0.7 or min(sum(bool(r[k]) for r in rows) for k in range(len(cols))) < 2
+            or sum(len(c.split()) >= 3 for c in cells) > 0.2 * len(cells)):
+        return None
+    return rows
 
 
 def _inside(a, b, tol=2.0):
@@ -704,6 +858,8 @@ def to_markdown(doc, tables="markdown", page_marks=True):
             lines = ["| " + " | ".join(_md_cell(c) for c in rows[0]) + " |", "|" + " --- |" * n]
             lines += ["| " + " | ".join(_md_cell(c) for c in r) + " |" for r in rows[1:]]
             out.append("\n".join(lines))
+        elif t == "code":
+            out.append("```\n" + b["text"] + "\n```")
         elif t == "figure":
             out.append("[figure]" + (f"\n\n> {b['text']}" if b.get("text") else ""))
         elif t in ("header", "footer"):

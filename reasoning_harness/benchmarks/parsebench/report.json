@@ -14,21 +14,21 @@
    "failed": 0
   },
   "Content_Faithfulness": {
-   "score": 72.5,
+   "score": 72.44,
    "documents": 506,
    "failed": 0
   },
   "Semantic_Formatting": {
-   "score": 35.48,
+   "score": 35.45,
    "documents": 476,
    "failed": 0
   },
   "Visual_Grounding": {
-   "score": 29.95,
+   "score": 29.99,
    "documents": 500,
    "failed": 0
   },
-  "Overall": 36.2
+  "Overall": 36.19
  },
  "first_run": {
   "Tables": {
@@ -783,5 +783,34 @@
     }
    }
   }
- }
+ },
+ "previous_final": {
+  "Tables": {
+   "score": 42.09,
+   "documents": 503,
+   "failed": 0
+  },
+  "Charts": {
+   "score": 0.98,
+   "documents": 568,
+   "failed": 0
+  },
+  "Content_Faithfulness": {
+   "score": 72.5,
+   "documents": 506,
+   "failed": 0
+  },
+  "Semantic_Formatting": {
+   "score": 35.48,
+   "documents": 476,
+   "failed": 0
+  },
+  "Visual_Grounding": {
+   "score": 29.95,
+   "documents": 500,
+   "failed": 0
+  },
+  "Overall": 36.2
+ },
+ "final_note": "Re-run 2026-10-28 after the block-type changes (code blocks, fixed-width tables, definition lists) and the rule-finder edge fix. One page could not be staged by the harness on Windows (file path too long); scoring reported 0 failed documents per dimension."
 }

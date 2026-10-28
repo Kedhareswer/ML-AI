@@ -117,6 +117,32 @@ PDF's own order differs from top-to-bottom reading. Text inside charts (axis
 labels, tick numbers) is also read as text. The weakest notebook pages are
 mostly plots with a few short labels.
 
+**4. Block types** (`scripts/docparse_block_types.py`, `benchmarks/docparse/block_types.json`).
+Synthetic pages with known types covering what the Pages view showed going wrong: notebook
+code cells read as tables, printed dataframes read as paragraphs, and "Term: description"
+lists read as paragraphs, plus guard cases that must not change (a letter typed in Courier,
+a two-line form, ruled and borderless tables, prose).
+
+| | Correct block types (17 checks) | Code | Dataframe tables | Lists |
+|---|---:|---:|---:|---:|
+| Before | 8 | 0/3 | 0/2 | 0/4 |
+| After | **17** | 3/3 | 2/2 | 4/4 |
+
+How: text in a fixed-width font (Courier, DejaVu Sans Mono and similar) is no longer turned
+into tables by pdfplumber's grid finder, which mistook code-cell and syntax-highlight
+backgrounds for table rules. Fixed-width lines whose blank columns line up become a table;
+other shaded or code-like fixed-width text becomes a `code` block (Markdown fences,
+indentation kept). On this repository's two notebook PDFs, tables fell from 31 to 5 and
+from 52 to 1; the slide deck is unchanged.
+
+**5. Scanned lab reports.** A scanned PDF and a phone photo of two synthetic lab reports
+(a 4×4 patient table and a 13×5 results table each) were compared cell by cell with the
+born-digital PDF of the same reports. Before this version, a bug in the rule finder dropped
+the last 160 px of every horizontal rule, so a table's last column (here *Flag* and the
+patient IDs) fell out of the grid and its rules were read as junk text. Now both tables
+come out whole: **159 of 162 cells exact** for the scan and for the photo. All three misses
+are `/` read as `I` ("Age I Sex").
+
 ## ParseBench (LlamaIndex)
 
 [ParseBench](https://huggingface.co/datasets/llamaindex/ParseBench)
@@ -132,6 +158,9 @@ docparse was run on the **full** dataset with the official harness
 [published leaderboard](https://github.com/run-llama/ParseBench/blob/main/leaderboard.csv)
 (snapshot 2026-10-28, 153 systems); grey bars are the three best open-weight models and the #1
 system, for scale. Overall is the mean of the five dimensions, as on the official leaderboard.
+The scores shown are a re-run of the current version (2026-10-28, after the block-type and
+rule-finder fixes below): overall 36.19, against 36.20 for the previous version. No dimension
+moved by more than 0.06 points.
 
 ![ParseBench overall](evidence/docparse/parsebench_overall.png)
 
@@ -139,7 +168,7 @@ system, for scale. Overall is the mean of the five dimensions, as on the officia
 
 **What this says honestly**
 
-- Its **content faithfulness (72.5)** is second among local parsers. It is
+- Its **content faithfulness (72.4)** is second among local parsers. It is
   strongest on simple (89.0) and multi-column (76.5) pages, and weakest on
   handwriting (27.4), scans (56.1) and non-English text (58.8). That matches the
   OCR model's limits: printed Latin text only.
@@ -166,7 +195,8 @@ Its failures led to fixes that are now part of docparse itself:
 | Rows stacked in one cell of rule-less tables split into records | Correct rows in insurance rate tables |
 | A malformed PDF link annotation no longer fails the whole page | 9 failing pages → 0 |
 
-Reproduce (parse-bench needs Python 3.12+):
+Reproduce (parse-bench needs Python 3.12+; on Windows set `PYTHONUTF8=1`, or parse-bench
+fails to save pages with non-Latin-1 characters and skips scoring four dimensions):
 
 ```bash
 pip install "parse-bench[fast]"
@@ -238,7 +268,7 @@ for b in doc["blocks"]:
 print(to_markdown(doc))
 ```
 
-Each block has a `type` (`heading`, `paragraph`, `list_item`, `table`,
+Each block has a `type` (`heading`, `paragraph`, `list_item`, `table`, `code`,
 `figure`, `header`, `footer`), a `source` (`text-layer`, `structure` or
 `ocr`), and where meaningful a `page`, `bbox`, `level`, `sheet`, `range` and
 an OCR `confidence`. Excel sheets also list formulas, merged ranges, charts and
@@ -293,8 +323,8 @@ after every round.
   very low resolution (text under about 10 px high) are not handled well.
 - Born-digital PDFs are only as good as their text layer: some PDFs embed
   fonts without a Unicode mapping. Use `--ocr always` for those.
-- Block types are often wrong on notebook and report PDFs: boxed code cells can come out
-  as tables, printed dataframes as paragraphs, and bullet-less lists as paragraphs. The Space's
-  Pages tab shows this per page.
+- Block types are still imperfect. Wide dataframes that pandas wraps over several lines can
+  come out as small broken tables, and only "Term: description" runs of three or more lines
+  are read as lists. The Space's Pages tab shows the types per page.
 - Besides ParseBench and the small ExtractBench check, the benchmarks are synthetic pages and
   three real PDFs from this repository. No direct comparison with Tesseract was run here.
