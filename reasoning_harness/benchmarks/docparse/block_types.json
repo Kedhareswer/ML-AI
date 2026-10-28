@@ -1,0 +1,117 @@
+{
+  "correct": 17,
+  "total": 17,
+  "by_type": {
+    "code": "3/3",
+    "heading": "3/3",
+    "list_item": "4/4",
+    "paragraph": "3/3",
+    "table": "4/4"
+  },
+  "tables_found": 3,
+  "tables_expected": 3,
+  "checks": [
+    {
+      "anchor": "Fraud Detection Notebook",
+      "expected": "heading",
+      "got": "heading",
+      "ok": true
+    },
+    {
+      "anchor": "Card fraud costs issuers billions every ",
+      "expected": "paragraph",
+      "got": "paragraph",
+      "ok": true
+    },
+    {
+      "anchor": "import numpy as np",
+      "expected": "code",
+      "got": "code",
+      "ok": true
+    },
+    {
+      "anchor": "credit = pd.read_csv('creditcard.csv')",
+      "expected": "code",
+      "got": "code",
+      "ok": true
+    },
+    {
+      "anchor": "-1.359807",
+      "expected": "table",
+      "got": "table 5x6",
+      "ok": true
+    },
+    {
+      "anchor": "378.66",
+      "expected": "table",
+      "got": "table 5x6",
+      "ok": true
+    },
+    {
+      "anchor": "3D projection",
+      "expected": "code",
+      "got": "code",
+      "ok": true
+    },
+    {
+      "anchor": "Column Information",
+      "expected": "heading",
+      "got": "heading",
+      "ok": true
+    },
+    {
+      "anchor": "ID:",
+      "expected": "list_item",
+      "got": "list_item",
+      "ok": true
+    },
+    {
+      "anchor": "Year_Birth:",
+      "expected": "list_item",
+      "got": "list_item",
+      "ok": true
+    },
+    {
+      "anchor": "Education:",
+      "expected": "list_item",
+      "got": "list_item",
+      "ok": true
+    },
+    {
+      "anchor": "Income:",
+      "expected": "list_item",
+      "got": "list_item",
+      "ok": true
+    },
+    {
+      "anchor": "Dear Mr. Patel, thank you for ",
+      "expected": "paragraph",
+      "got": "paragraph",
+      "ok": true
+    },
+    {
+      "anchor": "Name: John Smith",
+      "expected": "paragraph",
+      "got": "paragraph",
+      "ok": true
+    },
+    {
+      "anchor": "Growth",
+      "expected": "table",
+      "got": "table 3x3",
+      "ok": true
+    },
+    {
+      "anchor": "Q2 2024",
+      "expected": "table",
+      "got": "table 4x3",
+      "ok": true
+    },
+    {
+      "anchor": "Closing remarks",
+      "expected": "heading",
+      "got": "heading",
+      "ok": true
+    }
+  ]
+}

@@ -6,7 +6,7 @@
 <title>docparse</title>
 <style>
   :root { --bg:#f6f5f2; --panel:#fff; --ink:#1d1d1f; --muted:#6b6b70; --line:#dedcd6; --accent:#2457c5;
-          --heading:#d6452f; --paragraph:#2f6fd6; --list_item:#1f9d6b; --table:#9a4fd0; --figure:#d08a12; --header:#7a7a80; --footer:#7a7a80; }
+          --heading:#d6452f; --paragraph:#2f6fd6; --list_item:#1f9d6b; --table:#9a4fd0; --code:#0f8b8d; --figure:#d08a12; --header:#7a7a80; --footer:#7a7a80; }
   @media (prefers-color-scheme: dark) { :root { --bg:#151517; --panel:#1f1f22; --ink:#ececee; --muted:#9a9aa2; --line:#33333a; --accent:#7ea2ff; } }
   * { box-sizing: border-box; }
   body { margin:0; font:15px/1.5 system-ui, sans-serif; background:var(--bg); color:var(--ink); }
@@ -55,6 +55,7 @@
   .item { display:grid; grid-template-columns:26px 1fr; gap:8px; padding:10px 12px; border-bottom:1px solid var(--line); border-left:4px solid; cursor:pointer; font-size:14px; }
   .item b { font-size:12px; color:var(--muted); }
   .item .t { white-space:pre-wrap; word-break:break-word; }
+  .item .t.code { font:12px/1.45 ui-monospace, Consolas, monospace; overflow-x:auto; word-break:normal; }
   .item small { font-size:12px; font-weight:600; display:block; margin-bottom:2px; }
   .item table { margin-top:4px; font-size:12px; }
   .empty { color:var(--muted); padding:16px; }
@@ -82,7 +83,7 @@
 <script>
 const $ = s => document.querySelector(s);
 const drop = $('#drop'), input = $('#file');
-const TYPES = ['heading', 'paragraph', 'list_item', 'table', 'figure', 'header', 'footer'];
+const TYPES = ['heading', 'paragraph', 'list_item', 'table', 'code', 'figure', 'header', 'footer'];
 drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('over'); });
 drop.addEventListener('dragleave', () => drop.classList.remove('over'));
 drop.addEventListener('drop', e => { e.preventDefault(); drop.classList.remove('over'); if (e.dataTransfer.files[0]) send(e.dataTransfer.files[0]); });
@@ -95,7 +96,7 @@ function esc(s) { return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&l
 const color = t => `var(--${TYPES.includes(t) ? t : 'paragraph'})`;
 const tableHtml = rows => `<table>${rows.map(r => `<tr>${r.map(c => `<td>${esc(c ?? '')}</td>`).join('')}</tr>`).join('')}</table>`;
 const name = b => b.type.replace('_', ' ') + (b.level ? ' ' + b.level : '');
-const content = b => b.type === 'table' ? tableHtml(b.rows) : `<div class="t">${esc(b.text ?? (b.type === 'figure' ? '(picture)' : ''))}</div>`;
+const content = b => b.type === 'table' ? tableHtml(b.rows) : `<div class="t${b.type === 'code' ? ' code' : ''}">${esc(b.text ?? (b.type === 'figure' ? '(picture)' : ''))}</div>`;
 
 let P = null;  // what the Pages tab shows: {d, previews, byPage, cur, zoom}
 let GW = 132;  // label margin, px (narrower on phones)
@@ -112,7 +113,7 @@ function pages(d, previews, thumbs) {
   P = { d, previews, byPage, cur: 1, zoom: 'fit' };
   const strip = previews.map((src, n) => `<button class="thumb" data-p="${n + 1}" title="page ${n + 1}"><img src="${thumbs[n] || src}" alt="">` +
     `${n + 1} · ${(byPage[n + 1] || []).length} blocks</button>`).join('');
-  const keys = TYPES.slice(0, 6).map(t => `<span class="key"><i style="border-color:${color(t)}"></i>${t.replace('_', ' ')}</span>`).join('');
+  const keys = TYPES.slice(0, 7).map(t => `<span class="key"><i style="border-color:${color(t)}"></i>${t.replace('_', ' ')}</span>`).join('');
   el.innerHTML = `<div id="pagebar">
       <button id="prev" title="previous page (left arrow)">&lsaquo;</button>
       <label>page <select id="jump">${previews.map((_, n) => `<option value="${n + 1}">${n + 1}</option>`).join('')}</select> of ${previews.length}</label>

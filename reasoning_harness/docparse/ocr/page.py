@@ -14,6 +14,7 @@ from PIL import Image
 from .render import HEIGHT
 
 LIST_RE = re.compile(r"^((•|-|\*|\d{1,3}[.)]|\(?[a-zA-Z][.)]|\([ivx]+\))\s+|\d{1,3}[.)](?=[A-Za-z]))")
+DEF_RE = re.compile(r"^[A-Za-z][\w()./-]*( [\w()./-]+){0,3}:\s+\S")  # "Year_Birth: Customer's birth year"
 
 
 # ---------- small numpy morphology ----------
@@ -40,7 +41,9 @@ def _open_1d(mask, k, axis):
     c = np.pad(m.astype(np.int32), ((0, 0), (1, 0))).cumsum(1)
     full = (c[:, k:] - c[:, :-k]) == k          # window starting at j is all ink
     out = np.zeros_like(m)
-    c2 = np.pad(full.astype(np.int32), ((0, 0), (k, 0))).cumsum(1)
+    # pad k-1 on the right too, so the last k-1 pixels of a row (covered only by windows that
+    # start before them) are not dropped
+    c2 = np.pad(full.astype(np.int32), ((0, 0), (k, k - 1))).cumsum(1)
     cover = (c2[:, k:] - c2[:, :-k]) > 0       # any full window covers this pixel
     out[:, :cover.shape[1]] = cover[:, :m.shape[1]]
     return out if axis == 1 else out.T
@@ -504,6 +507,7 @@ def group(blocks, th):
     lead = float(np.median(gaps)) if gaps else 0.5 * th  # usual space between lines of one paragraph
     xh = float(np.median([b["xh"] for b in lines])) if lines else th
     others = [b for b in blocks if b["kind"] != "line"]
+    deflist = _definition_lines(lines, th)
     out, i = [], 0
     while i < len(lines):
         ln = lines[i]
@@ -537,7 +541,7 @@ def group(blocks, th):
                 _extend(prev, ln, text, conf)
             else:
                 out.append({"type": "heading", "level": level, "text": text, "box": ln["box"], "conf": conf})
-        elif LIST_RE.match(text):
+        elif LIST_RE.match(text) or i in deflist:
             out.append({"type": "list_item", "text": text, "box": ln["box"], "conf": conf})
         elif (prev and prev["type"] in ("paragraph", "list_item") and -0.5 * th < gap < max(0.9 * th, 1.35 * lead)
               and abs(ln["box"][2] - prev["box"][2]) < 2.5 * th and not big):
@@ -548,6 +552,8 @@ def group(blocks, th):
     for o in others:
         if o["kind"] == "figure":
             o = {"type": "figure", "box": o["box"], **({"text": o["text"]} if o.get("text") else {})}
+        elif o["kind"] == "code":
+            o = {"type": "code", "text": o["text"], "box": o["box"]}
         else:
             o = {"type": "table", "rows": o["rows"], "box": o["box"], "confidence": o["confidence"]}
         k = next((n for n, b in enumerate(out) if b["box"][0] > o["box"][0] and b["box"][2] < o["box"][3]), len(out))
@@ -558,6 +564,21 @@ def group(blocks, th):
         if "conf" in b:
             c = [v for v in b.pop("conf") if v is not None]
             b["confidence"] = round(float(np.mean(c)), 4) if c else None
+    return out
+
+
+def _definition_lines(lines, th):
+    """Indices of lines in runs of 3+ "Term: description" lines that start at the same x.
+    Two such lines (e.g. "Name: ..." and "Date: ...") stay ordinary text."""
+    out, i = set(), 0
+    while i < len(lines):
+        j = i
+        while (j < len(lines) and DEF_RE.match(" ".join(p[0] for p in lines[j]["parts"] if p[0]))
+               and abs(lines[j]["box"][2] - lines[i]["box"][2]) < 0.5 * th):
+            j += 1
+        if j - i >= 3:
+            out.update(range(i, j))
+        i = max(j, i + 1)
     return out
 
 
