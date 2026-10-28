@@ -5,11 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>docparse</title>
 <style>
-  :root { --bg:#f6f5f2; --panel:#fff; --ink:#1d1d1f; --muted:#6b6b70; --line:#dedcd6; --accent:#2457c5; }
+  :root { --bg:#f6f5f2; --panel:#fff; --ink:#1d1d1f; --muted:#6b6b70; --line:#dedcd6; --accent:#2457c5;
+          --heading:#d6452f; --paragraph:#2f6fd6; --list_item:#1f9d6b; --table:#9a4fd0; --figure:#d08a12; --header:#7a7a80; --footer:#7a7a80; }
   @media (prefers-color-scheme: dark) { :root { --bg:#151517; --panel:#1f1f22; --ink:#ececee; --muted:#9a9aa2; --line:#33333a; --accent:#7ea2ff; } }
   * { box-sizing: border-box; }
   body { margin:0; font:15px/1.5 system-ui, sans-serif; background:var(--bg); color:var(--ink); }
-  main { max-width:1100px; margin:0 auto; padding:24px 16px 48px; }
+  main { max-width:1400px; margin:0 auto; padding:24px 16px 48px; }
   h1 { font-size:22px; margin:0 0 4px; }
   p.sub { color:var(--muted); margin:0 0 20px; }
   #drop { display:block; border:2px dashed var(--line); border-radius:12px; padding:28px; text-align:center; background:var(--panel); cursor:pointer; }
@@ -18,38 +19,194 @@
   .tabs { display:flex; gap:4px; margin-top:20px; border-bottom:1px solid var(--line); }
   .tabs button { background:none; border:0; padding:8px 14px; color:var(--muted); font:inherit; cursor:pointer; border-bottom:2px solid transparent; }
   .tabs button.on { color:var(--ink); border-color:var(--accent); }
-  pre { background:var(--panel); border:1px solid var(--line); border-top:0; margin:0; padding:16px; white-space:pre-wrap; word-break:break-word; max-height:70vh; overflow:auto; font-size:13px; }
+  pre { background:var(--panel); border:1px solid var(--line); border-top:0; margin:0; padding:16px; white-space:pre-wrap; word-break:break-word; max-height:75vh; overflow:auto; font-size:13px; }
   #status { margin-top:12px; color:var(--muted); min-height:1.5em; }
   table { border-collapse:collapse; width:100%; background:var(--panel); font-size:13px; }
   td, th { border:1px solid var(--line); padding:6px 8px; text-align:left; vertical-align:top; }
-  #blocks { max-height:70vh; overflow:auto; }
+  #blocks { max-height:75vh; overflow:auto; }
+  /* Pages: one page at a time; labels sit in a margin beside the page so they never cover text */
+  #pagebar { display:flex; gap:10px 16px; align-items:center; flex-wrap:wrap; padding:12px 0; color:var(--muted); font-size:13px; }
+  #pagebar button { font:inherit; background:var(--panel); color:var(--ink); border:1px solid var(--line); border-radius:6px; padding:3px 12px; cursor:pointer; }
+  #pagebar button:disabled { opacity:.4; cursor:default; }
+  #pagebar select { font:inherit; }
+  .key { display:inline-flex; align-items:center; gap:4px; }
+  .key i { width:12px; height:12px; border:2px solid; border-radius:2px; display:inline-block; }
+  .viewer { display:grid; grid-template-columns:96px minmax(0,3fr) minmax(280px,2fr); gap:12px; }
+  .rail { height:78vh; overflow:auto; display:flex; flex-direction:column; gap:10px; padding:4px 6px 4px 2px; }
+  .thumb { all:unset; cursor:pointer; display:block; text-align:center; font-size:11px; color:var(--muted); }
+  .thumb img { display:block; width:100%; background:#fff; border:2px solid var(--line); border-radius:4px; }
+  .thumb:hover img { border-color:var(--muted); }
+  .thumb.on img { border-color:var(--accent); box-shadow:0 0 0 2px var(--accent); }
+  .thumb.on { color:var(--ink); font-weight:600; }
+  .thumb:focus-visible img { outline:2px solid var(--accent); }
+  .scroller { height:78vh; overflow:auto; border:1px solid var(--line); border-radius:8px; background:var(--bg); }
+  .canvas { position:relative; padding:12px 12px 12px 0; }
+  .gutter { position:absolute; left:0; top:12px; width:var(--gw); }
+  .sheet { position:relative; margin-left:var(--gw); background:#fff; box-shadow:0 1px 4px rgba(0,0,0,.25); }
+  .sheet img { display:block; width:100%; height:auto; }
+  .box { position:absolute; border:2px solid; background:color-mix(in srgb, currentColor 7%, transparent); cursor:pointer; }
+  .lbl { position:absolute; right:8px; max-width:calc(var(--gw) - 12px); font:600 11px/18px system-ui; color:#fff; padding:0 7px; border-radius:9px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; cursor:pointer; }
+  svg.links { position:absolute; left:0; top:12px; overflow:visible; pointer-events:none; }
+  .hot.box { outline:3px solid var(--accent); z-index:2; background:color-mix(in srgb, currentColor 22%, transparent); }
+  .hot.lbl { outline:2px solid var(--accent); }
+  .item.hot { background:color-mix(in srgb, var(--accent) 14%, var(--panel)); }
+  .noboxes .box, .noboxes .lbl, .noboxes svg.links, .nolabels .lbl, .nolabels svg.links { display:none; }
+  .read { height:78vh; overflow:auto; background:var(--panel); border:1px solid var(--line); border-radius:8px; }
+  .item { display:grid; grid-template-columns:26px 1fr; gap:8px; padding:10px 12px; border-bottom:1px solid var(--line); border-left:4px solid; cursor:pointer; font-size:14px; }
+  .item b { font-size:12px; color:var(--muted); }
+  .item .t { white-space:pre-wrap; word-break:break-word; }
+  .item small { font-size:12px; font-weight:600; display:block; margin-bottom:2px; }
+  .item table { margin-top:4px; font-size:12px; }
+  .empty { color:var(--muted); padding:16px; }
+  @media (max-width: 900px) {
+    .viewer { grid-template-columns:1fr; }
+    .rail { height:auto; flex-direction:row; overflow-x:auto; padding-bottom:6px; }
+    .thumb { flex:0 0 64px; }
+    .scroller, .read { height:auto; max-height:70vh; }
+  }
 </style>
 </head>
 <body>
 <main>
   <h1>docparse</h1>
-  <p class="sub">Drop a PDF, image, Word, Excel, CSV or PowerPoint file. Born-digital files are parsed exactly; images and scanned pages are read by the small OCR network.</p>
+  <p class="sub">Drop a PDF, image, Word, Excel, CSV or PowerPoint file. Born-digital files are parsed exactly; images and scanned pages are read by the small OCR network. The Pages tab shows each page with the boxes docparse found, next to what it read.</p>
   <label id="drop">Drop a file here or click to choose<input id="file" type="file" hidden></label>
   <div class="opts">
     <label>OCR <select id="ocr"><option value="auto">auto (scanned pages only)</option><option value="always">always</option><option value="never">never</option></select></label>
     <label><input id="ocrimg" type="checkbox"> read text inside embedded pictures</label>
   </div>
   <div id="status"></div>
-  <div class="tabs"><button data-t="md" class="on">Markdown</button><button data-t="blocks">Blocks</button><button data-t="json">JSON</button></div>
-  <pre id="md"></pre><div id="blocks" hidden></div><pre id="json" hidden></pre>
+  <div class="tabs"><button data-t="pages" class="on">Pages</button><button data-t="md">Markdown</button><button data-t="blocks">Blocks</button><button data-t="json">JSON</button></div>
+  <div id="pages"></div><pre id="md" hidden></pre><div id="blocks" hidden></div><pre id="json" hidden></pre>
 </main>
 <script>
 const $ = s => document.querySelector(s);
 const drop = $('#drop'), input = $('#file');
+const TYPES = ['heading', 'paragraph', 'list_item', 'table', 'figure', 'header', 'footer'];
 drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('over'); });
 drop.addEventListener('dragleave', () => drop.classList.remove('over'));
 drop.addEventListener('drop', e => { e.preventDefault(); drop.classList.remove('over'); if (e.dataTransfer.files[0]) send(e.dataTransfer.files[0]); });
 input.addEventListener('change', () => input.files[0] && send(input.files[0]));
 document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => {
   document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x === b));
-  ['md', 'blocks', 'json'].forEach(id => $('#' + id).hidden = id !== b.dataset.t);
+  ['pages', 'md', 'blocks', 'json'].forEach(id => $('#' + id).hidden = id !== b.dataset.t);
 });
-function esc(s) { return String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+const color = t => `var(--${TYPES.includes(t) ? t : 'paragraph'})`;
+const tableHtml = rows => `<table>${rows.map(r => `<tr>${r.map(c => `<td>${esc(c ?? '')}</td>`).join('')}</tr>`).join('')}</table>`;
+const name = b => b.type.replace('_', ' ') + (b.level ? ' ' + b.level : '');
+const content = b => b.type === 'table' ? tableHtml(b.rows) : `<div class="t">${esc(b.text ?? (b.type === 'figure' ? '(picture)' : ''))}</div>`;
+
+let P = null;  // what the Pages tab shows: {d, previews, byPage, cur, zoom}
+let GW = 132;  // label margin, px (narrower on phones)
+
+function pages(d, previews, thumbs) {
+  const el = $('#pages');
+  P = null;
+  if (!previews.length) {
+    el.innerHTML = `<p class="empty">No page images for this format (${esc(d.format)}): it has no fixed page layout. See the Blocks and Markdown tabs.</p>`;
+    return;
+  }
+  const byPage = {};
+  d.blocks.forEach((b, i) => { if (b.page) (byPage[b.page] ??= []).push([i, b]); });
+  P = { d, previews, byPage, cur: 1, zoom: 'fit' };
+  const strip = previews.map((src, n) => `<button class="thumb" data-p="${n + 1}" title="page ${n + 1}"><img src="${thumbs[n] || src}" alt="">` +
+    `${n + 1} · ${(byPage[n + 1] || []).length} blocks</button>`).join('');
+  const keys = TYPES.slice(0, 6).map(t => `<span class="key"><i style="border-color:${color(t)}"></i>${t.replace('_', ' ')}</span>`).join('');
+  el.innerHTML = `<div id="pagebar">
+      <button id="prev" title="previous page (left arrow)">&lsaquo;</button>
+      <label>page <select id="jump">${previews.map((_, n) => `<option value="${n + 1}">${n + 1}</option>`).join('')}</select> of ${previews.length}</label>
+      <button id="next" title="next page (right arrow)">&rsaquo;</button>
+      <label>zoom <select id="zoom"><option value="fit">fit width</option><option value="1.5">150%</option><option value="2">200%</option><option value="3">300%</option></select></label>
+      <label><input id="showboxes" type="checkbox" checked> boxes</label>
+      <label><input id="showlabels" type="checkbox" checked> labels</label>
+      ${keys}${d.pages > previews.length ? `<span>first ${previews.length} of ${d.pages} pages</span>` : ''}</div>
+    <div class="viewer"><div class="rail" id="rail">${strip}</div><div class="scroller"><div class="canvas" id="canvas"></div></div><div class="read" id="read"></div></div>`;
+  $('#prev').onclick = () => show(P.cur - 1);
+  $('#next').onclick = () => show(P.cur + 1);
+  $('#jump').onchange = e => show(+e.target.value);
+  $('#zoom').onchange = e => { P.zoom = e.target.value; show(P.cur); };
+  $('#showboxes').onchange = e => el.classList.toggle('noboxes', !e.target.checked);
+  $('#rail').onclick = e => { const t = e.target.closest('.thumb'); if (t) show(+t.dataset.p); };
+  $('#showlabels').onchange = e => el.classList.toggle('nolabels', !e.target.checked);
+  show(1);
+}
+
+document.addEventListener('keydown', e => {
+  if (!P || $('#pages').hidden || /SELECT|INPUT|TEXTAREA/.test(document.activeElement.tagName)) return;
+  if (e.key === 'ArrowLeft') show(P.cur - 1);
+  if (e.key === 'ArrowRight') show(P.cur + 1);
+});
+addEventListener('resize', () => { if (P && P.zoom === 'fit') show(P.cur, true); });
+
+function show(p, keepScroll) {
+  if (!P || p < 1 || p > P.previews.length) return;
+  P.cur = p;
+  $('#jump').value = p;
+  $('#prev').disabled = p === 1;
+  $('#next').disabled = p === P.previews.length;
+  document.querySelectorAll('#rail .thumb').forEach(t => t.classList.toggle('on', +t.dataset.p === p));
+  $(`#rail .thumb[data-p="${p}"]`).scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  const [W, H] = (P.d.page_sizes || [])[p - 1] || [1, 1];
+  let n = 0;
+  const list = (P.byPage[p] || []).map(([i, b]) => [i, b, b.bbox ? ++n : null]);
+  const scroller = $('.scroller'), canvas = $('#canvas');
+  GW = scroller.clientWidth < 520 ? 84 : 132;
+  const fit = Math.max(200, scroller.clientWidth - GW - 14);
+  const w = P.zoom === 'fit' ? fit : fit * +P.zoom;
+  canvas.style.setProperty('--gw', GW + 'px');
+  canvas.style.width = (w + GW + 12) + 'px';
+  const placed = list.filter(([, b]) => b.bbox);
+  const boxes = placed.map(([i, b, k]) => {
+    const [x0, y0, x1, y1] = b.bbox;
+    return `<div class="box" data-i="${i}" title="${k} ${esc(name(b))}" style="color:${color(b.type)};left:${x0 / W * 100}%;top:${y0 / H * 100}%;` +
+      `width:${(x1 - x0) / W * 100}%;height:${(y1 - y0) / H * 100}%"></div>`;
+  }).join('');
+  const labels = placed.map(([i, b, k]) => `<div class="lbl" data-i="${i}" data-top="${b.bbox[1] / H}" data-x="${b.bbox[0] / W}" ` +
+    `data-c="${color(b.type)}" style="background:${color(b.type)}" title="${k} ${esc(name(b))}">${k} ${esc(name(b))}</div>`).join('');
+  canvas.innerHTML = `<div class="gutter">${labels}</div><svg class="links"></svg>` +
+    `<div class="sheet" style="width:${w}px"><img src="${P.previews[p - 1]}" alt="page ${p}">${boxes}</div>`;
+  $('#read').innerHTML = list.map(([i, b, k]) => `<div class="item" data-i="${i}" style="border-left-color:${color(b.type)}"><b>${k ?? '–'}</b>` +
+    `<div><small style="color:${color(b.type)}">${esc(name(b))}<span style="color:var(--muted);font-weight:400"> · ${esc(b.source ?? '')}` +
+    `${b.confidence != null ? ' · conf ' + b.confidence : ''}</span></small>${content(b)}</div></div>`).join('')
+    || '<p class="empty">Nothing was read on this page.</p>';
+  const img = canvas.querySelector('img');
+  if (img.complete) place(w); else img.onload = () => place(w);
+  wire();
+  if (!keepScroll) { scroller.scrollTop = 0; scroller.scrollLeft = 0; $('#read').scrollTop = 0; }
+}
+
+function place(w) {
+  // each label starts level with its box and is pushed down so labels never overlap; a line joins label and box
+  const h = $('#canvas .sheet').offsetHeight;
+  let floor = 0, lines = '';
+  [...document.querySelectorAll('#canvas .lbl')].sort((a, b) => a.dataset.top - b.dataset.top).forEach(l => {
+    const top = +l.dataset.top * h, y = Math.max(top, floor);
+    l.style.top = y + 'px';
+    floor = y + 21;
+    lines += `<path d="M${GW - 8} ${y + 9} H${GW} L${GW + +l.dataset.x * w} ${top + 2}" fill="none" stroke="${l.dataset.c}" stroke-width="1.3" opacity=".75"/>`;
+  });
+  const svg = $('#canvas svg.links'), tall = Math.max(h, floor);
+  svg.setAttribute('width', GW + w);
+  svg.setAttribute('height', tall);
+  svg.innerHTML = lines;
+  $('#canvas').style.height = (tall + 24) + 'px';
+}
+
+function wire() {
+  const all = [...document.querySelectorAll('#canvas [data-i], #read [data-i]')];
+  const hot = (i, on) => all.forEach(x => { if (x.dataset.i === i) x.classList.toggle('hot', on); });
+  all.forEach(x => {
+    x.onmouseenter = () => hot(x.dataset.i, true);
+    x.onmouseleave = () => hot(x.dataset.i, false);
+    x.onclick = () => {  // jump to the partner: page side -> its text, text -> its box
+      const inRead = !!x.closest('#read');
+      const other = all.find(y => y.dataset.i === x.dataset.i && !!y.closest('#read') !== inRead && !y.classList.contains('lbl'));
+      if (other) other.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+    };
+  });
+}
+
 async function send(file) {
   $('#status').textContent = `Reading ${file.name} ...`;
   const t0 = performance.now();
@@ -60,6 +217,7 @@ async function send(file) {
   const d = data.document;
   $('#status').textContent = `${d.blocks.length} blocks, ${d.pages} page(s)/sheet(s) in ${((performance.now() - t0) / 1000).toFixed(1)} s` +
     (d.warnings.length ? ' · ' + d.warnings.join('; ') : '');
+  pages(d, data.previews || [], data.thumbs || []);
   $('#md').textContent = data.markdown;
   $('#json').textContent = JSON.stringify(d, null, 2);
   const rows = d.blocks.map(b => `<tr><td>${b.page ?? b.sheet ?? ''}</td><td>${b.type}${b.level ? ' ' + b.level : ''}</td><td>${b.source ?? ''}</td>` +

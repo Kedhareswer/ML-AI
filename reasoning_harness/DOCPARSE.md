@@ -1,5 +1,8 @@
 # docparse: a very small document parser
 
+**6 MB model, CPU only.** ParseBench 36.2, just below LiteParse (36.9) among local parsers,
+with a network 60x to 420x smaller than the open-weight document models.
+
 - **Try it:** [huggingface.co/spaces/Kedhareswer/docparse](https://huggingface.co/spaces/Kedhareswer/docparse) (drop a PDF, image, Word, Excel, CSV or PowerPoint file)
 - **Weights and code:** [huggingface.co/Kedhareswer/docparse](https://huggingface.co/Kedhareswer/docparse): `artifacts/docparse/ocr.pt` (6.0 MB), the `docparse` package, benchmark reports and tests
 - **Source:** [github.com/Kedhareswer/ML-AI](https://github.com/Kedhareswer/ML-AI) (`reasoning_harness/`)
@@ -22,6 +25,18 @@ The design choice: **a model is only used where one is needed.** Born-digital
 files already contain their text; reading their structure is exact and much
 faster than any network. The neural network reads pixels: images, scans and
 (optionally, `--ocr-images`) pictures embedded inside documents.
+
+## How small it is
+
+docparse's only network is **6 MB** (1.48 M parameters) and runs on a CPU. Open-weight
+document models are 60x to 420x larger and want a GPU. (Local parsers such as PyMuPDF4LLM
+use no model at all and cannot read scans or images.) Accuracy against other parsers is in
+[ParseBench](#parsebench-llamaindex) and [ExtractBench](#extractbench-llamaindex-small-local-check) below.
+
+![Model size](evidence/docparse/model_size.png)
+
+Sizes are the weight files in each model's Hugging Face repo (`benchmarks/parsebench/model_sizes.json`).
+All charts are drawn by `scripts/plot_docparse.py` from the files in `benchmarks/`.
 
 ## The model
 
@@ -113,30 +128,17 @@ Scoring is deterministic rule matching, with no LLM judge.
 
 docparse was run on the **full** dataset with the official harness
 (parse-bench 1.0.4) on a 4-core CPU: all 2,078 pages, 0 failures, median
-0.5 s per page. The comparison rows are the "Open Source - Local" entries of
-ParseBench's published leaderboard.
+0.5 s per page. Blue bars are every "Open Source - Local" entry of the
+[published leaderboard](https://github.com/run-llama/ParseBench/blob/main/leaderboard.csv)
+(snapshot 2026-10-28, 153 systems); grey bars are the three best open-weight models and the #1
+system, for scale. Overall is the mean of the five dimensions, as on the official leaderboard.
 
-| Parser | Overall | Tables | Charts | Content faithfulness | Semantic formatting | Visual grounding |
-|---|---:|---:|---:|---:|---:|---:|
-| PyMuPDF4LLM | 53.5 | 72.0 | 2.2 | 79.3 | 52.0 | 61.9 |
-| Warp Ingest | 40.2 | 57.5 | 7.0 | 70.8 | 45.8 | 19.8 |
-| LiteParse (no OCR) | 36.9 | 42.4 | 1.8 | 70.0 | 38.5 | 31.8 |
-| **docparse** | **36.2** | **42.1** | **1.0** | **72.5** | **35.5** | **30.0** |
-| OpenDataLoader | 29.4 | 35.2 | 0.9 | 66.1 | 34.1 | 10.8 |
-| pdf-inspector | 26.6 | 26.6 | 5.3 | 56.1 | 35.1 | 9.9 |
-| MarkItDown | 18.6 | 15.8 | 2.0 | 64.5 | 0.9 | 9.9 |
-| PyMuPDF (text) | 16.0 | 0.0 | 0.0 | 68.3 | 1.0 | 10.9 |
-| pypdf | 14.9 | 0.0 | 0.0 | 62.5 | 0.9 | 10.9 |
+![ParseBench overall](evidence/docparse/parsebench_overall.png)
 
-Overall is the mean of the five dimensions, as on the official leaderboard.
-For scale: the top of the full leaderboard (cloud services and multi-billion
-parameter vision-language models) reaches 75–90.
+![ParseBench by dimension](evidence/docparse/parsebench_dimensions.png)
 
 **What this says honestly**
 
-- docparse is mid-table among local open-source parsers: ahead of pypdf,
-  PyMuPDF, MarkItDown, pdf-inspector and OpenDataLoader; just behind LiteParse
-  (36.9); behind Warp Ingest and clearly behind PyMuPDF4LLM.
 - Its **content faithfulness (72.5)** is second among local parsers. It is
   strongest on simple (89.0) and multi-column (76.5) pages, and weakest on
   handwriting (27.4), scans (56.1) and non-English text (58.8). That matches the
@@ -188,10 +190,9 @@ parse → LLM baselines are), against plain pypdf text, with everything else fix
 the same model (Qwen2.5-3B-Instruct, 4-bit, llama.cpp on 4 CPU cores), the same
 prompt and 12,288-token context budget, and the official scorer.
 
-| Parse stage (6-document test set) | Value F1 | Precision | Recall |
-|---|---:|---:|---:|
-| **docparse** | **35.8** | 63.8 | 32.5 |
-| pypdf | 32.9 | 66.3 | 29.8 |
+![ExtractBench](evidence/docparse/extractbench.png)
+
+Precision: docparse 63.8, pypdf 66.3. Recall: docparse 32.5, pypdf 29.8.
 
 docparse helped most on a scanned document (Value F1 19.6 vs 8.0, from OCR) and
 an earnings deck with tables (35.0 vs 25.0). It lost on the 66-page document
@@ -246,7 +247,13 @@ images under `sheets`.
 ## Online demo
 
 The [Space](https://huggingface.co/spaces/Kedhareswer/docparse) runs the same
-`docparse ui` server and weights. Files up to 40 MB, one at a time. LibreOffice
+`docparse ui` server and weights. Files up to 40 MB, one at a time. For PDFs, images and
+slide decks the **Pages** tab shows one page at a time (first 40) with a strip of page thumbnails
+beside it: click any page to open it, or use the arrow keys; zoom goes up to 300%. Each page has a box around every block docparse found. Labels in the margin
+give each block's type (heading, paragraph, list item, table, figure) and its place in reading
+order, without covering the page. The text read from each box is listed beside the page; hover
+or click either side to find its partner. It is the quickest way to see what docparse misses or
+misreads. LibreOffice
 is installed there, so `.doc`, `.rtf`, `.odt`, `.xls`, `.ods`, `.ppt`, `.pptx`
 and `.odp` work too. It runs on Hugging Face's free ZeroGPU hardware with all
 inference on CPU (the app registers an unused `@spaces.GPU` function because
@@ -286,5 +293,8 @@ after every round.
   very low resolution (text under about 10 px high) are not handled well.
 - Born-digital PDFs are only as good as their text layer: some PDFs embed
   fonts without a Unicode mapping. Use `--ocr always` for those.
-- Besides ParseBench, the benchmarks are synthetic pages and three real PDFs from
-  this repository. No direct comparison with Tesseract was run here.
+- Block types are often wrong on notebook and report PDFs: boxed code cells can come out
+  as tables, printed dataframes as paragraphs, and bullet-less lists as paragraphs. The Space's
+  Pages tab shows this per page.
+- Besides ParseBench and the small ExtractBench check, the benchmarks are synthetic pages and
+  three real PDFs from this repository. No direct comparison with Tesseract was run here.

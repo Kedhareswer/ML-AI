@@ -42,8 +42,9 @@ def recognizer(path=None):
     return Recognizer(str(path))
 
 
-def extract(path, ocr="auto", ocr_images=False, model=None, dpi=200, password=None):
-    """ocr: "auto" (only pages without a text layer), "always", or "never"."""
+def extract(path, ocr="auto", ocr_images=False, model=None, dpi=200, password=None, on_parsed=None):
+    """ocr: "auto" (only pages without a text layer), "always", or "never".
+    on_parsed(path, doc) runs after parsing, while the parsed file (e.g. LibreOffice's PDF) still exists."""
     path = Path(path)
     ext = path.suffix.lower()
     doc = {"source": path.name, "format": ext.lstrip("."), "metadata": {}, "pages": 0, "blocks": [],
@@ -54,8 +55,12 @@ def extract(path, ocr="auto", ocr_images=False, model=None, dpi=200, password=No
             converted = _libreoffice(path, CONVERT[ext], tmp)
             doc["warnings"].append(f"converted {ext} to .{CONVERT[ext]} with LibreOffice before parsing")
             _dispatch(converted, converted.suffix.lower(), doc, opts)
+            if on_parsed:
+                on_parsed(converted, doc)
     else:
         _dispatch(path, ext, doc, opts)
+        if on_parsed:
+            on_parsed(path, doc)
     return doc
 
 
@@ -70,8 +75,6 @@ def _dispatch(path, ext, doc, opts):
         xlsx(path, doc, opts["ocr_images"], opts["model"])
     elif ext in (".csv", ".tsv"):
         delimited(path, doc)
-    elif ext in (".txt", ".md"):
-        text_file(path, doc)
     else:
         raise ValueError(f"unsupported file type: {ext}")
 
@@ -647,17 +650,6 @@ def delimited(path, doc):
     rows = [r for r in csv.reader(io.StringIO(text), dialect)]
     doc["blocks"].append({"type": "table", "rows": rows, "source": "structure"})
     doc["metadata"].update({"encoding": enc, "delimiter": dialect.delimiter, "rows": len(rows)})
-    doc["pages"] = 1
-
-
-def text_file(path, doc):
-    text = Path(path).read_text(encoding="utf-8", errors="replace")
-    for para in [p.strip() for p in text.split("\n\n") if p.strip()]:
-        if para.startswith("#"):
-            level = len(para) - len(para.lstrip("#"))
-            doc["blocks"].append({"type": "heading", "level": level, "text": para.lstrip("# ").strip(), "source": "structure"})
-        else:
-            doc["blocks"].append({"type": "paragraph", "text": para, "source": "structure"})
     doc["pages"] = 1
 
 
